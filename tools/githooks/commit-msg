@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+msg_file="${1:?missing commit message file}"
+msg="$(cat "$msg_file")"
+first_line="$(printf "%s" "$msg" | head -n 1 | tr -d '\r')"
+
+# Allow merge commits
+if [[ "$first_line" =~ ^Merge\  ]]; then
+  exit 0
+fi
+
+# Allow git's default revert format
+if [[ "$first_line" =~ ^Revert\ " ]]; then
+  exit 0
+fi
+
+# Conventional Commits (https://www.conventionalcommits.org/en/v1.0.0/)
+# type(scope?)!?: subject
+re='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9-]+\))?(!)?: .+'
+
+if [[ ! "$first_line" =~ $re ]]; then
+  echo "ERROR: Commit message must follow Conventional Commits." >&2
+  echo "Got: $first_line" >&2
+  echo "Examples:" >&2
+  echo "  feat(core): add TRON parser" >&2
+  echo "  fix(api-go): handle empty narratives" >&2
+  echo "  docs: update README" >&2
+  exit 1
+fi

@@ -1,0 +1,59 @@
+name: Spec proposal / improvement
+description: Propose a new idea, improvement, clarification, or extension to the vAgenda specification
+title: "spec: "
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Proposal type
+      options:
+        - New extension/module
+        - Clarification (reduce ambiguity)
+        - Breaking change (requires version bump)
+        - Editorial (wording/typos/structure)
+        - Examples / docs improvement
+        - Tooling idea (Task/CI/hooks)
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What problem does this solve? Who benefits?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Describe the change. If possible, include concrete schema changes and example documents.
+    validations:
+      required: true
+
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility / migration
+      description: Is this backwards compatible? If not, how should migration/versioning work?
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other approaches did you consider and why not?
+    validations:
+      required: false
+
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: Links to relevant sections, related standards, prior art, etc.
+    validations:
+      required: false

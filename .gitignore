@@ -1,6 +1,14 @@
-# Warp AI assistant files
+# Warp AI assistant files (local-only)
 docs/warp*.md
 
 # Go coverage artifacts
 api/go/coverage.out
 api/go/coverage.html
+
+# Common coverage artifacts (any language/tool)
+**/coverage.out
+**/coverage.html
+**/coverage.txt
+
+# macOS
+.DS_Store

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Start a discussion
+    about: Use discussions for open-ended exploration and early-stage ideas.
+    url: https://github.com/visionik/vAgenda/discussions
+  - name: Read the spec
+    about: vAgenda specification (README)
+    url: https://github.com/visionik/vAgenda

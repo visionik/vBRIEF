@@ -1,0 +1,49 @@
+name: Bug report (spec or tooling)
+description: Report an inconsistency, ambiguity, or defect in the spec text or repo tooling
+title: "bug: "
+labels: [bug]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Spec text / semantics
+        - Examples in the spec
+        - Repo tooling (Task/CI/hooks)
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: location
+    attributes:
+      label: Where is the issue?
+      description: Link to the exact section/heading or file and line range (if applicable).
+      placeholder: "README.md §2.1 …" or "vAgenda-extension-… (lines 120-150)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What’s wrong?
+      description: Describe the ambiguity/inconsistency/bug you found.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should it say/do instead?
+      description: If possible, propose concrete replacement wording or behavior.
+    validations:
+      required: false
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce (tooling only)
+      description: If this is a tooling/CI/hook bug, include minimal repro steps and logs.
+    validations:
+      required: false

@@ -1,0 +1,8 @@
+* text=auto
+
+# Ensure hooks and scripts run consistently on macOS/Linux
+*.sh text eol=lf
+
+# GitHub config files
+*.yml text eol=lf
+*.yaml text eol=lf

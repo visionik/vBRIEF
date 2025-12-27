@@ -1,0 +1,49 @@
+version: '3'
+
+includes:
+  api:go:
+    taskfile: ./api/go/Taskfile.yml
+    dir: ./api/go
+
+tasks:
+  default:
+    desc: List all available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  install:
+    desc: Install all dependencies
+    deps:
+      - api:go:install
+
+  fmt:
+    desc: Format all code
+    deps:
+      - api:go:fmt
+
+  test:
+    desc: Run all tests
+    deps:
+      - api:go:test
+
+  check:
+    desc: Run all quality checks (fast)
+    deps:
+      - api:go:check
+
+  quality:
+    desc: Run all quality checks including coverage gates
+    deps:
+      - api:go:quality
+
+  git:hooks:install:
+    desc: Install local git hooks (pre-commit + commit-msg)
+    cmds:
+      - |
+        set -euo pipefail
+        mkdir -p .git/hooks
+        cp -f tools/githooks/pre-commit .git/hooks/pre-commit
+        cp -f tools/githooks/commit-msg .git/hooks/commit-msg
+        chmod +x .git/hooks/pre-commit .git/hooks/commit-msg
+        echo "Installed git hooks into .git/hooks"
