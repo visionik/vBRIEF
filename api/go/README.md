@@ -237,20 +237,19 @@ The `updater` package provides validated mutations that ensure the document rema
 import "github.com/visionik/vAgenda/api/go/pkg/updater"
 
 // Create updater
-upd := updater.New(nil) // Uses default validator
+upd := updater.NewUpdater(doc) // Binds to a single document
 
 // TodoList operations
-err := upd.AddTodoItem(doc, core.TodoItem{...})
-err := upd.RemoveTodoItem(doc, index)
-err := upd.UpdateTodoItem(doc, index, func(item *core.TodoItem) {...})
+err := upd.AddItemValidated(core.TodoItem{...})
+err := upd.RemoveItemValidated(index)
+err := upd.UpdateItemStatus(index, core.StatusCompleted)
 
 // Plan operations
-err := upd.AddPlanNarrative(doc, key, narrative)
-err := upd.RemovePlanNarrative(doc, key)
-err := upd.UpdatePlanNarrative(doc, key, func(n *core.Narrative) {...})
-err := upd.AddPlanPhase(doc, phase)
-err := upd.RemovePlanPhase(doc, index)
-err := upd.UpdatePlanPhase(doc, index, func(p *core.Phase) {...})
+err := upd.UpdatePlanStatus(core.PlanStatusApproved)
+err := upd.Transaction(func(u *updater.Updater) error {
+  // apply multiple mutations to upd.Document() (todo list / plan)
+  return nil
+})
 ```
 
 ## Examples

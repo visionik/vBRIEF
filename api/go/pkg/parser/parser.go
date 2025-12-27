@@ -2,9 +2,16 @@
 package parser
 
 import (
+	"errors"
+	"fmt"
 	"io"
 
 	"github.com/visionik/vAgenda/api/go/pkg/core"
+)
+
+var (
+	// ErrUnknownFormat is returned when a parser format is not recognized.
+	ErrUnknownFormat = errors.New("unknown format")
 )
 
 // Parser handles document parsing from various formats.
@@ -32,15 +39,15 @@ const (
 )
 
 // New creates a new parser for the specified format.
-func New(format Format) Parser {
+func New(format Format) (Parser, error) {
 	switch format {
 	case FormatJSON:
-		return NewJSONParser()
+		return NewJSONParser(), nil
 	case FormatTRON:
-		return NewTRONParser()
+		return NewTRONParser(), nil
 	case FormatAuto:
-		return NewAutoParser()
+		return NewAutoParser(), nil
 	default:
-		return NewAutoParser()
+		return nil, fmt.Errorf("%w: %q", ErrUnknownFormat, format)
 	}
 }

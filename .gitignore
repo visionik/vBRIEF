@@ -1,2 +1,6 @@
 # Warp AI assistant files
 docs/warp*.md
+
+# Go coverage artifacts
+api/go/coverage.out
+api/go/coverage.html

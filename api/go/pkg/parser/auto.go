@@ -8,17 +8,17 @@ import (
 	"github.com/visionik/vAgenda/api/go/pkg/core"
 )
 
-// AutoParser automatically detects the format and parses accordingly.
-type AutoParser struct{}
+// autoParser automatically detects the format and parses accordingly.
+type autoParser struct{}
 
 // NewAutoParser creates a new auto-detecting parser.
 func NewAutoParser() Parser {
-	return &AutoParser{}
+	return &autoParser{}
 }
 
 // Parse reads and parses a document, auto-detecting the format.
-func (p *AutoParser) Parse(r io.Reader) (*core.Document, error) {
-	data, err := io.ReadAll(r)
+func (p *autoParser) Parse(r io.Reader) (*core.Document, error) {
+	data, err := readAllLimited(r)
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +26,7 @@ func (p *AutoParser) Parse(r io.Reader) (*core.Document, error) {
 }
 
 // ParseBytes parses a document, auto-detecting the format from a byte slice.
-func (p *AutoParser) ParseBytes(data []byte) (*core.Document, error) {
+func (p *autoParser) ParseBytes(data []byte) (*core.Document, error) {
 	// Try JSON first (starts with '{')
 	trimmed := bytes.TrimSpace(data)
 	if len(trimmed) > 0 && trimmed[0] == '{' {
@@ -43,7 +43,7 @@ func (p *AutoParser) ParseBytes(data []byte) (*core.Document, error) {
 }
 
 // ParseString parses a document, auto-detecting the format from a string.
-func (p *AutoParser) ParseString(s string) (*core.Document, error) {
+func (p *autoParser) ParseString(s string) (*core.Document, error) {
 	// Try JSON first (starts with '{')
 	trimmed := strings.TrimSpace(s)
 	if len(trimmed) > 0 && trimmed[0] == '{' {

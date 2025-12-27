@@ -41,8 +41,12 @@ tasks:
   test:coverage:
     desc: Run tests with coverage (≥75% required)
     cmds:
-      - go test -cover -coverprofile={{.COVERAGE_OUT}} $(go list {{.PKG_PATH}} | grep -v /examples/)
+      - go test -count=1 -cover -coverprofile={{.COVERAGE_OUT}} $(go list {{.PKG_PATH}} | awk '!/\/examples\//')
       - go tool cover -func={{.COVERAGE_OUT}}
+      - |
+        pct=$(awk 'NR>1 {s+=$2; if($3>0) c+=$2} END{if(s==0){print 0} else {printf("%.1f", 100*c/s)}}' {{.COVERAGE_OUT}})
+        echo "Total statement coverage: ${pct}%"
+        awk -v pct="$pct" 'BEGIN{if(pct+0 < 75){exit 1}}'
 
   test:coverage:html:
     desc: Generate HTML coverage report
@@ -87,6 +91,11 @@ tasks:
     desc: Run the mutations example
     cmds:
       - go run examples/mutations/main.go
+
+  run:strict-errors:
+    desc: Run example showing strict error behavior for format/extension validation
+    cmds:
+      - go run examples/strict-errors/main.go
 
   clean:
     desc: Clean build artifacts and coverage files

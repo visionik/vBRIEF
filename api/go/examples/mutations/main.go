@@ -98,10 +98,10 @@ func main() {
 		Build()
 
 	// Create updater
-	upd := updater.New(nil)
+	upd := updater.NewUpdater(doc)
 
 	// Add item with validation
-	err = upd.AddTodoItem(doc, core.TodoItem{
+	err = upd.AddItemValidated(core.TodoItem{
 		Title:  "Deploy to production",
 		Status: core.StatusPending,
 	})
@@ -111,9 +111,7 @@ func main() {
 	fmt.Printf("   Added validated item, total: %d\n", len(doc.TodoList.Items))
 
 	// Update item with validation
-	err = upd.UpdateTodoItem(doc, 0, func(item *core.TodoItem) {
-		item.Status = core.StatusCompleted
-	})
+	err = upd.UpdateItemStatus(0, core.StatusCompleted)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -125,7 +123,8 @@ func main() {
 		WithProposal("Proposal", "Required proposal content").
 		Build()
 
-	err = upd.AddTodoItem(invalidDoc, core.TodoItem{Title: "Task", Status: core.StatusPending})
+	badUpd := updater.NewUpdater(invalidDoc)
+	err = badUpd.AddItemValidated(core.TodoItem{Title: "Task", Status: core.StatusPending})
 	if err != nil {
 		fmt.Printf("   Validation caught error: %v\n\n", err)
 	}

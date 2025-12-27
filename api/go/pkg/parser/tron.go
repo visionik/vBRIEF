@@ -17,7 +17,7 @@ func NewTRONParser() Parser {
 
 // Parse reads and parses a TRON document from a reader.
 func (p *TRONParser) Parse(r io.Reader) (*core.Document, error) {
-	data, err := io.ReadAll(r)
+	data, err := readAllLimited(r)
 	if err != nil {
 		return nil, err
 	}

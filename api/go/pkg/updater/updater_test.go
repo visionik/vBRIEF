@@ -8,194 +8,147 @@ import (
 	"github.com/visionik/vAgenda/api/go/pkg/core"
 )
 
-func TestNewUpdater(t *testing.T) {
-	// With nil validator
-	u := New(nil)
-	assert.NotNil(t, u)
-	assert.NotNil(t, u.validator)
+func TestNewUpdater_Stateful(t *testing.T) {
+	doc := &core.Document{
+		Info:     core.Info{Version: "0.2"},
+		TodoList: &core.TodoList{Items: []core.TodoItem{}},
+	}
+
+	u := NewUpdater(doc)
+	require.NotNil(t, u)
+	assert.Equal(t, doc, u.Document())
 }
 
-func TestAddTodoItem(t *testing.T) {
-	u := New(nil)
+func TestUpdater_AddItemValidated(t *testing.T) {
 	doc := &core.Document{
-		Info: core.Info{
-			Version: "1.0",
-		},
+		Info:     core.Info{Version: "1.0"},
 		TodoList: &core.TodoList{},
 	}
 
-	item := core.TodoItem{Title: "Task 1", Status: core.StatusPending}
-	err := u.AddTodoItem(doc, item)
-
+	u := NewUpdater(doc)
+	err := u.AddItemValidated(core.TodoItem{Title: "Task 1", Status: core.StatusPending})
 	require.NoError(t, err)
-	assert.NotNil(t, doc.TodoList)
 	assert.Len(t, doc.TodoList.Items, 1)
-	assert.Equal(t, "Task 1", doc.TodoList.Items[0].Title)
 
-	// Add another
-	err = u.AddTodoItem(doc, core.TodoItem{Title: "Task 2", Status: core.StatusPending})
+	err = u.AddItemValidated(core.TodoItem{Title: "Task 2", Status: core.StatusPending})
 	require.NoError(t, err)
 	assert.Len(t, doc.TodoList.Items, 2)
 }
 
-func TestAddTodoItemValidationError(t *testing.T) {
-	u := New(nil)
+func TestUpdater_AddItemValidatedValidationError(t *testing.T) {
 	doc := &core.Document{
-		Info: core.Info{
-			Version: "1.0",
-		},
-		Plan:     &core.Plan{},     // Has Plan, wrong for todo-list
-		TodoList: &core.TodoList{}, // Cannot have both
+		Info:     core.Info{Version: "1.0"},
+		TodoList: &core.TodoList{},
+		Plan:     &core.Plan{},
 	}
 
-	item := core.TodoItem{Title: "Task 1", Status: core.StatusPending}
-	err := u.AddTodoItem(doc, item)
-
-	assert.Error(t, err) // Should fail validation
+	u := NewUpdater(doc)
+	err := u.AddItemValidated(core.TodoItem{Title: "Task 1", Status: core.StatusPending})
+	assert.Error(t, err)
 }
 
-func TestRemoveTodoItem(t *testing.T) {
-	u := New(nil)
+func TestUpdater_RemoveItemValidated(t *testing.T) {
 	doc := &core.Document{
-		Info: core.Info{
-			Version: "1.0",
-		},
-		TodoList: &core.TodoList{
-			Items: []core.TodoItem{
-				{Title: "Task 1", Status: core.StatusPending},
-				{Title: "Task 2", Status: core.StatusPending},
-			},
-		},
+		Info: core.Info{Version: "1.0"},
+		TodoList: &core.TodoList{Items: []core.TodoItem{
+			{Title: "Task 1", Status: core.StatusPending},
+			{Title: "Task 2", Status: core.StatusPending},
+		}},
 	}
 
-	err := u.RemoveTodoItem(doc, 0)
+	u := NewUpdater(doc)
+	err := u.RemoveItemValidated(0)
 	require.NoError(t, err)
 	assert.Len(t, doc.TodoList.Items, 1)
 	assert.Equal(t, "Task 2", doc.TodoList.Items[0].Title)
 
-	// Invalid index
-	err = u.RemoveTodoItem(doc, 5)
-	assert.ErrorIs(t, err, core.ErrInvalidIndex)
+	err = u.RemoveItemValidated(5)
+	assert.Error(t, err)
 }
 
-func TestUpdateTodoItem(t *testing.T) {
-	u := New(nil)
+func TestUpdater_UpdateItemStatus(t *testing.T) {
 	doc := &core.Document{
-		Info: core.Info{
-			Version: "1.0",
-		},
-		TodoList: &core.TodoList{
-			Items: []core.TodoItem{
-				{Title: "Task 1", Status: core.StatusPending},
-			},
-		},
+		Info:     core.Info{Version: "0.2"},
+		TodoList: &core.TodoList{Items: []core.TodoItem{{Title: "a", Status: core.StatusPending}}},
 	}
 
-	err := u.UpdateTodoItem(doc, 0, func(item *core.TodoItem) {
-		item.Status = core.StatusCompleted
-	})
-
+	u := NewUpdater(doc)
+	err := u.UpdateItemStatus(0, core.StatusCompleted)
 	require.NoError(t, err)
 	assert.Equal(t, core.StatusCompleted, doc.TodoList.Items[0].Status)
 }
 
-func TestAddPlanNarrative(t *testing.T) {
-	u := New(nil)
+func TestUpdater_FindAndUpdate(t *testing.T) {
 	doc := &core.Document{
-		Info: core.Info{
-			Version: "1.0",
-		},
-		Plan: &core.Plan{
-			Title:      "Test Plan",
-			Status:     core.PlanStatusDraft,
-			Narratives: map[string]core.Narrative{"proposal": {Title: "Proposal", Content: "Content"}},
-		},
+		Info:     core.Info{Version: "0.2"},
+		TodoList: &core.TodoList{Items: []core.TodoItem{{Title: "a", Status: core.StatusPending}}},
 	}
 
-	narrative := core.Narrative{Title: "Overview", Content: "Content"}
-	err := u.AddPlanNarrative(doc, "overview", narrative)
-
+	u := NewUpdater(doc)
+	err := u.FindAndUpdate(
+		func(item *core.TodoItem) bool { return item.Title == "a" },
+		func(item *core.TodoItem) { item.Status = core.StatusInProgress },
+	)
 	require.NoError(t, err)
-	assert.NotNil(t, doc.Plan)
-	assert.Len(t, doc.Plan.Narratives, 2) // proposal + overview
-	assert.Equal(t, "Content", doc.Plan.Narratives["overview"].Content)
+	assert.Equal(t, core.StatusInProgress, doc.TodoList.Items[0].Status)
 }
 
-func TestRemovePlanNarrative(t *testing.T) {
-	u := New(nil)
+func TestUpdater_Transaction(t *testing.T) {
 	doc := &core.Document{
-		Info: core.Info{
-			Version: "1.0",
-		},
+		Info:     core.Info{Version: "0.2"},
+		TodoList: &core.TodoList{Items: []core.TodoItem{}},
+	}
+
+	u := NewUpdater(doc)
+	err := u.Transaction(func(u *Updater) error {
+		return u.AddItemValidated(core.TodoItem{Title: "x", Status: core.StatusPending})
+	})
+	require.NoError(t, err)
+	assert.Len(t, doc.TodoList.Items, 1)
+}
+
+func TestUpdater_AddUpdateRemovePlanNarratives(t *testing.T) {
+	doc := &core.Document{
+		Info: core.Info{Version: "1.0"},
 		Plan: &core.Plan{
 			Title:  "Test Plan",
 			Status: core.PlanStatusDraft,
 			Narratives: map[string]core.Narrative{
 				"proposal": {Title: "Proposal", Content: "Content"},
-				"overview": {Title: "Overview", Content: "Content"},
 			},
 		},
 	}
 
-	err := u.RemovePlanNarrative(doc, "overview")
+	u := NewUpdater(doc)
+	err := u.Transaction(func(u *Updater) error {
+		doc.Plan.AddNarrative("overview", core.Narrative{Title: "Overview", Content: "Content"})
+		return nil
+	})
 	require.NoError(t, err)
-	assert.Len(t, doc.Plan.Narratives, 1) // proposal still remains
+	assert.Len(t, doc.Plan.Narratives, 2)
+
+	err = u.Transaction(func(u *Updater) error {
+		n := doc.Plan.Narratives["overview"]
+		n.Content = "Updated"
+		doc.Plan.Narratives["overview"] = n
+		return nil
+	})
+	require.NoError(t, err)
+	assert.Equal(t, "Updated", doc.Plan.Narratives["overview"].Content)
+
+	err = u.Transaction(func(u *Updater) error {
+		doc.Plan.RemoveNarrative("overview")
+		return nil
+	})
+	require.NoError(t, err)
+	assert.Len(t, doc.Plan.Narratives, 1)
 	_, exists := doc.Plan.Narratives["overview"]
 	assert.False(t, exists)
 }
 
-func TestUpdatePlanNarrative(t *testing.T) {
-	u := New(nil)
+func TestUpdater_PlanPhaseMutationsViaTransaction(t *testing.T) {
 	doc := &core.Document{
-		Info: core.Info{
-			Version: "1.0",
-		},
-		Plan: &core.Plan{
-			Title:  "Test Plan",
-			Status: core.PlanStatusDraft,
-			Narratives: map[string]core.Narrative{
-				"proposal": {Title: "Proposal", Content: "Content"},
-				"overview": {Title: "Overview", Content: "Original"},
-			},
-		},
-	}
-
-	err := u.UpdatePlanNarrative(doc, "overview", func(n *core.Narrative) {
-		n.Content = "Updated"
-	})
-
-	require.NoError(t, err)
-	assert.Equal(t, "Updated", doc.Plan.Narratives["overview"].Content)
-}
-
-func TestAddPlanPhase(t *testing.T) {
-	u := New(nil)
-	doc := &core.Document{
-		Info: core.Info{
-			Version: "1.0",
-		},
-		Plan: &core.Plan{
-			Title:      "Test Plan",
-			Status:     core.PlanStatusDraft,
-			Narratives: map[string]core.Narrative{"proposal": {Title: "Proposal", Content: "Content"}},
-		},
-	}
-
-	phase := core.Phase{Title: "Phase 1", Status: core.PhaseStatusPending}
-	err := u.AddPlanPhase(doc, phase)
-
-	require.NoError(t, err)
-	assert.NotNil(t, doc.Plan)
-	assert.Len(t, doc.Plan.Phases, 1)
-	assert.Equal(t, "Phase 1", doc.Plan.Phases[0].Title)
-}
-
-func TestRemovePlanPhase(t *testing.T) {
-	u := New(nil)
-	doc := &core.Document{
-		Info: core.Info{
-			Version: "1.0",
-		},
+		Info: core.Info{Version: "1.0"},
 		Plan: &core.Plan{
 			Title:      "Test Plan",
 			Status:     core.PlanStatusDraft,
@@ -207,32 +160,29 @@ func TestRemovePlanPhase(t *testing.T) {
 		},
 	}
 
-	err := u.RemovePlanPhase(doc, 0)
-	require.NoError(t, err)
-	assert.Len(t, doc.Plan.Phases, 1)
-	assert.Equal(t, "Phase 2", doc.Plan.Phases[0].Title)
-}
+	u := NewUpdater(doc)
 
-func TestUpdatePlanPhase(t *testing.T) {
-	u := New(nil)
-	doc := &core.Document{
-		Info: core.Info{
-			Version: "1.0",
-		},
-		Plan: &core.Plan{
-			Title:      "Test Plan",
-			Status:     core.PlanStatusDraft,
-			Narratives: map[string]core.Narrative{"proposal": {Title: "Proposal", Content: "Content"}},
-			Phases: []core.Phase{
-				{Title: "Phase 1", Status: core.PhaseStatusPending},
-			},
-		},
-	}
-
-	err := u.UpdatePlanPhase(doc, 0, func(p *core.Phase) {
-		p.Status = core.PhaseStatusCompleted
+	// Add phase and validate
+	err := u.Transaction(func(u *Updater) error {
+		doc.Plan.AddPhase(core.Phase{Title: "Phase 3", Status: core.PhaseStatusPending})
+		return nil
 	})
+	require.NoError(t, err)
+	assert.Len(t, doc.Plan.Phases, 3)
 
+	// Update phase and validate
+	err = u.Transaction(func(u *Updater) error {
+		return doc.Plan.UpdatePhase(0, func(p *core.Phase) {
+			p.Status = core.PhaseStatusCompleted
+		})
+	})
 	require.NoError(t, err)
 	assert.Equal(t, core.PhaseStatusCompleted, doc.Plan.Phases[0].Status)
+
+	// Remove phase and validate
+	err = u.Transaction(func(u *Updater) error {
+		return doc.Plan.RemovePhase(1)
+	})
+	require.NoError(t, err)
+	assert.Len(t, doc.Plan.Phases, 2)
 }

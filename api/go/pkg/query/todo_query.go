@@ -1,7 +1,11 @@
 // Package query provides filtering and querying capabilities for vAgenda documents.
 package query
 
-import "github.com/visionik/vAgenda/api/go/pkg/core"
+import (
+	"strings"
+
+	"github.com/visionik/vAgenda/api/go/pkg/core"
+)
 
 // TodoQuery provides filtering for TodoItems.
 type TodoQuery struct {
@@ -15,7 +19,7 @@ func NewTodoQuery(items []core.TodoItem) *TodoQuery {
 
 // ByStatus filters items by status.
 func (q *TodoQuery) ByStatus(status core.ItemStatus) *TodoQuery {
-	filtered := make([]core.TodoItem, 0)
+	filtered := make([]core.TodoItem, 0, len(q.items))
 	for _, item := range q.items {
 		if item.Status == status {
 			filtered = append(filtered, item)
@@ -26,18 +30,28 @@ func (q *TodoQuery) ByStatus(status core.ItemStatus) *TodoQuery {
 
 // ByTitle filters items by title substring (case-insensitive).
 func (q *TodoQuery) ByTitle(substring string) *TodoQuery {
-	filtered := make([]core.TodoItem, 0)
+	substr := strings.ToLower(substring)
+	filtered := make([]core.TodoItem, 0, len(q.items))
 	for _, item := range q.items {
-		if contains(item.Title, substring) {
+		if strings.Contains(strings.ToLower(item.Title), substr) {
 			filtered = append(filtered, item)
 		}
 	}
 	return &TodoQuery{items: filtered}
 }
 
+// ByTag filters items by tag.
+//
+// Tag support requires a metadata/tags extension which is not implemented yet.
+// For now this returns an empty result.
+func (q *TodoQuery) ByTag(tag string) *TodoQuery {
+	_ = tag
+	return &TodoQuery{items: nil}
+}
+
 // Where filters items using a custom predicate function.
 func (q *TodoQuery) Where(predicate func(core.TodoItem) bool) *TodoQuery {
-	filtered := make([]core.TodoItem, 0)
+	filtered := make([]core.TodoItem, 0, len(q.items))
 	for _, item := range q.items {
 		if predicate(item) {
 			filtered = append(filtered, item)
@@ -67,41 +81,4 @@ func (q *TodoQuery) Count() int {
 // Any returns true if there are any matching items.
 func (q *TodoQuery) Any() bool {
 	return len(q.items) > 0
-}
-
-// contains performs case-insensitive substring search.
-func contains(s, substr string) bool {
-	// Simple case-insensitive contains
-	sLower := toLower(s)
-	substrLower := toLower(substr)
-	return indexOf(sLower, substrLower) >= 0
-}
-
-// toLower converts a string to lowercase.
-func toLower(s string) string {
-	result := make([]rune, len(s))
-	for i, r := range s {
-		if r >= 'A' && r <= 'Z' {
-			result[i] = r + 32
-		} else {
-			result[i] = r
-		}
-	}
-	return string(result)
-}
-
-// indexOf returns the index of substr in s, or -1 if not found.
-func indexOf(s, substr string) int {
-	if len(substr) == 0 {
-		return 0
-	}
-	if len(substr) > len(s) {
-		return -1
-	}
-	for i := 0; i <= len(s)-len(substr); i++ {
-		if s[i:i+len(substr)] == substr {
-			return i
-		}
-	}
-	return -1
 }

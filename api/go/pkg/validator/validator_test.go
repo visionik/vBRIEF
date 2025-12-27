@@ -1,6 +1,7 @@
 package validator
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -80,7 +81,7 @@ func TestValidator_ValidateTodoList(t *testing.T) {
 
 	t.Run("document with both TodoList and Plan fails", func(t *testing.T) {
 		doc := &core.Document{
-			Info: core.Info{Version: "0.2"},
+			Info:     core.Info{Version: "0.2"},
 			TodoList: &core.TodoList{Items: []core.TodoItem{}},
 			Plan: &core.Plan{
 				Title:      "Plan",
@@ -195,6 +196,22 @@ func TestValidator_ValidatePlan(t *testing.T) {
 		err := v.Validate(doc)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "content is required")
+	})
+}
+
+func TestValidator_ValidateExtensions(t *testing.T) {
+	v := NewValidator()
+	doc := &core.Document{Info: core.Info{Version: "0.2"}, TodoList: &core.TodoList{Items: []core.TodoItem{}}}
+
+	t.Run("no extensions requested succeeds", func(t *testing.T) {
+		err := v.ValidateExtensions(doc, nil)
+		assert.NoError(t, err)
+	})
+
+	t.Run("extensions requested returns not supported", func(t *testing.T) {
+		err := v.ValidateExtensions(doc, []string{"timestamps"})
+		assert.Error(t, err)
+		assert.True(t, errors.Is(err, ErrExtensionsNotSupported))
 	})
 }
 

@@ -3,10 +3,17 @@ package convert
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io"
 
 	"github.com/tron-format/trongo/pkg/tron"
 	"github.com/visionik/vAgenda/api/go/pkg/core"
+)
+
+var (
+	// ErrUnknownFormat is returned when a converter format is not recognized.
+	ErrUnknownFormat = errors.New("unknown format")
 )
 
 // Format represents an output format.
@@ -43,7 +50,7 @@ func (c *converter) Convert(doc *core.Document, format Format) ([]byte, error) {
 	case FormatTRON:
 		return tron.Marshal(doc)
 	default:
-		return json.Marshal(doc)
+		return nil, fmt.Errorf("%w: %q", ErrUnknownFormat, format)
 	}
 }
 
@@ -53,13 +60,25 @@ func (c *converter) ConvertTo(doc *core.Document, format Format, w io.Writer) er
 	if err != nil {
 		return err
 	}
-	_, err = w.Write(data)
-	return err
+	if _, err := w.Write(data); err != nil {
+		return fmt.Errorf("write: %w", err)
+	}
+	return nil
+}
+
+// Convert is a convenience helper that converts a document to the specified format.
+func Convert(doc *core.Document, format Format) ([]byte, error) {
+	return NewConverter().Convert(doc, format)
+}
+
+// ConvertTo is a convenience helper that writes a document to the specified format.
+func ConvertTo(doc *core.Document, format Format, w io.Writer) error {
+	return NewConverter().ConvertTo(doc, format, w)
 }
 
 // ToJSON converts a document to JSON bytes.
 func ToJSON(doc *core.Document) ([]byte, error) {
-	return json.Marshal(doc)
+	return Convert(doc, FormatJSON)
 }
 
 // ToJSONIndent converts a document to indented JSON bytes.
@@ -69,7 +88,7 @@ func ToJSONIndent(doc *core.Document, prefix, indent string) ([]byte, error) {
 
 // ToTRON converts a document to TRON bytes.
 func ToTRON(doc *core.Document) ([]byte, error) {
-	return tron.Marshal(doc)
+	return Convert(doc, FormatTRON)
 }
 
 // ToTRONIndent converts a document to indented TRON bytes.

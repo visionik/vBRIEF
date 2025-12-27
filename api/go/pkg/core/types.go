@@ -1,7 +1,10 @@
 // Package core provides the core types and interfaces for vAgenda documents.
 package core
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 // Common errors for document operations.
 var (
@@ -154,7 +157,7 @@ func (tl *TodoList) AddItem(item TodoItem) {
 // RemoveItem removes an item at the specified index.
 func (tl *TodoList) RemoveItem(index int) error {
 	if index < 0 || index >= len(tl.Items) {
-		return ErrInvalidIndex
+		return fmt.Errorf("%w: index=%d len=%d", ErrInvalidIndex, index, len(tl.Items))
 	}
 	tl.Items = append(tl.Items[:index], tl.Items[index+1:]...)
 	return nil
@@ -163,7 +166,7 @@ func (tl *TodoList) RemoveItem(index int) error {
 // UpdateItem applies updates to an item at the specified index.
 func (tl *TodoList) UpdateItem(index int, updates func(*TodoItem)) error {
 	if index < 0 || index >= len(tl.Items) {
-		return ErrInvalidIndex
+		return fmt.Errorf("%w: index=%d len=%d", ErrInvalidIndex, index, len(tl.Items))
 	}
 	updates(&tl.Items[index])
 	return nil
@@ -198,7 +201,7 @@ func (p *Plan) RemoveNarrative(key string) {
 func (p *Plan) UpdateNarrative(key string, updates func(*Narrative)) error {
 	narrative, exists := p.Narratives[key]
 	if !exists {
-		return ErrNarrativeNotFound
+		return fmt.Errorf("%w: key=%q", ErrNarrativeNotFound, key)
 	}
 	updates(&narrative)
 	p.Narratives[key] = narrative
@@ -213,7 +216,7 @@ func (p *Plan) AddPhase(phase Phase) {
 // RemovePhase removes a phase at the specified index.
 func (p *Plan) RemovePhase(index int) error {
 	if index < 0 || index >= len(p.Phases) {
-		return ErrInvalidIndex
+		return fmt.Errorf("%w: index=%d len=%d", ErrInvalidIndex, index, len(p.Phases))
 	}
 	p.Phases = append(p.Phases[:index], p.Phases[index+1:]...)
 	return nil
@@ -222,7 +225,7 @@ func (p *Plan) RemovePhase(index int) error {
 // UpdatePhase applies updates to a phase at the specified index.
 func (p *Plan) UpdatePhase(index int, updates func(*Phase)) error {
 	if index < 0 || index >= len(p.Phases) {
-		return ErrInvalidIndex
+		return fmt.Errorf("%w: index=%d len=%d", ErrInvalidIndex, index, len(p.Phases))
 	}
 	updates(&p.Phases[index])
 	return nil

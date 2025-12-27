@@ -2,6 +2,7 @@ package convert
 
 import (
 	"bytes"
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -40,13 +41,18 @@ func TestConverter_Convert(t *testing.T) {
 		assert.Less(t, len(data), 500)
 	})
 
-	t.Run("defaults to JSON for unknown format", func(t *testing.T) {
-		data, err := conv.Convert(doc, Format("unknown"))
-
-		require.NoError(t, err)
-		require.NotEmpty(t, data)
-		assert.Contains(t, string(data), "vAgendaInfo")
+	t.Run("returns error for unknown format", func(t *testing.T) {
+		_, err := conv.Convert(doc, Format("unknown"))
+		require.Error(t, err)
+		assert.True(t, errors.Is(err, ErrUnknownFormat))
 	})
+}
+
+type errorWriter struct{}
+
+func (w errorWriter) Write(p []byte) (int, error) {
+	_ = p
+	return 0, assert.AnError
 }
 
 func TestConverter_ConvertTo(t *testing.T) {
@@ -76,6 +82,12 @@ func TestConverter_ConvertTo(t *testing.T) {
 
 		require.NoError(t, err)
 		assert.NotEmpty(t, buf.String())
+	})
+
+	t.Run("returns wrapped write error", func(t *testing.T) {
+		err := conv.ConvertTo(doc, FormatJSON, errorWriter{})
+		require.Error(t, err)
+		assert.True(t, errors.Is(err, assert.AnError))
 	})
 }
 

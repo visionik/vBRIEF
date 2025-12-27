@@ -9,6 +9,13 @@ type PlanBuilder struct {
 
 // NewPlan creates a new Plan builder with the specified title and version.
 func NewPlan(title, version string) *PlanBuilder {
+	return NewPlanWithStatus(version, title, core.PlanStatusDraft)
+}
+
+// NewPlanWithStatus creates a new Plan builder with explicit status.
+//
+// This matches the intent of the original extension proposal (version, title, status).
+func NewPlanWithStatus(version, title string, status core.PlanStatus) *PlanBuilder {
 	return &PlanBuilder{
 		doc: &core.Document{
 			Info: core.Info{
@@ -16,7 +23,7 @@ func NewPlan(title, version string) *PlanBuilder {
 			},
 			Plan: &core.Plan{
 				Title:      title,
-				Status:     core.PlanStatusDraft,
+				Status:     status,
 				Narratives: make(map[string]core.Narrative),
 			},
 		},

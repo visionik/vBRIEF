@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"bytes"
 	"strings"
 	"testing"
 
@@ -165,6 +166,21 @@ func TestAutoParser_Parse(t *testing.T) {
 		require.NotNil(t, doc)
 		assert.Equal(t, "0.2", doc.Info.Version)
 	})
+
+	t.Run("returns error when input exceeds MaxDocumentSize", func(t *testing.T) {
+		big := bytes.Repeat([]byte("a"), MaxDocumentSize+1)
+		_, err := parser.Parse(bytes.NewReader(big))
+		require.Error(t, err)
+		assert.ErrorIs(t, err, ErrDocumentTooLarge)
+	})
+}
+
+func TestTRONParser_Parse_Limits(t *testing.T) {
+	p := NewTRONParser()
+	big := bytes.Repeat([]byte("a"), MaxDocumentSize+1)
+	_, err := p.Parse(bytes.NewReader(big))
+	require.Error(t, err)
+	assert.ErrorIs(t, err, ErrDocumentTooLarge)
 }
 
 func TestNew(t *testing.T) {
@@ -175,16 +191,20 @@ func TestNew(t *testing.T) {
 	}{
 		{"JSON format", FormatJSON, "*parser.JSONParser"},
 		{"TRON format", FormatTRON, "*parser.TRONParser"},
-		{"Auto format", FormatAuto, "*parser.AutoParser"},
-		{"Unknown format defaults to Auto", Format("unknown"), "*parser.AutoParser"},
+		{"Auto format", FormatAuto, "auto"},
+		{"Unknown format errors", Format("unknown"), ""},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			parser := New(tt.format)
-			assert.NotNil(t, parser)
-			// Type checking would require reflection or type assertion
-			// For now, just verify we get a non-nil parser
+			p, err := New(tt.format)
+			if tt.name == "Unknown format errors" {
+				assert.Error(t, err)
+				assert.Nil(t, p)
+				return
+			}
+			require.NoError(t, err)
+			assert.NotNil(t, p)
 		})
 	}
 }

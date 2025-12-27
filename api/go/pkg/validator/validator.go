@@ -2,9 +2,15 @@
 package validator
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/visionik/vAgenda/api/go/pkg/core"
+)
+
+var (
+	// ErrExtensionsNotSupported is returned when extensions are requested but not implemented.
+	ErrExtensionsNotSupported = errors.New("extensions not supported")
 )
 
 // ValidationError represents a single validation error.
@@ -40,6 +46,12 @@ type Validator interface {
 
 	// ValidateCore checks only core requirements.
 	ValidateCore(doc *core.Document) error
+
+	// ValidateExtensions checks extension requirements.
+	//
+	// Extensions are not implemented yet, so this currently behaves as a safe no-op
+	// beyond core validation.
+	ValidateExtensions(doc *core.Document, extensions []string) error
 }
 
 type validator struct{}
@@ -104,6 +116,17 @@ func (v *validator) Validate(doc *core.Document) error {
 
 // ValidateCore checks only core requirements.
 func (v *validator) ValidateCore(doc *core.Document) error {
+	return v.Validate(doc)
+}
+
+// ValidateExtensions checks extension requirements.
+//
+// Extensions are not implemented yet. If any extensions are requested, this returns
+// ErrExtensionsNotSupported.
+func (v *validator) ValidateExtensions(doc *core.Document, extensions []string) error {
+	if len(extensions) > 0 {
+		return fmt.Errorf("%w: %v", ErrExtensionsNotSupported, extensions)
+	}
 	return v.Validate(doc)
 }
 
