@@ -57,7 +57,7 @@ A typical loop:
 4. **Reuse**
    - Retrieve a relevant subset of entries for the next run.
 
-vAgenda supports this by representing long-term knowledge as `playbook.entries`: an **append-only log** of playbook entries.
+vAgenda supports this by storing long-term knowledge as Playbook Entries; Entries become an append-only log that preserves history in the playbook.
 
 - Each playbook entry has an `operation` and either creates a new logical entry or updates/deprecates an existing one.
 - Updates form a **per-entry linked list** via `prevEventId` (not a single global chain).
@@ -69,7 +69,7 @@ vAgenda supports this by representing long-term knowledge as `playbook.entries`:
 - **Recommended**: Extension 10 (Version Control & Sync)
 
 Notes:
-- If Extension 10 is present, playbook patching can use `baseDocumentSequence` (document `sequence`) for optimistic concurrency.
+- If Extension 10 is present, tools MAY use the host document’s `sequence` as an optimistic concurrency guard when applying new Playbook Entries.
 
 ## Machine-verifiable schema (JSON)
 
