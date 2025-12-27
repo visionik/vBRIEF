@@ -84,6 +84,20 @@ The library enables:
 │   │   └── index.ts
 │   └── package.json
 │
+├── mutator/               # Direct mutation helpers
+│   ├── src/
+│   │   ├── todo-mutator.ts
+│   │   ├── plan-mutator.ts
+│   │   └── index.ts
+│   └── package.json
+│
+├── updater/               # Immutable and validated updates
+│   ├── src/
+│   │   ├── immutable.ts
+│   │   ├── validated.ts
+│   │   └── index.ts
+│   └── package.json
+│
 ├── extensions/            # Extension implementations
 │   ├── timestamps/
 │   ├── identifiers/
@@ -698,10 +712,520 @@ export class TodoQuery {
 }
 
 /**
- * Create a query for todo items
- */
+| * Create a query for todo items
+| */
 export function query(items: TodoItem[]): TodoQuery {
   return new TodoQuery(items);
+}
+```
+
+### Mutation API
+
+The library supports document modification through multiple patterns: direct mutation (for simple cases), immutable updates (for functional patterns), and validated mutations (for complex scenarios).
+
+#### Direct Mutation Helpers
+
+```typescript
+// mutator/todo-mutator.ts
+
+import type { TodoList, TodoItem, ItemStatus } from "@vagenda/core";
+
+/**
+ * Helper functions for mutating TodoList
+ */
+export class TodoListMutator {
+  constructor(private list: TodoList) {}
+
+  /**
+   * Add an item to the list
+   */
+  addItem(title: string, status: ItemStatus = "pending"): void {
+    this.list.items.push({ title, status });
+  }
+
+  /**
+   * Remove an item by index
+   */
+  removeItem(index: number): void {
+    if (index < 0 || index >= this.list.items.length) {
+      throw new Error(`Index out of range: ${index}`);
+    }
+    this.list.items.splice(index, 1);
+  }
+
+  /**
+   * Update an item by index
+   */
+  updateItem(index: number, updates: Partial<TodoItem>): void {
+    if (index < 0 || index >= this.list.items.length) {
+      throw new Error(`Index out of range: ${index}`);
+    }
+    Object.assign(this.list.items[index], updates);
+  }
+
+  /**
+   * Find and update items matching predicate
+   */
+  findAndUpdate(
+    predicate: (item: TodoItem) => boolean,
+    updates: Partial<TodoItem>
+  ): number {
+    let count = 0;
+    for (const item of this.list.items) {
+      if (predicate(item)) {
+        Object.assign(item, updates);
+        count++;
+      }
+    }
+    return count;
+  }
+
+  /**
+   * Clear all items
+   */
+  clear(): void {
+    this.list.items = [];
+  }
+}
+
+// mutator/plan-mutator.ts
+
+import type { Plan, Narrative, PlanStatus } from "@vagenda/core";
+
+/**
+ * Helper functions for mutating Plan
+ */
+export class PlanMutator {
+  constructor(private plan: Plan) {}
+
+  /**
+   * Add or update a narrative
+   */
+  setNarrative(key: string, narrative: Narrative): void {
+    this.plan.narratives[key] = narrative;
+  }
+
+  /**
+   * Remove a narrative
+   */
+  removeNarrative(key: string): void {
+    delete this.plan.narratives[key];
+  }
+
+  /**
+   * Update narrative content
+   */
+  updateNarrative(key: string, updates: Partial<Narrative>): void {
+    if (!(key in this.plan.narratives)) {
+      throw new Error(`Narrative not found: ${key}`);
+    }
+    Object.assign(this.plan.narratives[key], updates);
+  }
+
+  /**
+   * Set plan status
+   */
+  setStatus(status: PlanStatus): void {
+    this.plan.status = status;
+  }
+}
+
+/**
+ * Create a mutator for a TodoList
+ */
+export function mutateTodoList(list: TodoList): TodoListMutator {
+  return new TodoListMutator(list);
+}
+
+/**
+ * Create a mutator for a Plan
+ */
+export function mutatePlan(plan: Plan): PlanMutator {
+  return new PlanMutator(plan);
+}
+```
+
+#### Immutable Update Helpers
+
+```typescript
+// updater/immutable.ts
+
+import type { Document, TodoList, TodoItem, Plan, Narrative, ItemStatus, PlanStatus } from "@vagenda/core";
+
+/**
+ * Immutable update helpers using structural sharing
+ */
+export class ImmutableUpdater {
+  /**
+   * Add item to TodoList (immutable)
+   */
+  static addItem(doc: Document, title: string, status: ItemStatus = "pending"): Document {
+    if (!doc.todoList) {
+      throw new Error("Document has no TodoList");
+    }
+    
+    return {
+      ...doc,
+      todoList: {
+        ...doc.todoList,
+        items: [...doc.todoList.items, { title, status }]
+      }
+    };
+  }
+
+  /**
+   * Remove item from TodoList (immutable)
+   */
+  static removeItem(doc: Document, index: number): Document {
+    if (!doc.todoList) {
+      throw new Error("Document has no TodoList");
+    }
+    
+    return {
+      ...doc,
+      todoList: {
+        ...doc.todoList,
+        items: doc.todoList.items.filter((_, i) => i !== index)
+      }
+    };
+  }
+
+  /**
+   * Update item in TodoList (immutable)
+   */
+  static updateItem(
+    doc: Document, 
+    index: number, 
+    updates: Partial<TodoItem>
+  ): Document {
+    if (!doc.todoList) {
+      throw new Error("Document has no TodoList");
+    }
+    
+    return {
+      ...doc,
+      todoList: {
+        ...doc.todoList,
+        items: doc.todoList.items.map((item, i) => 
+          i === index ? { ...item, ...updates } : item
+        )
+      }
+    };
+  }
+
+  /**
+   * Find and update items (immutable)
+   */
+  static findAndUpdate(
+    doc: Document,
+    predicate: (item: TodoItem) => boolean,
+    updates: Partial<TodoItem>
+  ): Document {
+    if (!doc.todoList) {
+      throw new Error("Document has no TodoList");
+    }
+    
+    return {
+      ...doc,
+      todoList: {
+        ...doc.todoList,
+        items: doc.todoList.items.map(item =>
+          predicate(item) ? { ...item, ...updates } : item
+        )
+      }
+    };
+  }
+
+  /**
+   * Set narrative in Plan (immutable)
+   */
+  static setNarrative(
+    doc: Document,
+    key: string,
+    narrative: Narrative
+  ): Document {
+    if (!doc.plan) {
+      throw new Error("Document has no Plan");
+    }
+    
+    return {
+      ...doc,
+      plan: {
+        ...doc.plan,
+        narratives: {
+          ...doc.plan.narratives,
+          [key]: narrative
+        }
+      }
+    };
+  }
+
+  /**
+   * Update plan status (immutable)
+   */
+  static setPlanStatus(doc: Document, status: PlanStatus): Document {
+    if (!doc.plan) {
+      throw new Error("Document has no Plan");
+    }
+    
+    return {
+      ...doc,
+      plan: {
+        ...doc.plan,
+        status
+      }
+    };
+  }
+}
+```
+
+#### Validated Updater
+
+```typescript
+// updater/validated.ts
+
+import type { Document, TodoItem, ItemStatus, PlanStatus, Narrative } from "@vagenda/core";
+import { Validator, type ValidationResult } from "@vagenda/validator";
+
+export interface UpdateResult {
+  success: boolean;
+  document?: Document;
+  validation?: ValidationResult;
+}
+
+/**
+ * Validated updater with automatic validation after mutations
+ */
+export class ValidatedUpdater {
+  private validator: Validator;
+
+  constructor(private doc: Document, validator?: Validator) {
+    this.validator = validator ?? new Validator();
+  }
+
+  /**
+   * Get the current document
+   */
+  getDocument(): Document {
+    return this.doc;
+  }
+
+  /**
+   * Validate current state
+   */
+  validate(): ValidationResult {
+    return this.validator.validate(this.doc);
+  }
+
+  /**
+   * Add item with validation
+   */
+  addItem(title: string, status: ItemStatus = "pending"): UpdateResult {
+    if (!this.doc.todoList) {
+      return {
+        success: false,
+        validation: {
+          valid: false,
+          errors: [{ path: "todoList", message: "Document has no TodoList" }]
+        }
+      };
+    }
+
+    this.doc.todoList.items.push({ title, status });
+    const validation = this.validate();
+    
+    if (!validation.valid) {
+      // Rollback
+      this.doc.todoList.items.pop();
+      return { success: false, validation };
+    }
+    
+    return { success: true, document: this.doc };
+  }
+
+  /**
+   * Update item with validation
+   */
+  updateItem(index: number, updates: Partial<TodoItem>): UpdateResult {
+    if (!this.doc.todoList) {
+      return {
+        success: false,
+        validation: {
+          valid: false,
+          errors: [{ path: "todoList", message: "Document has no TodoList" }]
+        }
+      };
+    }
+
+    const item = this.doc.todoList.items[index];
+    if (!item) {
+      return {
+        success: false,
+        validation: {
+          valid: false,
+          errors: [{ path: `todoList.items[${index}]`, message: "Item not found" }]
+        }
+      };
+    }
+
+    // Save original for rollback
+    const original = { ...item };
+    Object.assign(item, updates);
+    
+    const validation = this.validate();
+    
+    if (!validation.valid) {
+      // Rollback
+      Object.assign(item, original);
+      return { success: false, validation };
+    }
+    
+    return { success: true, document: this.doc };
+  }
+
+  /**
+   * Find and update with validation
+   */
+  findAndUpdate(
+    predicate: (item: TodoItem) => boolean,
+    updates: Partial<TodoItem>
+  ): UpdateResult {
+    if (!this.doc.todoList) {
+      return {
+        success: false,
+        validation: {
+          valid: false,
+          errors: [{ path: "todoList", message: "Document has no TodoList" }]
+        }
+      };
+    }
+
+    // Save originals for rollback
+    const originals = new Map<number, TodoItem>();
+    const indices: number[] = [];
+    
+    this.doc.todoList.items.forEach((item, i) => {
+      if (predicate(item)) {
+        originals.set(i, { ...item });
+        indices.push(i);
+        Object.assign(item, updates);
+      }
+    });
+
+    if (indices.length === 0) {
+      return {
+        success: false,
+        validation: {
+          valid: false,
+          errors: [{ path: "todoList.items", message: "No matching items found" }]
+        }
+      };
+    }
+    
+    const validation = this.validate();
+    
+    if (!validation.valid) {
+      // Rollback all changes
+      indices.forEach(i => {
+        Object.assign(this.doc.todoList!.items[i], originals.get(i)!);
+      });
+      return { success: false, validation };
+    }
+    
+    return { success: true, document: this.doc };
+  }
+
+  /**
+   * Remove item with validation
+   */
+  removeItem(index: number): UpdateResult {
+    if (!this.doc.todoList) {
+      return {
+        success: false,
+        validation: {
+          valid: false,
+          errors: [{ path: "todoList", message: "Document has no TodoList" }]
+        }
+      };
+    }
+
+    const removed = this.doc.todoList.items.splice(index, 1);
+    if (removed.length === 0) {
+      return {
+        success: false,
+        validation: {
+          valid: false,
+          errors: [{ path: `todoList.items[${index}]`, message: "Item not found" }]
+        }
+      };
+    }
+    
+    const validation = this.validate();
+    
+    if (!validation.valid) {
+      // Rollback
+      this.doc.todoList.items.splice(index, 0, removed[0]);
+      return { success: false, validation };
+    }
+    
+    return { success: true, document: this.doc };
+  }
+
+  /**
+   * Set plan narrative with validation
+   */
+  setNarrative(key: string, narrative: Narrative): UpdateResult {
+    if (!this.doc.plan) {
+      return {
+        success: false,
+        validation: {
+          valid: false,
+          errors: [{ path: "plan", message: "Document has no Plan" }]
+        }
+      };
+    }
+
+    const original = this.doc.plan.narratives[key];
+    this.doc.plan.narratives[key] = narrative;
+    
+    const validation = this.validate();
+    
+    if (!validation.valid) {
+      // Rollback
+      if (original) {
+        this.doc.plan.narratives[key] = original;
+      } else {
+        delete this.doc.plan.narratives[key];
+      }
+      return { success: false, validation };
+    }
+    
+    return { success: true, document: this.doc };
+  }
+
+  /**
+   * Execute multiple operations in a transaction
+   */
+  transaction(fn: (updater: ValidatedUpdater) => UpdateResult): UpdateResult {
+    // Create a deep clone for rollback
+    const snapshot = JSON.parse(JSON.stringify(this.doc));
+    
+    const result = fn(this);
+    
+    if (!result.success) {
+      // Rollback to snapshot
+      this.doc = snapshot;
+    }
+    
+    return result;
+  }
+}
+
+/**
+ * Create a validated updater
+ */
+export function createUpdater(doc: Document, validator?: Validator): ValidatedUpdater {
+  return new ValidatedUpdater(doc, validator);
 }
 ```
 
@@ -957,6 +1481,144 @@ export function useTodoList(initialDoc: Document) {
     updateItemStatus,
     removeItem
   };
+}
+```
+
+### Example 7: Direct Mutations
+
+```typescript
+import { VAgendaDocument } from "@vagenda/core";
+import { mutateTodoList } from "@vagenda/mutator";
+import { readFile, writeFile } from "fs/promises";
+
+// Parse existing document
+const content = await readFile("tasks.tron", "utf-8");
+const doc = VAgendaDocument.parse(content);
+
+// Use mutator for direct changes
+const mutator = mutateTodoList(doc.todoList!);
+
+// Add new item
+mutator.addItem("New urgent task", "pending");
+
+// Update first item
+mutator.updateItem(0, { status: "completed" });
+
+// Find and update multiple items
+const updated = mutator.findAndUpdate(
+  item => item.status === "pending",
+  { status: "inProgress" }
+);
+console.log(`Updated ${updated} items`);
+
+// Save back
+await writeFile("tasks.tron", doc.toTRON());
+```
+
+### Example 8: Immutable Updates
+
+```typescript
+import { VAgendaDocument } from "@vagenda/core";
+import { ImmutableUpdater } from "@vagenda/updater";
+import { readFile } from "fs/promises";
+
+// Parse document
+const content = await readFile("tasks.tron", "utf-8");
+const doc = VAgendaDocument.parse(content);
+
+// Immutable updates (functional style)
+let updated = doc.data;
+
+// Add item (returns new document)
+updated = ImmutableUpdater.addItem(updated, "New task", "pending");
+
+// Update first item (returns new document)
+updated = ImmutableUpdater.updateItem(updated, 0, { status: "completed" });
+
+// Find and update (returns new document)
+updated = ImmutableUpdater.findAndUpdate(
+  updated,
+  item => item.status === "pending",
+  { status: "inProgress" }
+);
+
+// Original doc.data is unchanged
+console.log("Original:", doc.data.todoList?.items.length);
+console.log("Updated:", updated.todoList?.items.length);
+
+// Create new document from updated data
+const newDoc = new VAgendaDocument(updated);
+console.log(newDoc.toJSON(true));
+```
+
+### Example 9: Validated Updates
+
+```typescript
+import { VAgendaDocument } from "@vagenda/core";
+import { createUpdater } from "@vagenda/updater";
+import { readFile, writeFile } from "fs/promises";
+
+// Parse document
+const content = await readFile("tasks.tron", "utf-8");
+const doc = VAgendaDocument.parse(content);
+
+// Create validated updater
+const updater = createUpdater(doc.data);
+
+// Add item with validation
+const result1 = updater.addItem("New task", "pending");
+if (!result1.success) {
+  console.error("Validation failed:", result1.validation?.errors);
+}
+
+// Find and update with validation
+const result2 = updater.findAndUpdate(
+  item => item.status === "pending",
+  { status: "inProgress" }
+);
+
+if (result2.success) {
+  console.log("All updates validated successfully");
+  const updated = new VAgendaDocument(updater.getDocument());
+  await writeFile("tasks.tron", updated.toTRON());
+} else {
+  console.error("Updates rolled back:", result2.validation?.errors);
+}
+```
+
+### Example 10: Transactional Updates
+
+```typescript
+import { todo } from "@vagenda/builder";
+import { createUpdater } from "@vagenda/updater";
+
+// Create initial document
+const doc = todo("0.2")
+  .addItem("Task 1", "pending")
+  .build();
+
+// Perform multiple updates atomically
+const updater = createUpdater(doc);
+const result = updater.transaction(u => {
+  // All these operations happen together
+  let r = u.addItem("Task 2", "pending");
+  if (!r.success) return r;
+  
+  r = u.addItem("Task 3", "pending");
+  if (!r.success) return r;
+  
+  r = u.updateItem(0, { status: "inProgress" });
+  if (!r.success) return r;
+  
+  return { success: true, document: u.getDocument() };
+});
+
+if (result.success) {
+  console.log("Transaction completed");
+  console.log(result.document!.todoList?.items.length); // 3 items
+} else {
+  console.log("Transaction rolled back");
+  console.log(doc.todoList?.items.length); // Still 1 item
 }
 ```
 

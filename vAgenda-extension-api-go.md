@@ -61,6 +61,7 @@ github.com/visionik/vagenda-go/
 │   ├── builder/        # Fluent builders
 │   ├── validator/      # Schema validation
 │   ├── query/          # Query/filter interfaces
+│   ├── updater/        # Document mutation with validation
 │   └── convert/        # Format conversion
 ├── cmd/
 │   └── va/             # CLI tool
@@ -412,6 +413,171 @@ func NewConverter() Converter {
 }
 ```
 
+### Mutation API
+
+The library supports document modification through a hybrid approach: direct mutation for simple cases, convenience methods for common operations, and a validated updater for complex scenarios.
+
+#### Core Type Mutations
+
+```go
+package core
+
+// TodoList mutation methods
+func (tl *TodoList) AddItem(item TodoItem) {
+    tl.Items = append(tl.Items, item)
+}
+
+func (tl *TodoList) RemoveItem(index int) error {
+    if index < 0 || index >= len(tl.Items) {
+        return fmt.Errorf("index out of range: %d", index)
+    }
+    tl.Items = append(tl.Items[:index], tl.Items[index+1:]...)
+    return nil
+}
+
+func (tl *TodoList) UpdateItem(index int, updates func(*TodoItem)) error {
+    if index < 0 || index >= len(tl.Items) {
+        return fmt.Errorf("index out of range: %d", index)
+    }
+    updates(&tl.Items[index])
+    return nil
+}
+
+func (tl *TodoList) FindItem(predicate func(*TodoItem) bool) *TodoItem {
+    for i := range tl.Items {
+        if predicate(&tl.Items[i]) {
+            return &tl.Items[i]
+        }
+    }
+    return nil
+}
+
+// Plan mutation methods
+func (p *Plan) AddNarrative(key string, narrative Narrative) {
+    if p.Narratives == nil {
+        p.Narratives = make(map[string]Narrative)
+    }
+    p.Narratives[key] = narrative
+}
+
+func (p *Plan) RemoveNarrative(key string) {
+    delete(p.Narratives, key)
+}
+
+func (p *Plan) UpdateNarrative(key string, updates func(*Narrative)) error {
+    narrative, exists := p.Narratives[key]
+    if !exists {
+        return fmt.Errorf("narrative not found: %s", key)
+    }
+    updates(&narrative)
+    p.Narratives[key] = narrative
+    return nil
+}
+```
+
+#### Updater Package
+
+```go
+package updater
+
+import (
+    "fmt"
+    "github.com/visionik/vagenda-go/pkg/core"
+    "github.com/visionik/vagenda-go/pkg/validator"
+)
+
+// Updater provides validated document mutations
+type Updater struct {
+    doc       *core.Document
+    validator validator.Validator
+}
+
+// NewUpdater creates an updater for a document
+func NewUpdater(doc *core.Document) *Updater {
+    return &Updater{
+        doc:       doc,
+        validator: validator.NewValidator(),
+    }
+}
+
+// WithValidator sets a custom validator
+func (u *Updater) WithValidator(v validator.Validator) *Updater {
+    u.validator = v
+    return u
+}
+
+// UpdateItemStatus updates an item's status with validation
+func (u *Updater) UpdateItemStatus(index int, status core.ItemStatus) error {
+    if err := u.doc.TodoList.UpdateItem(index, func(item *core.TodoItem) {
+        item.Status = status
+    }); err != nil {
+        return err
+    }
+    return u.validator.Validate(u.doc)
+}
+
+// FindAndUpdate finds items by predicate and applies updates
+func (u *Updater) FindAndUpdate(predicate func(*core.TodoItem) bool, 
+                                 update func(*core.TodoItem)) error {
+    if u.doc.TodoList == nil {
+        return fmt.Errorf("document has no todo list")
+    }
+    
+    found := false
+    for i := range u.doc.TodoList.Items {
+        if predicate(&u.doc.TodoList.Items[i]) {
+            update(&u.doc.TodoList.Items[i])
+            found = true
+        }
+    }
+    
+    if !found {
+        return fmt.Errorf("no matching items found")
+    }
+    
+    return u.validator.Validate(u.doc)
+}
+
+// AddItemValidated adds an item with validation
+func (u *Updater) AddItemValidated(item core.TodoItem) error {
+    if u.doc.TodoList == nil {
+        u.doc.TodoList = &core.TodoList{}
+    }
+    u.doc.TodoList.AddItem(item)
+    return u.validator.Validate(u.doc)
+}
+
+// RemoveItemValidated removes an item with validation
+func (u *Updater) RemoveItemValidated(index int) error {
+    if err := u.doc.TodoList.RemoveItem(index); err != nil {
+        return err
+    }
+    return u.validator.Validate(u.doc)
+}
+
+// UpdatePlanStatus updates plan status with validation
+func (u *Updater) UpdatePlanStatus(status core.PlanStatus) error {
+    if u.doc.Plan == nil {
+        return fmt.Errorf("document has no plan")
+    }
+    u.doc.Plan.Status = status
+    return u.validator.Validate(u.doc)
+}
+
+// Transaction executes multiple operations with validation
+func (u *Updater) Transaction(fn func(*Updater) error) error {
+    if err := fn(u); err != nil {
+        return err
+    }
+    return u.validator.Validate(u.doc)
+}
+
+// Document returns the underlying document
+func (u *Updater) Document() *core.Document {
+    return u.doc
+}
+```
+
 ## Extension Support
 
 Extensions are implemented as separate packages that extend core types using embedded structs:
@@ -679,6 +845,154 @@ func main() {
     }
     
     // Use the item...
+}
+```
+
+### Example 6: Simple Mutations
+
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+    "github.com/visionik/vagenda-go/pkg/parser"
+    "github.com/visionik/vagenda-go/pkg/convert"
+    "github.com/visionik/vagenda-go/pkg/core"
+)
+
+func main() {
+    // Parse existing document
+    p := parser.AutoParser()
+    file, _ := os.Open("tasks.tron")
+    doc, _ := p.Parse(file)
+    file.Close()
+    
+    // Direct mutation for simple changes
+    doc.TodoList.AddItem(core.TodoItem{
+        Title:  "New urgent task",
+        Status: core.StatusPending,
+    })
+    
+    // Update existing item
+    doc.TodoList.UpdateItem(0, func(item *core.TodoItem) {
+        item.Status = core.StatusCompleted
+    })
+    
+    // Add narrative to plan
+    if doc.Plan != nil {
+        doc.Plan.AddNarrative("implementation", core.Narrative{
+            Title:   "Implementation Details",
+            Content: "Use JWT for authentication",
+        })
+    }
+    
+    // Save back
+    outFile, _ := os.Create("tasks.tron")
+    defer outFile.Close()
+    converter := convert.NewConverter()
+    converter.ConvertTo(doc, convert.FormatTRON, outFile)
+}
+```
+
+### Example 7: Validated Updates
+
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+    "github.com/visionik/vagenda-go/pkg/parser"
+    "github.com/visionik/vagenda-go/pkg/updater"
+    "github.com/visionik/vagenda-go/pkg/convert"
+    "github.com/visionik/vagenda-go/pkg/core"
+)
+
+func main() {
+    // Parse document
+    p := parser.AutoParser()
+    file, _ := os.Open("tasks.tron")
+    doc, _ := p.Parse(file)
+    file.Close()
+    
+    // Create updater with validation
+    upd := updater.NewUpdater(doc)
+    
+    // Find and update items matching criteria
+    err := upd.FindAndUpdate(
+        func(item *core.TodoItem) bool {
+            return item.Status == core.StatusPending
+        },
+        func(item *core.TodoItem) {
+            item.Status = core.StatusInProgress
+        },
+    )
+    if err != nil {
+        fmt.Printf("Update failed: %v\n", err)
+        return
+    }
+    
+    // Update with validation
+    if err := upd.UpdateItemStatus(0, core.StatusCompleted); err != nil {
+        fmt.Printf("Validation failed: %v\n", err)
+        return
+    }
+    
+    // Save validated document
+    outFile, _ := os.Create("tasks.tron")
+    defer outFile.Close()
+    converter := convert.NewConverter()
+    converter.ConvertTo(upd.Document(), convert.FormatTRON, outFile)
+}
+```
+
+### Example 8: Transactional Updates
+
+```go
+package main
+
+import (
+    "fmt"
+    "github.com/visionik/vagenda-go/pkg/builder"
+    "github.com/visionik/vagenda-go/pkg/updater"
+    "github.com/visionik/vagenda-go/pkg/core"
+)
+
+func main() {
+    // Create initial document
+    doc := builder.NewTodoList("0.2").
+        AddItem("Task 1", core.StatusPending).
+        Build()
+    
+    // Perform multiple updates atomically
+    upd := updater.NewUpdater(doc)
+    err := upd.Transaction(func(u *updater.Updater) error {
+        // Add multiple items
+        if err := u.AddItemValidated(core.TodoItem{
+            Title:  "Task 2",
+            Status: core.StatusPending,
+        }); err != nil {
+            return err
+        }
+        
+        if err := u.AddItemValidated(core.TodoItem{
+            Title:  "Task 3",
+            Status: core.StatusPending,
+        }); err != nil {
+            return err
+        }
+        
+        // Update first item
+        return u.UpdateItemStatus(0, core.StatusInProgress)
+    })
+    
+    if err != nil {
+        fmt.Printf("Transaction failed: %v\n", err)
+        return
+    }
+    
+    fmt.Println("All updates completed successfully")
 }
 ```
 
