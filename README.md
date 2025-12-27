@@ -36,6 +36,7 @@ This enables both agentic systems and human-facing tools to share a common repre
 - **Item abstract base**: Added `Item` as abstract base class for all contained entities (TodoItem, PlanItem, PlaybookItem)
 - **Tagged atomic**: Added universal `tags` field to Extension 3 - ALL entities (TodoList, TodoItem, Plan, PlanItem, Playbook, PlaybookItem) can now be tagged
 - **Unified container pattern**: All containers (TodoList, Plan, Playbook) now consistently use `.items` field
+- **Multiple containers per document**: Documents can now contain multiple containers of the same or different types (e.g., Plan + TodoList, multiple TodoLists). Minimum requirement: at least one container must be present.
 
 **Migration**: See `history/spec-v0.2.md` for previous version. Migration tools provided in atomic-classes-proposal.md.
 
@@ -43,9 +44,9 @@ This enables both agentic systems and human-facing tools to share a common repre
 
 The key words **MUST**, **SHOULD**, and **MAY** in this document are to be interpreted as normative requirements.
 
-A document is **vAgenda Core v0.2 conformant** if:
-- It is a single object containing `vAgendaInfo` and exactly one of `todoList` or `plan`.
-- `vAgendaInfo.version` MUST equal `"0.2"`.
+A document is **vAgenda Core v0.3 conformant** if:
+- It is a single object containing `vAgendaInfo` (required) and at least one container (`todoList`, `plan`, or extension containers).
+- `vAgendaInfo.version` MUST equal `"0.3"`.
 - Any `status` fields MUST use only the enumerated values defined in this spec.
 
 ### Extensibility and unknown fields
@@ -195,7 +196,7 @@ items: [
 
 ### vAgendaInfo (Core)
 
-**Purpose**: Document-level metadata that appears once per file, as a sibling to the main content object (TodoList or Plan). Contains version information and optional authorship details.
+**Purpose**: Document-level metadata that appears once per file, as a sibling to container objects (TodoList, Plan, Playbook, etc.). Contains version information and optional authorship details.
 
 ```javascript
 vAgendaInfo {
@@ -206,13 +207,28 @@ vAgendaInfo {
 }
 ```
 
-**Document Structure**: A vAgenda document contains `vAgendaInfo` and either `todoList` or `plan`:
+**Document Structure**: A vAgenda document contains `vAgendaInfo` (required) and **at least one container** (TodoList, Plan, or extension containers like Playbook). Multiple containers of the same or different types are allowed:
 ```javascript
 {
   vAgendaInfo: vAgendaInfo,  # Document metadata (required)
-  todoList?: TodoList,       # Either todoList...
-  plan?: Plan                # ...or plan (not both)
+  todoList?: TodoList,       # Optional: one or more TodoLists
+  plan?: Plan,               # Optional: one or more Plans
+  playbook?: Playbook        # Optional: one or more Playbooks (Extension 6)
+  # ... additional extension containers
 }
+```
+
+**Examples**:
+```javascript
+// Single container (backward compatible)
+{vAgendaInfo, todoList}
+
+// Multiple containers of different types
+{vAgendaInfo, plan, todoList}  # Plan with associated task list
+{vAgendaInfo, plan, playbook}  # Plan with accumulated learnings
+
+// Multiple containers of the same type
+{vAgendaInfo, todoList: {...}, todoList2: {...}}  # e.g., different priority buckets
 ```
 
 ### Item (Core Abstract Base)

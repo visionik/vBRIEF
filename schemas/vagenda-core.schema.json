@@ -10,15 +10,9 @@
     "todoList": {"$ref": "#/$defs/TodoList"},
     "plan": {"$ref": "#/$defs/Plan"}
   },
-  "oneOf": [
-    {
-      "required": ["todoList"],
-      "not": {"required": ["plan"]}
-    },
-    {
-      "required": ["plan"],
-      "not": {"required": ["todoList"]}
-    }
+  "anyOf": [
+    {"required": ["todoList"]},
+    {"required": ["plan"]}
   ],
   "additionalProperties": true,
   "$defs": {
