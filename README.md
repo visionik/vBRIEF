@@ -698,7 +698,7 @@ TodoItem(
 
 **Depends on:** Extension 2 (Identifiers)
 
-Adds nested organization and dependencies.
+Adds dependency tracking and nested (tree) structure for items.
 
 ### TodoItem Extensions
 ```javascript
@@ -708,20 +708,12 @@ TodoItem {
 }
 ```
 
-### Plan Extensions
-```javascript
-Plan {
-  // Core + Rich Metadata fields...
-  items?: PlanItem[]         # Implementation phases
-}
-```
-
 ### PlanItem Extensions
 ```javascript
 PlanItem {
   // Core + Rich Metadata fields...
   dependencies?: string[] # IDs of items that must complete first
-  subItems?: PlanItem[]     # Child items (nested hierarchy)
+  subItems?: PlanItem[]   # Child items (nested hierarchy)
   todoList?: TodoList     # Associated todo list
 }
 ```
@@ -744,13 +736,13 @@ plan: Plan(
   {
     "proposal": Narrative(
       "Overview",
-      "Multi-phase authentication implementation"
+      "Multi-step authentication implementation"
     )
   },
   [
-    PlanItem("phase-1", "Database setup", "completed", []),
-    PlanItem("phase-2", "JWT implementation", "inProgress", ["phase-1"]),
-    PlanItem("phase-3", "OAuth integration", "pending", ["phase-2"])
+    PlanItem("item-1", "Database setup", "completed", []),
+    PlanItem("item-2", "JWT implementation", "inProgress", ["item-1"]),
+    PlanItem("item-3", "OAuth integration", "pending", ["item-2"])
   ]
 )
 ```
@@ -768,27 +760,27 @@ plan: Plan(
   "narratives": {
     "proposal": {
       "title": "Overview",
-      "content": "Multi-phase authentication implementation"
+      "content": "Multi-step authentication implementation"
     }
   },
   "items": [
     {
-      "id": "phase-1",
+      "id": "item-1",
       "title": "Database setup",
       "status": "completed",
       "dependencies": []
     },
     {
-      "id": "phase-2",
+      "id": "item-2",
       "title": "JWT implementation",
       "status": "inProgress",
-      "dependencies": ["phase-1"]
+      "dependencies": ["item-1"]
     },
     {
-      "id": "phase-3",
+      "id": "item-3",
       "title": "OAuth integration",
       "status": "pending",
-      "dependencies": ["phase-2"]
+      "dependencies": ["item-2"]
     }
   ]
 }
