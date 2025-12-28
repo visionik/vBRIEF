@@ -613,6 +613,8 @@ See also domain-specific extension documents:
 
 These examples are intentionally "real-world" and include fields from **Core + Extensions 1–12**. Unknown fields are allowed and tools should preserve them.
 
+**Note on format**: The examples below are shown in JSON for readability and completeness. These same documents can be represented in TRON format with 35-40% fewer tokens by using class definitions and positional parameters. See the core examples earlier in this spec for TRON syntax, or use a conversion tool to generate TRON from JSON.
+
 ## A1. TodoList (Operational Execution)
 
 ```json

@@ -1,0 +1,23 @@
+{
+  "vContextInfo": {
+    "version": "0.4",
+    "author": "vContext Project",
+    "description": "Development practices and conventions for the vContext project"
+  },
+  "playbook": {
+    "title": "vContext Development Practices",
+    "description": "Accumulated best practices and conventions for contributing to the vContext project",
+    "items": [
+      {
+        "title": "Use task targets for repeatable actions",
+        "status": "active",
+        "content": "Always use `task` targets defined in Taskfile.yml for repeatable actions rather than documenting raw shell commands. This ensures consistency and maintainability across the project."
+      },
+      {
+        "title": "Follow Conventional Commits specification",
+        "status": "active",
+        "content": "All commit messages must follow the Conventional Commits specification (https://www.conventionalcommits.org/en/v1.0.0/). This enables automated changelog generation and semantic versioning. Format: `type(scope): description`. Common types: feat, fix, docs, refactor, test, chore. Examples: 'docs: update spec', 'feat(api-go): add validator'."
+      }
+    ]
+  }
+}

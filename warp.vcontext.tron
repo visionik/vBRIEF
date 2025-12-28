@@ -1,0 +1,26 @@
+class vContextInfo: version, author, description
+class Playbook: title, description, items
+class PlaybookItem: title, status, content
+
+vContextInfo: vContextInfo(
+  "0.4",
+  "vContext Project",
+  "Development practices and conventions for the vContext project"
+)
+
+playbook: Playbook(
+  "vContext Development Practices",
+  "Accumulated best practices and conventions for contributing to the vContext project",
+  [
+    PlaybookItem(
+      "Use task targets for repeatable actions",
+      "active",
+      "Always use `task` targets defined in Taskfile.yml for repeatable actions rather than documenting raw shell commands. This ensures consistency and maintainability across the project."
+    ),
+    PlaybookItem(
+      "Follow Conventional Commits specification",
+      "active",
+      "All commit messages must follow the Conventional Commits specification (https://www.conventionalcommits.org/en/v1.0.0/). This enables automated changelog generation and semantic versioning. Format: `type(scope): description`. Common types: feat, fix, docs, refactor, test, chore. Examples: 'docs: update spec', 'feat(api-go): add validator'."
+    )
+  ]
+)
