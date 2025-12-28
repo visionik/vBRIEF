@@ -126,6 +126,7 @@ items: [
 **Resources**:
 - Specification: https://tron-format.github.io/
 - Discussion: https://www.reddit.com/r/LocalLLaMA/comments/1pa3ok3/toon_is_terrible_so_i_invented_a_new_format_tron/
+- Format Comparison: https://www.piotr-sikora.com/blog/2025-12-05-toon-tron-csv-yaml-json-format-comparison
 
 ### JSON — For Compatibility
 - **Universal compatibility**: Every programming language has JSON support
