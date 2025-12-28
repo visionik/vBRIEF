@@ -1095,6 +1095,12 @@ This spec is intentionally iterative. The following open questions are candidate
    - Use cases: LLMs consuming multiple documents in sequence, batch processing, log-style append operations, large-scale context aggregation.
    - Consideration: how would this interact with cross-document references and container linking?
 
+14. **Should TodoList be called TaskList?**
+   - "Task" is a more general and widely-used term than "todo" in project management and software development.
+   - "TodoList" clearly signals the immediate, action-oriented nature, but may sound less professional.
+   - Alternative naming: TaskList/Task, WorkList/WorkItem, ActionList/Action.
+   - Consideration: changing now would be a breaking change; however, TodoItem could be aliased to Task for familiarity.
+
 ---
 
 # Appendix C: License
