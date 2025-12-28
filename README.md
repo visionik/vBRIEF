@@ -430,6 +430,26 @@ Playbook {
 
 **Purpose**: A single append-only event that creates, refines, or deprecates a logical playbook entry.
 
+**Required fields (by operation)**:
+
+```javascript
+PlaybookItem {
+  eventId: string          # Unique identifier for this event (append-only log record)
+  targetId: string         # Stable identifier for the logical entry being evolved across events
+  operation: enum          # "initial" | "append" | "update" | "deprecate" (how this event changes the target entry)
+  createdAt: datetime      # When this event occurred (timestamp for ordering/audit)
+
+  # Required when operation is "update" or "deprecate":
+  prevEventId: string      # Previous eventId for this targetId (forms a chain)
+
+  # Required when operation is "initial" or "append":
+  kind: enum               # "strategy" | "learning" | "rule" | "warning" | "note"
+  narrative: object        # Narrative map: {Title Case key: markdown string}
+}
+```
+
+**Full field list**:
+
 ```javascript
 PlaybookItem {
   eventId: string          # Unique identifier for this event (append-only log record)
