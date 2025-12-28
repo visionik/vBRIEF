@@ -40,7 +40,7 @@ vContext aims to establish a universal, open standard for agentic memory systems
 
 7. MAY **Bridge human and AI collaboration** by maintaining both machine-optimized (TRON) and universally-compatible (JSON) representations of the same data
 
-8. MAY be **extended to serve as a transactional session log** of agentic coding sessions for legal and intellectual property defense
+8. MAY be **extended to serve as a transactional log** of agentic coding sessions for legal and intellectual property defense
 
 9. MAY **also be use for non-AI tools** that work with todo lists, plans, and playbooks.
 
