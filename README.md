@@ -195,22 +195,11 @@ Markdown is widely used for human-readable documents and might seem like a natur
 - **Weak structure**: Lists, headings, and nested content lack semantic meaning (is `- [ ]` a todo item, a checklist, or just formatted text?)
 - **No type system**: Can't distinguish between a priority level, status value, or arbitrary text without custom conventions
 - **No interoperability guarantees**: One implementation can make Markdown unambiguous, but nothing guarantees consistent, non-ambiguous interpretation across implementations
-- **Token inefficiency**: Markdown's human-optimized formatting (repeated `- [ ]`, `**bold**`, etc.) consumes more tokens than structured formats
+- **Token inefficiency**: Markdown's human-optimized formatting consumes more tokens than structured formats
 - **Inconsistent updates**: Modifying specific items requires regex/heuristics rather than direct field access, increasing error risk
 - **No validation**: Invalid or malformed markdown is still valid markdown, making it easy to corrupt data
 
-**Markdown as an output format**:
-
-While we believe many agents and tools will convert vContext files to Markdown for human presentation, reporting, or integration with Markdown-based workflows, a consistent, structured, low-token format is needed for:
-
-- **Reliable programmatic access**: Agents need to query, filter, and update specific fields without parsing ambiguity
-- **Cross-agent interoperability**: Different agents must interpret the same document identically
-- **Token efficiency**: Minimizing context window usage in LLM operations
-- **Data validation**: Ensuring documents conform to expected schemas
-- **Consistent updates**: Making precise modifications without risking corruption
-- **Machine learning**: Structured data enables better training and fine-tuning of agentic systems
-
-vContext serves as the canonical storage format, while Markdown can be generated on-demand for human consumption.
+Markdown is still useful as a **generated output format** for humans, but vContext is intended to be the **canonical storage format** so tools can reliably query, validate, and update structured data across implementations.
 
 ## Architecture Layers
 
