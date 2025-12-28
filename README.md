@@ -406,24 +406,28 @@ Narrative {
 }
 ```
 
-**Standard Narrative Titles**: While `title` can be any string, vContext defines standard titles that follow the **understand → design → execute → learn** workflow:
+**Standard Narrative Titles**: While `title` can be any string, vContext defines 13 standard titles that follow the **understand → design → execute → learn** workflow:
 
 **Understand phase** (gathering context):
 - **Overview** - High-level summary
-- **Context** - Current state / what exists today
+- **Background** - Current state, prior work, and what exists today
 - **Problem** - What needs fixing or addressing
+- **Constraint** - Requirements, boundaries, and invariants that must be maintained
 
 **Design phase** (planning solution):
 - **Proposal** - Proposed solution or approach
-- **Alternative** - Other options considered
+- **Hypothesis** - Testable prediction or assumption
+- **Alternative** - Other option considered (multiple alternatives can be captured as separate narratives)
 - **Risk** - Potential issues and mitigations
 
 **Execute phase** (taking action):
 - **Test** - Validation approach or testing strategy
 - **Action** - Execution or deployment strategy
+- **Observation** - Raw data or factual observations from execution
 
 **Learn phase** (capturing outcomes):
-- **Result** - Outcomes, learnings, and retrospectives
+- **Result** - Interpreted outcomes and conclusions
+- **Reflection** - Meta-cognitive analysis of the process itself
 
 These titles provide a consistent vocabulary across all vContext entities. Tools MAY use these to provide structured workflows, but custom titles are always permitted.
 
@@ -558,7 +562,7 @@ class Narrative: title, content
 vContextInfo: vContextInfo("0.4")
 playbook: Playbook(
   "Backend Development Best Practices",
-  Narrative("Context", "Accumulated lessons learned from backend development"),
+  Narrative("Background", "Accumulated lessons learned from backend development"),
   [
     PlaybookItem(
       "Test database migrations in staging first",
@@ -583,7 +587,7 @@ playbook: Playbook(
   "playbook": {
     "title": "Backend Development Best Practices",
     "narrative": {
-      "title": "Context",
+      "title": "Background",
       "content": "Accumulated lessons learned from backend development"
     },
     "items": [
@@ -690,7 +694,7 @@ todoList: TodoList(
       "8c0d8b2f-2d08-4e4a-a34f-6a21f8f8a0b1",
       "Add p95/p99 alert for /webhooks/process",
       "inProgress",
-      Narrative("Context", "Alert on sustained p95>2s for 10m. Include saturation + queue depth as signals."),
+      Narrative("Background", "Alert on sustained p95>2s for 10m. Include saturation + queue depth as signals."),
       "critical",
       ["observability", "alerts"],
       "2025-12-28T06:55:00Z",
@@ -717,7 +721,7 @@ todoList: TodoList(
       "b112f9e9-1c84-4b8b-9893-6a0b2a1a40f7",
       "Run rollback drill for payment-webhooks",
       "pending",
-      Narrative("Context", "Practice rollback procedure in staging; capture time-to-recover and gaps."),
+      Narrative("Background", "Practice rollback procedure in staging; capture time-to-recover and gaps."),
       "high",
       ["runbook", "resilience"],
       "2025-12-28T07:33:00Z",
@@ -741,7 +745,7 @@ todoList: TodoList(
       "61c0c8c1-1db5-4e4e-b5da-1b7cbb1b2c22",
       "Weekly: review webhook SLA + alert thresholds",
       "pending",
-      Narrative("Context", "Adjust for seasonal traffic. Ensure alert noise is acceptable."),
+      Narrative("Background", "Adjust for seasonal traffic. Ensure alert noise is acceptable."),
       "medium",
       ["recurring", "slo"],
       "2025-12-28T07:34:00Z",
@@ -853,7 +857,7 @@ todoList: TodoList(
         "title": "Add p95/p99 alert for /webhooks/process",
         "status": "inProgress",
         "narrative": {
-          "title": "Context",
+          "title": "Background",
           "content": "Alert on sustained p95>2s for 10m. Include saturation + queue depth as signals."
         },
         "priority": "critical",
@@ -887,7 +891,7 @@ todoList: TodoList(
         "title": "Run rollback drill for payment-webhooks",
         "status": "pending",
         "narrative": {
-          "title": "Context",
+          "title": "Background",
           "content": "Practice rollback procedure in staging; capture time-to-recover and gaps."
         },
         "priority": "high",
@@ -910,7 +914,7 @@ todoList: TodoList(
         "title": "Weekly: review webhook SLA + alert thresholds",
         "status": "pending",
         "narrative": {
-          "title": "Context",
+          "title": "Background",
           "content": "Adjust for seasonal traffic. Ensure alert noise is acceptable."
         },
         "priority": "medium",
@@ -980,7 +984,7 @@ plan: Plan(
   {
     "proposal": Narrative("Proposal", "1) Fix N+1 DB queries in webhook processing.\n2) Add queue-depth based autoscaling.\n3) Add p95/p99 alerts + dashboards.\n4) Add rollback drill + runbook improvements."),
     "problem": Narrative("Problem", "Production latency regression increased webhook processing time from ~250ms to >2s p95 under load."),
-    "context": Narrative("Context", "Webhook handler performs per-event DB lookups (N+1) and competes with background reconciliation jobs."),
+    "background": Narrative("Background", "Webhook handler performs per-event DB lookups (N+1) and competes with background reconciliation jobs."),
     "alternative": Narrative("Alternative", "- Add more replicas only (insufficient: DB bottleneck)\n- Change DB isolation level (riskier)\n- Move reconciliation to separate worker pool (selected)"),
     "risk": Narrative("Risk", "- Changing worker pool may affect ordering guarantees\n- Autoscaling could amplify DB load if not bounded\nMitigations: rate limits, circuit breakers, staged rollout."),
     "test": Narrative("Test", "- Reproduce regression with load test\n- Confirm p95<400ms at 2x typical throughput\n- Run rollback drill in staging\n- Validate alert noise for 48h"),
@@ -1002,7 +1006,7 @@ plan: Plan(
       "p1-uid",
       "Diagnose and fix root cause",
       "inProgress",
-      Narrative("Context", "Remove N+1 queries; isolate reconciliation job impact."),
+      Narrative("Background", "Remove N+1 queries; isolate reconciliation job impact."),
       ["root-cause"],
       [],
       "2025-12-27T18:30:00Z",
@@ -1021,7 +1025,7 @@ plan: Plan(
       "p2-uid",
       "Observability + guardrails",
       "pending",
-      Narrative("Context", "Dashboards, alerts, SLOs, and bounded autoscaling."),
+      Narrative("Background", "Dashboards, alerts, SLOs, and bounded autoscaling."),
       null,
       ["p1"],
       null,
@@ -1037,7 +1041,7 @@ plan: Plan(
       "p3-uid",
       "Rollout + rollback drill",
       "pending",
-      Narrative("Context", "Canary rollout, validate rollback, and document runbook."),
+      Narrative("Background", "Canary rollout, validate rollback, and document runbook."),
       null,
       ["p1", "p2"],
       null,
@@ -1132,8 +1136,8 @@ plan: Plan(
         "title": "Problem",
         "content": "Production latency regression increased webhook processing time from ~250ms to >2s p95 under load." 
       },
-      "context": {
-        "title": "Context",
+      "background": {
+        "title": "Background",
         "content": "Webhook handler performs per-event DB lookups (N+1) and competes with background reconciliation jobs." 
       },
       "alternative": {
@@ -1173,7 +1177,7 @@ plan: Plan(
         "title": "Diagnose and fix root cause",
         "status": "inProgress",
         "narrative": {
-          "title": "Context",
+          "title": "Background",
           "content": "Remove N+1 queries; isolate reconciliation job impact."
         },
         "tags": ["root-cause"],
@@ -1213,7 +1217,7 @@ plan: Plan(
         "title": "Observability + guardrails",
         "status": "pending",
         "narrative": {
-          "title": "Context",
+          "title": "Background",
           "content": "Dashboards, alerts, SLOs, and bounded autoscaling."
         },
         "dependencies": ["p1"],
@@ -1228,7 +1232,7 @@ plan: Plan(
         "title": "Rollout + rollback drill",
         "status": "pending",
         "narrative": {
-          "title": "Context",
+          "title": "Background",
           "content": "Canary rollout, validate rollback, and document runbook."
         },
         "dependencies": ["p1", "p2"],

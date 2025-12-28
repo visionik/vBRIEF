@@ -116,13 +116,17 @@
           "properties": {
             "proposal": {"$ref": "#/$defs/Narrative"},
             "overview": {"$ref": "#/$defs/Narrative"},
-            "context": {"$ref": "#/$defs/Narrative"},
+            "background": {"$ref": "#/$defs/Narrative"},
             "problem": {"$ref": "#/$defs/Narrative"},
+            "constraint": {"$ref": "#/$defs/Narrative"},
+            "hypothesis": {"$ref": "#/$defs/Narrative"},
             "alternative": {"$ref": "#/$defs/Narrative"},
             "risk": {"$ref": "#/$defs/Narrative"},
             "test": {"$ref": "#/$defs/Narrative"},
             "action": {"$ref": "#/$defs/Narrative"},
+            "observation": {"$ref": "#/$defs/Narrative"},
             "result": {"$ref": "#/$defs/Narrative"},
+            "reflection": {"$ref": "#/$defs/Narrative"},
             "custom": {"type": "array", "items": {"$ref": "#/$defs/Narrative"}}
           },
           "additionalProperties": true

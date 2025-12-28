@@ -239,13 +239,17 @@ Plan {
   narratives: {
     proposal: Narrative,     # Proposal (required, standard title)
     overview?: Narrative,    # Overview (standard title)
-    context?: Narrative,     # Context (standard title)
+    background?: Narrative,  # Background (standard title)
     problem?: Narrative,     # Problem (standard title)
+    constraint?: Narrative,  # Constraint (standard title)
+    hypothesis?: Narrative,  # Hypothesis (standard title)
     alternative?: Narrative, # Alternative (standard title)
     risk?: Narrative,        # Risk (standard title)
     test?: Narrative,        # Test (standard title)
     action?: Narrative,      # Action (standard title)
+    observation?: Narrative, # Observation (standard title)
     result?: Narrative,      # Result (standard title)
+    reflection?: Narrative,  # Reflection (standard title)
     custom?: Narrative[]     # User-defined narratives
   }
   metadata?: object        # Custom fields
@@ -291,7 +295,7 @@ TodoItem(
   "item-2",
   "Implement JWT authentication",
   "inProgress",
-  Narrative("Context", "Add JWT token generation and validation for secure API access"),
+  Narrative("Background", "Add JWT token generation and validation for secure API access"),
   "high",
   ["security", "backend", "auth"],
   {"estimatedHours": 8, "complexity": "medium"}
@@ -305,7 +309,7 @@ TodoItem(
   "title": "Implement JWT authentication",
   "status": "inProgress",
   "narrative": {
-    "title": "Context",
+    "title": "Background",
     "content": "Add JWT token generation and validation for secure API access"
   },
   "priority": "high",

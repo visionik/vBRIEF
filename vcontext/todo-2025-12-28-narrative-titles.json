@@ -1,0 +1,63 @@
+{
+  "vContextInfo": {
+    "version": "0.4"
+  },
+  "todoList": {
+    "narrative": {
+      "title": "Overview",
+      "content": "Expand vContext standard narrative titles from 9 to 13, replacing Context with Background and adding Hypothesis, Observation, Constraint, and Reflection."
+    },
+    "items": [
+      {
+        "id": "t1",
+        "title": "Update Narrative definition in README.md with 13 standard titles",
+        "status": "completed",
+        "narrative": {
+          "title": "Result",
+          "content": "Updated README.md to define 13 standard titles organized by understand → design → execute → learn workflow. Changed Context to Background, kept Alternative singular, added Hypothesis, Observation, Constraint, Reflection."
+        }
+      },
+      {
+        "id": "t2",
+        "title": "Update Plan narratives structure in Extension 3",
+        "status": "completed",
+        "narrative": {
+          "title": "Result",
+          "content": "Updated vContext-extension-common.md Plan Extensions to include all 13 narrative keys: overview, background, problem, constraint, hypothesis, alternative, risk, test, action, observation, result, reflection."
+        }
+      },
+      {
+        "id": "t3",
+        "title": "Update JSON schema with new narrative keys",
+        "status": "completed",
+        "narrative": {
+          "title": "Result",
+          "content": "Updated vcontext-core.schema.json to replace context with background and add constraint, hypothesis, observation, reflection to Plan narratives properties."
+        }
+      },
+      {
+        "id": "t4",
+        "title": "Update all examples to use Background instead of Context",
+        "status": "completed",
+        "narrative": {
+          "title": "Result",
+          "content": "Replaced all occurrences of Context → Background in examples across README.md and vContext-extension-common.md. Updated both TRON and JSON format examples, including TodoItem, Playbook, and Plan narratives."
+        }
+      },
+      {
+        "id": "t5",
+        "title": "Update Appendix A examples with new narrative structure",
+        "status": "cancelled",
+        "narrative": {
+          "title": "Reflection",
+          "content": "Decided to keep Appendix A examples as-is. They already demonstrate the workflow properly and adding more narrative keys would make them overly complex. The spec and schema updates are sufficient."
+        }
+      },
+      {
+        "id": "t6",
+        "title": "Commit and push changes",
+        "status": "pending"
+      }
+    ]
+  }
+}
