@@ -2162,6 +2162,11 @@ This spec is intentionally iterative. The following open questions are candidate
    - Today: Extension 8 adds `recurrence` and `reminders` to support calendar-like automation.
    - Alternative: remove Extension 8 from core scope and rely on external scheduling systems + `uris` to link to them.
 
+4. **Do we need `percentComplete`?**
+   - It can be hard to define consistently for individual TodoItems.
+   - For many uses, progress for TodoLists/Plans can be derived from item statuses (e.g., completed/total), optionally weighting blocked/cancelled.
+   - Alternative: remove `percentComplete` and standardize derived progress calculations for containers and/or PlanItems only.
+
 ---
 
 # Appendix C: License
