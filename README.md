@@ -13,7 +13,7 @@ vContext provides an **open, standardized format** for these memory systems that
 This enables both agentic systems and human-facing tools to share a common representation of work, plans, and accumulated knowledge.
 
 **Origins and Scope**:
-- This specification is based on a review of internal memory formats used by several different agentic coding systems
+- This specification began with a review of internal memory formats used by several agentic coding systems to ensure it addresses real-world requirements
 - The design is inspired by established standards such as vCard and vCalendar/iCalendar
 - While primarily intended for agentic coding, the spec is secondarily usable as an interop format for almost any todo, task, or project management software
 
