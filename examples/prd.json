@@ -1,0 +1,684 @@
+[
+  {
+    "category": "functional",
+    "description": "User can drag and drop a SQLite file onto the page to open it",
+    "steps": [
+      "User drags a .db, .sqlite, .sqlite3, or .db3 file over the drop zone",
+      "Drop zone visual indicator activates (highlight/border change)",
+      "User drops the file",
+      "File is read using the File API",
+      "Database is loaded into sql.js",
+      "UI transitions from empty state to database view"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can click a browse button to select a SQLite file",
+    "steps": [
+      "User clicks the 'Browse Files' button",
+      "Native file picker dialog opens",
+      "User selects a SQLite file",
+      "File is read and loaded into sql.js",
+      "UI transitions to database view"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "File name and size are displayed after loading a database",
+    "steps": [
+      "User loads a SQLite file",
+      "File name appears in the header or info area",
+      "File size is displayed in human-readable format (KB/MB)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "All tables in the database are listed in a sidebar",
+    "steps": [
+      "Database is loaded",
+      "Query sqlite_master for all tables",
+      "Table names are rendered in a sidebar list",
+      "List is scrollable if many tables exist"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Each table in the sidebar shows its row count",
+    "steps": [
+      "Tables are listed in sidebar",
+      "For each table, execute COUNT(*) query",
+      "Row count is displayed next to table name"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Clicking a table name loads and displays its contents",
+    "steps": [
+      "User clicks on a table name in the sidebar",
+      "Table becomes visually selected/highlighted",
+      "SELECT query executes for that table",
+      "Results display in the data viewer panel"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Column names and types are shown in table headers",
+    "steps": [
+      "Table data is displayed",
+      "Header row shows column names",
+      "Column data types are visible (as subtitle or tooltip)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Table data is paginated with configurable page size",
+    "steps": [
+      "Table with more rows than page size is selected",
+      "Only first page of results is shown",
+      "Pagination controls appear below the table",
+      "Current page number and total pages are displayed"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can change the number of rows per page",
+    "steps": [
+      "Page size dropdown/selector is visible",
+      "User selects a different page size (25, 50, 100, or 500)",
+      "Table refreshes with new number of rows",
+      "Pagination updates to reflect new total pages"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can navigate between pages using pagination controls",
+    "steps": [
+      "User clicks 'Next' button",
+      "Next page of results loads",
+      "User clicks 'Previous' button",
+      "Previous page loads",
+      "User can click specific page number to jump to it"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Clicking a column header sorts the table by that column",
+    "steps": [
+      "User clicks on a column header",
+      "Table sorts by that column in ascending order",
+      "Sort indicator (arrow) appears on the column",
+      "User clicks same header again",
+      "Sort order toggles to descending",
+      "Sort indicator updates to show descending"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "NULL values are displayed with distinct styling",
+    "steps": [
+      "Table contains NULL values",
+      "NULL cells display 'NULL' text or placeholder",
+      "NULL cells have distinct visual styling (italic, gray, etc.)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "BLOB data shows a size indicator instead of raw content",
+    "steps": [
+      "Table contains BLOB columns",
+      "BLOB cells display type indicator (e.g., 'BLOB')",
+      "BLOB size is shown (e.g., '1.2 KB')",
+      "Raw binary data is not rendered as text"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "SQL query editor text area is available for custom queries",
+    "steps": [
+      "Query editor panel is visible in the UI",
+      "Text area accepts user input",
+      "User can type SQL queries",
+      "Text area supports multi-line input"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can execute a query by clicking the Run button",
+    "steps": [
+      "User types a SQL query in the editor",
+      "User clicks the 'Run' button",
+      "Query is executed against the database",
+      "Results appear in the data viewer"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can execute a query with Ctrl+Enter keyboard shortcut",
+    "steps": [
+      "User types a SQL query in the editor",
+      "User presses Ctrl+Enter (or Cmd+Enter on Mac)",
+      "Query executes",
+      "Results display in the data viewer"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Query results display in the same table format as table browsing",
+    "steps": [
+      "User executes a custom SQL query",
+      "Results render in the data table component",
+      "Column headers show result column names",
+      "Pagination works for query results"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Invalid SQL queries show an error message",
+    "steps": [
+      "User types an invalid SQL query",
+      "User executes the query",
+      "Error message is displayed",
+      "Error message includes the SQL error description",
+      "Previous results remain visible or cleared gracefully"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "SQL editor has basic syntax highlighting",
+    "steps": [
+      "User types SQL in the editor",
+      "SQL keywords (SELECT, FROM, WHERE, etc.) are highlighted",
+      "String literals are highlighted in a different color",
+      "Numbers are highlighted distinctly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "ui",
+    "description": "Wide tables scroll horizontally",
+    "steps": [
+      "Table with many columns is displayed",
+      "Table container shows horizontal scrollbar",
+      "User can scroll left/right to see all columns"
+    ],
+    "passes": false
+  },
+  {
+    "category": "ui",
+    "description": "Table header row remains sticky when scrolling vertically",
+    "steps": [
+      "Table with many rows is displayed",
+      "User scrolls down in the table",
+      "Header row stays fixed at the top",
+      "Column names remain visible while scrolling"
+    ],
+    "passes": false
+  },
+  {
+    "category": "ui",
+    "description": "Long cell values are truncated with ellipsis",
+    "steps": [
+      "Cell contains text longer than column width",
+      "Text is truncated with ellipsis (...)",
+      "Column maintains consistent width"
+    ],
+    "passes": false
+  },
+  {
+    "category": "ui",
+    "description": "Hovering over truncated cells shows full content in tooltip",
+    "steps": [
+      "Cell has truncated content",
+      "User hovers over the cell",
+      "Tooltip appears with full cell value",
+      "Tooltip disappears when mouse leaves"
+    ],
+    "passes": false
+  },
+  {
+    "category": "ui",
+    "description": "Empty state is shown when no database is loaded",
+    "steps": [
+      "Application loads without a file",
+      "Drop zone with instructions is displayed",
+      "SQLite icon or graphic is shown",
+      "Supported file formats are listed",
+      "Privacy message about local data is shown"
+    ],
+    "passes": false
+  },
+  {
+    "category": "ui",
+    "description": "Application header displays logo and title",
+    "steps": [
+      "Page loads",
+      "Header is visible at top of page",
+      "Logo/icon is displayed",
+      "'SQLite UI' title is shown"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Quick filter input filters visible table rows",
+    "steps": [
+      "Table data is displayed",
+      "Filter input field is visible above the table",
+      "User types in the filter input",
+      "Rows not matching the filter text are hidden",
+      "Matching rows remain visible",
+      "Clearing filter shows all rows again"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can export current view to CSV",
+    "steps": [
+      "Table data is displayed",
+      "User clicks 'Export CSV' button",
+      "CSV file is generated with current view data",
+      "Browser downloads the CSV file"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can export current view to JSON",
+    "steps": [
+      "Table data is displayed",
+      "User clicks 'Export JSON' button",
+      "JSON file is generated with current view data",
+      "Browser downloads the JSON file"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can copy cell value to clipboard",
+    "steps": [
+      "User clicks on a cell or uses context menu",
+      "Copy option is available",
+      "Cell value is copied to clipboard",
+      "Visual feedback confirms copy action"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Query history stores executed queries in localStorage",
+    "steps": [
+      "User executes a SQL query",
+      "Query is saved to localStorage",
+      "Query history persists after page reload",
+      "Last N queries are retained (older ones removed)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can re-run queries from history dropdown",
+    "steps": [
+      "User opens query history dropdown",
+      "Previous queries are listed",
+      "User clicks on a historical query",
+      "Query populates in the editor",
+      "Query can be executed"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can clear query history",
+    "steps": [
+      "Query history contains entries",
+      "User clicks 'Clear History' option",
+      "Confirmation prompt appears (optional)",
+      "History is cleared from localStorage",
+      "History dropdown shows empty state"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Foreign key columns show a visual indicator",
+    "steps": [
+      "Table with foreign key constraints is selected",
+      "Columns with FK constraints have an icon or badge",
+      "FK indicator distinguishes FK columns from regular columns"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Clicking a foreign key value navigates to the referenced row",
+    "steps": [
+      "Cell in a FK column is clicked",
+      "Referenced table is loaded",
+      "View jumps to the referenced row",
+      "Referenced row is highlighted"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Dark mode can be toggled via UI control",
+    "steps": [
+      "Theme toggle button is visible in header",
+      "User clicks the toggle",
+      "UI switches between light and dark themes",
+      "All components update to new theme colors"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Dark mode respects system preference by default",
+    "steps": [
+      "User has system dark mode enabled",
+      "Application loads",
+      "Dark theme is applied automatically",
+      "User with light system preference sees light theme"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Theme preference is persisted in localStorage",
+    "steps": [
+      "User toggles theme",
+      "Preference is saved to localStorage",
+      "User reloads the page",
+      "Previously selected theme is applied"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Page loads in under 500ms",
+    "steps": [
+      "User navigates to the application URL",
+      "HTML, CSS, and critical JS load",
+      "Initial UI renders within 500ms",
+      "Empty state is interactive"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "sql.js WebAssembly module loads in under 1 second",
+    "steps": [
+      "Page load initiates WASM fetch",
+      "sql-wasm.wasm file downloads",
+      "WASM module compiles and initializes",
+      "Total time is under 1 second on broadband"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "10MB database file opens in under 2 seconds",
+    "steps": [
+      "User loads a 10MB SQLite file",
+      "File is read into memory",
+      "sql.js initializes the database",
+      "Table list is populated",
+      "Total time is under 2 seconds"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Simple SELECT queries execute in under 100ms",
+    "steps": [
+      "Database is loaded",
+      "User runs a simple SELECT query",
+      "Query executes and returns results",
+      "Results render in under 100ms total"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Warning is shown for files over 100MB",
+    "steps": [
+      "User attempts to load a file larger than 100MB",
+      "Warning message is displayed",
+      "User can choose to proceed or cancel",
+      "File loads if user confirms"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Files over 500MB are rejected with an error",
+    "steps": [
+      "User attempts to load a file larger than 500MB",
+      "Error message is displayed",
+      "File is not loaded",
+      "Application remains functional"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Loading progress is shown for files over 10MB",
+    "steps": [
+      "User loads a file larger than 10MB",
+      "Progress indicator appears",
+      "Progress updates as file loads",
+      "Progress indicator disappears when complete"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Application uses semantic HTML elements",
+    "steps": [
+      "Page uses appropriate semantic tags",
+      "Tables use <table>, <thead>, <tbody>, <th>, <td>",
+      "Navigation uses <nav>",
+      "Main content uses <main>",
+      "Buttons use <button> elements"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Interactive elements have ARIA labels",
+    "steps": [
+      "Buttons have aria-label or visible text",
+      "Icon-only buttons have descriptive aria-labels",
+      "Form inputs have associated labels",
+      "Status messages use aria-live regions"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Application is keyboard navigable",
+    "steps": [
+      "User can Tab through all interactive elements",
+      "Focus indicators are visible",
+      "Enter/Space activates buttons",
+      "Escape closes modals/dropdowns"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Color contrast meets WCAG AA standards",
+    "steps": [
+      "Text has minimum 4.5:1 contrast ratio against background",
+      "Large text has minimum 3:1 contrast ratio",
+      "Interactive elements are distinguishable",
+      "Both light and dark themes meet contrast requirements"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "No data is transmitted to external servers",
+    "steps": [
+      "User loads and queries a database",
+      "Network tab shows no external requests with user data",
+      "All processing happens client-side",
+      "Only static assets are fetched from hosting server"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "User input displayed in UI is properly sanitized",
+    "steps": [
+      "Database contains potentially malicious content (script tags, etc.)",
+      "Data is displayed in the table",
+      "No scripts execute",
+      "HTML entities are properly escaped"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Application works in Chrome 80+",
+    "steps": [
+      "Application is opened in Chrome 80 or later",
+      "All features function correctly",
+      "No console errors related to unsupported APIs"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Application works in Firefox 75+",
+    "steps": [
+      "Application is opened in Firefox 75 or later",
+      "All features function correctly",
+      "No console errors related to unsupported APIs"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Application works in Safari 14+",
+    "steps": [
+      "Application is opened in Safari 14 or later",
+      "All features function correctly",
+      "No console errors related to unsupported APIs"
+    ],
+    "passes": false
+  },
+  {
+    "category": "non-functional",
+    "description": "Application works in Edge 80+",
+    "steps": [
+      "Application is opened in Edge 80 or later",
+      "All features function correctly",
+      "No console errors related to unsupported APIs"
+    ],
+    "passes": false
+  },
+  {
+    "category": "ui",
+    "description": "Sidebar is resizable or has appropriate fixed width",
+    "steps": [
+      "Sidebar displays table list",
+      "Sidebar has reasonable width for table names",
+      "Long table names are truncated or sidebar scrolls horizontally"
+    ],
+    "passes": false
+  },
+  {
+    "category": "ui",
+    "description": "Selected table is visually highlighted in sidebar",
+    "steps": [
+      "User clicks on a table in the sidebar",
+      "Selected table has distinct background or border",
+      "Selection is clearly visible",
+      "Previous selection is deselected"
+    ],
+    "passes": false
+  },
+  {
+    "category": "ui",
+    "description": "Table name and row count displayed above data viewer",
+    "steps": [
+      "User selects a table",
+      "Table name appears above the data grid",
+      "Row count is displayed (e.g., '1,234 rows')"
+    ],
+    "passes": false
+  },
+  {
+    "category": "ui",
+    "description": "Query editor panel is collapsible or togglable",
+    "steps": [
+      "Query editor panel has expand/collapse control",
+      "User clicks to collapse the panel",
+      "Panel minimizes to save space",
+      "User can expand it again"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "First column can be made sticky via toggle",
+    "steps": [
+      "Toggle for sticky first column is available",
+      "User enables the toggle",
+      "First column remains fixed when scrolling horizontally",
+      "User can disable to return to normal scrolling"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Column-specific filtering allows filtering by individual columns",
+    "steps": [
+      "User opens column filter options",
+      "User can select which column to filter",
+      "User enters filter value",
+      "Only rows matching that column's filter are shown"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can copy entire row to clipboard",
+    "steps": [
+      "User selects a row or uses row context menu",
+      "Copy row option is available",
+      "Row data is copied as tab-separated or JSON",
+      "Visual feedback confirms copy"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Foreign key relationships are shown in schema info",
+    "steps": [
+      "User views table schema/structure",
+      "FK relationships are listed",
+      "Referenced table and column are displayed"
+    ],
+    "passes": false
+  }
+]

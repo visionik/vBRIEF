@@ -1,0 +1,576 @@
+{
+  "vContextInfo": {
+    "version": "0.5"
+  },
+  "vSpec": {
+    "title": "RFC 854: TELNET Protocol Specification",
+    "status": "approved",
+    "type": "rfc",
+    "author": "J. Postel, J. Reynolds (ISI)",
+    "tags": ["telnet", "protocol", "nvt", "rfc854", "tcp", "1983"],
+    "narratives": {
+      "summary": "RFC 854 defines the TELNET protocol for providing a general, bi-directional, eight-bit byte oriented communications facility over TCP. Its primary goal is to allow a standard method of interfacing terminal devices and terminal-oriented processes using a Network Virtual Terminal (NVT) abstraction with negotiated options.",
+      "problem": "Host terminals have diverse characteristics and handling conventions. Without a standard intermediate representation, each host would need to maintain information about every other host's terminal type, creating an unmanageable combinatorial complexity.",
+      "solution": "Define a Network Virtual Terminal (NVT) as an imaginary canonical terminal with standard control codes and display characteristics. All hosts map their local device characteristics to/from the NVT. Option negotiation allows hosts to extend beyond NVT baseline capabilities in a symmetric, non-terminating-loop-safe manner.",
+      "scope": "**In scope**: NVT printer/keyboard definition, USASCII control code semantics, TELNET command codes (IAC, WILL, WON'T, DO, DON'T, SE, SB, etc.), option negotiation rules, transmission discipline, SYNCH signal mechanism, connection establishment.\n**Out of scope**: Specific option definitions (covered in companion document \"TELNET Option Specifications\"), TCP implementation details, application-layer protocols above TELNET."
+    },
+    "items": [
+      {
+        "id": "NVT-1",
+        "kind": "requirement",
+        "title": "NVT printer: NULL (NUL) code 0 - No Operation",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "The NVT printer MUST recognize code 0 (NULL/NUL) and perform no operation.",
+          "Acceptance Criteria": "- Code 0 does not move print head\n- Code 0 does not produce output\n- Code 0 is effectively ignored"
+        },
+        "metadata": {
+          "category": "nvt-control",
+          "code": 0,
+          "name": "NULL",
+          "abbreviation": "NUL"
+        }
+      },
+      {
+        "id": "NVT-2",
+        "kind": "requirement",
+        "title": "NVT printer: Line Feed (LF) code 10 - Move to next line",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "The NVT printer MUST recognize code 10 (Line Feed/LF) and move the printer to the next print line, keeping the same horizontal position.",
+          "Acceptance Criteria": "- Code 10 advances to next line\n- Horizontal position is preserved\n- Does not return to left margin"
+        },
+        "metadata": {
+          "category": "nvt-control",
+          "code": 10,
+          "name": "Line Feed",
+          "abbreviation": "LF"
+        }
+      },
+      {
+        "id": "NVT-3",
+        "kind": "requirement",
+        "title": "NVT printer: Carriage Return (CR) code 13 - Move to left margin",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "The NVT printer MUST recognize code 13 (Carriage Return/CR) and move the printer to the left margin of the current line.",
+          "Acceptance Criteria": "- Code 13 returns to left margin\n- Vertical position is preserved\n- Does not advance to next line"
+        },
+        "metadata": {
+          "category": "nvt-control",
+          "code": 13,
+          "name": "Carriage Return",
+          "abbreviation": "CR"
+        }
+      },
+      {
+        "id": "NVT-4",
+        "kind": "requirement",
+        "title": "NVT printer: BELL (BEL) code 7 - Optional audible/visible signal",
+        "status": "completed",
+        "priority": "may",
+        "narrative": {
+          "Description": "The NVT printer MAY recognize code 7 (BELL/BEL) to produce an audible or visible signal. The signal does NOT move the print head. Neither end may assume the other party will take any particular action upon receipt.",
+          "Acceptance Criteria": "- Code 7 may produce signal (audible beep or visual flash)\n- Signal does not move print head\n- No mandatory behavior required"
+        },
+        "metadata": {
+          "category": "nvt-control-optional",
+          "code": 7,
+          "name": "BELL",
+          "abbreviation": "BEL"
+        }
+      },
+      {
+        "id": "NVT-5",
+        "kind": "requirement",
+        "title": "NVT printer: Back Space (BS) code 8 - Optional move left",
+        "status": "completed",
+        "priority": "may",
+        "narrative": {
+          "Description": "The NVT printer MAY recognize code 8 (Back Space/BS) to move the print head one character position towards the left margin. Neither end may assume the other party will take any particular action upon receipt.",
+          "Acceptance Criteria": "- Code 8 may move print head left by one position\n- No mandatory behavior required"
+        },
+        "metadata": {
+          "category": "nvt-control-optional",
+          "code": 8,
+          "name": "Back Space",
+          "abbreviation": "BS"
+        }
+      },
+      {
+        "id": "NVT-6",
+        "kind": "requirement",
+        "title": "NVT printer: Horizontal Tab (HT) code 9 - Optional move to next tab stop",
+        "status": "completed",
+        "priority": "may",
+        "narrative": {
+          "Description": "The NVT printer MAY recognize code 9 (Horizontal Tab/HT) to move the printer to the next horizontal tab stop. It remains unspecified how either party determines or establishes where such tab stops are located.",
+          "Acceptance Criteria": "- Code 9 may move to next horizontal tab stop\n- Tab stop locations are implementation-defined\n- No mandatory behavior required"
+        },
+        "metadata": {
+          "category": "nvt-control-optional",
+          "code": 9,
+          "name": "Horizontal Tab",
+          "abbreviation": "HT"
+        }
+      },
+      {
+        "id": "NVT-7",
+        "kind": "requirement",
+        "title": "NVT printer: Vertical Tab (VT) code 11 - Optional move to next vertical tab stop",
+        "status": "completed",
+        "priority": "may",
+        "narrative": {
+          "Description": "The NVT printer MAY recognize code 11 (Vertical Tab/VT) to move the printer to the next vertical tab stop. It remains unspecified how either party determines or establishes where such tab stops are located.",
+          "Acceptance Criteria": "- Code 11 may move to next vertical tab stop\n- Tab stop locations are implementation-defined\n- No mandatory behavior required"
+        },
+        "metadata": {
+          "category": "nvt-control-optional",
+          "code": 11,
+          "name": "Vertical Tab",
+          "abbreviation": "VT"
+        }
+      },
+      {
+        "id": "NVT-8",
+        "kind": "requirement",
+        "title": "NVT printer: Form Feed (FF) code 12 - Optional move to top of next page",
+        "status": "completed",
+        "priority": "may",
+        "narrative": {
+          "Description": "The NVT printer MAY recognize code 12 (Form Feed/FF) to move the printer to the top of the next page, keeping the same horizontal position.",
+          "Acceptance Criteria": "- Code 12 may advance to top of next page\n- Horizontal position is preserved\n- No mandatory behavior required"
+        },
+        "metadata": {
+          "category": "nvt-control-optional",
+          "code": 12,
+          "name": "Form Feed",
+          "abbreviation": "FF"
+        }
+      },
+      {
+        "id": "NVT-9",
+        "kind": "requirement",
+        "title": "NVT printer: CR LF sequence positions at left margin of next line",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "The sequence CR LF MUST cause the NVT to be positioned at the left margin of the next print line (as would, for example, the sequence LF CR).",
+          "Acceptance Criteria": "- CR LF moves to left margin of next line\n- LF CR has the same effect\n- Order does not matter for combined effect"
+        },
+        "metadata": {
+          "category": "nvt-control-sequence"
+        }
+      },
+      {
+        "id": "NVT-10",
+        "kind": "requirement",
+        "title": "NVT printer: CR NUL when carriage return alone is desired",
+        "status": "completed",
+        "priority": "should",
+        "narrative": {
+          "Description": "When a carriage return alone is actually desired (i.e., not followed by line feed), the CR NUL sequence SHOULD be used.",
+          "Acceptance Criteria": "- CR NUL moves to left margin without advancing line\n- Distinguishes bare CR from CR LF"
+        },
+        "metadata": {
+          "category": "nvt-control-sequence"
+        }
+      },
+      {
+        "id": "CMD-1",
+        "kind": "requirement",
+        "title": "TELNET command: SE (code 240) - End of subnegotiation parameters",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 240 (SE) MUST be recognized as the end of subnegotiation parameters. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 240 after IAC marks end of subnegotiation\n- Used in conjunction with SB command"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 240,
+          "name": "SE"
+        }
+      },
+      {
+        "id": "CMD-2",
+        "kind": "requirement",
+        "title": "TELNET command: NOP (code 241) - No operation",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 241 (NOP) MUST be recognized as a no-operation command. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 241 after IAC performs no operation\n- Can be used for timing or keep-alive purposes"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 241,
+          "name": "NOP"
+        }
+      },
+      {
+        "id": "CMD-3",
+        "kind": "requirement",
+        "title": "TELNET command: Data Mark (code 242) - Data stream portion of Synch",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 242 (Data Mark) MUST be recognized as the data stream portion of a Synch signal. This MUST always be accompanied by a TCP Urgent notification. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 242 after IAC is Data Mark\n- Must be accompanied by TCP Urgent\n- Used to flush input stream"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 242,
+          "name": "Data Mark",
+          "abbreviation": "DM"
+        }
+      },
+      {
+        "id": "CMD-4",
+        "kind": "requirement",
+        "title": "TELNET command: Break (code 243) - NVT character BRK",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 243 (Break) MUST be recognized as the NVT character BRK. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 243 after IAC is Break signal\n- Analog of physical terminal break key"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 243,
+          "name": "Break",
+          "abbreviation": "BRK"
+        }
+      },
+      {
+        "id": "CMD-5",
+        "kind": "requirement",
+        "title": "TELNET command: Interrupt Process (code 244) - Function IP",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 244 (Interrupt Process) MUST be recognized as the function IP. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 244 after IAC is IP signal\n- Suspends, interrupts, aborts, or terminates the process to which the NVT is connected"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 244,
+          "name": "Interrupt Process",
+          "abbreviation": "IP"
+        }
+      },
+      {
+        "id": "CMD-6",
+        "kind": "requirement",
+        "title": "TELNET command: Abort Output (code 245) - Function AO",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 245 (Abort Output) MUST be recognized as the function AO. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 245 after IAC is AO signal\n- Allows the process to run to completion but does not send output to the user's terminal"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 245,
+          "name": "Abort output",
+          "abbreviation": "AO"
+        }
+      },
+      {
+        "id": "CMD-7",
+        "kind": "requirement",
+        "title": "TELNET command: Are You There (code 246) - Function AYT",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 246 (Are You There) MUST be recognized as the function AYT. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 246 after IAC is AYT signal\n- Provides the user with visible evidence that the system is still running"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 246,
+          "name": "Are You There",
+          "abbreviation": "AYT"
+        }
+      },
+      {
+        "id": "CMD-8",
+        "kind": "requirement",
+        "title": "TELNET command: Erase Character (code 247) - Function EC",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 247 (Erase Character) MUST be recognized as the function EC. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 247 after IAC is EC signal\n- Deletes the last preceding undeleted character from the data stream"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 247,
+          "name": "Erase character",
+          "abbreviation": "EC"
+        }
+      },
+      {
+        "id": "CMD-9",
+        "kind": "requirement",
+        "title": "TELNET command: Erase Line (code 248) - Function EL",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 248 (Erase Line) MUST be recognized as the function EL. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 248 after IAC is EL signal\n- Deletes all characters from the preceding mark (or start of line) to the end of the line"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 248,
+          "name": "Erase Line",
+          "abbreviation": "EL"
+        }
+      },
+      {
+        "id": "CMD-10",
+        "kind": "requirement",
+        "title": "TELNET command: Go Ahead (code 249) - GA signal",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 249 (Go Ahead) MUST be recognized as the GA signal. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 249 after IAC is GA signal\n- Tells the other end that it can transmit\n- Used in half-duplex mode"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 249,
+          "name": "Go ahead",
+          "abbreviation": "GA"
+        }
+      },
+      {
+        "id": "CMD-11",
+        "kind": "requirement",
+        "title": "TELNET command: SB (code 250) - Begin subnegotiation",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 250 (SB) MUST be recognized as indicating that what follows is subnegotiation of the indicated option. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- Code 250 after IAC begins subnegotiation\n- Followed by option code and parameters\n- Terminated by IAC SE"
+        },
+        "metadata": {
+          "category": "telnet-command",
+          "code": 250,
+          "name": "SB"
+        }
+      },
+      {
+        "id": "CMD-12",
+        "kind": "requirement",
+        "title": "TELNET command: WILL (code 251) - Desire to begin performing option",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 251 (WILL) followed by option code MUST indicate the sender's desire to begin performing, or confirmation that the sender is now performing, the indicated option. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- IAC WILL <option> offers to enable option\n- Receiver responds with DO (accept) or DON'T (reject)"
+        },
+        "metadata": {
+          "category": "telnet-command-negotiation",
+          "code": 251,
+          "name": "WILL"
+        }
+      },
+      {
+        "id": "CMD-13",
+        "kind": "requirement",
+        "title": "TELNET command: WON'T (code 252) - Refusal to perform option",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 252 (WON'T) followed by option code MUST indicate the sender's refusal to perform, or continue performing, the indicated option. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- IAC WON'T <option> refuses to enable option\n- Receiver should respond with DON'T to acknowledge"
+        },
+        "metadata": {
+          "category": "telnet-command-negotiation",
+          "code": 252,
+          "name": "WON'T"
+        }
+      },
+      {
+        "id": "CMD-14",
+        "kind": "requirement",
+        "title": "TELNET command: DO (code 253) - Request other party perform option",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 253 (DO) followed by option code MUST indicate the request that the other party perform, or confirmation that the sender is expecting the other party to perform, the indicated option. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- IAC DO <option> requests other party enable option\n- Receiver responds with WILL (accept) or WON'T (reject)"
+        },
+        "metadata": {
+          "category": "telnet-command-negotiation",
+          "code": 253,
+          "name": "DO"
+        }
+      },
+      {
+        "id": "CMD-15",
+        "kind": "requirement",
+        "title": "TELNET command: DON'T (code 254) - Demand other party stop performing option",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 254 (DON'T) followed by option code MUST indicate the demand that the other party stop performing, or confirmation that the sender is no longer expecting the other party to perform, the indicated option. This code only has meaning when immediately preceded by an IAC.",
+          "Acceptance Criteria": "- IAC DON'T <option> demands other party disable option\n- Receiver should respond with WON'T to acknowledge"
+        },
+        "metadata": {
+          "category": "telnet-command-negotiation",
+          "code": 254,
+          "name": "DON'T"
+        }
+      },
+      {
+        "id": "CMD-16",
+        "kind": "requirement",
+        "title": "TELNET command: IAC (code 255) - Interpret As Command / Data Byte 255",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Code 255 (IAC) MUST be recognized as the Interpret As Command prefix. To send data byte 255, it MUST be doubled (IAC IAC).",
+          "Acceptance Criteria": "- Single IAC (255) introduces command\n- IAC IAC (255 255) transmits data byte 255\n- All TELNET commands must be preceded by IAC"
+        },
+        "metadata": {
+          "category": "telnet-command-escape",
+          "code": 255,
+          "name": "IAC"
+        }
+      },
+      {
+        "id": "OPT-1",
+        "kind": "requirement",
+        "title": "Option negotiation: Parties may only request a change in status",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Parties MUST only request a change in option status; i.e., a party MUST NOT send out a request merely to announce what mode it is in.",
+          "Acceptance Criteria": "- Requests only sent when desiring a mode change\n- No unsolicited status announcements via option commands"
+        },
+        "metadata": {
+          "category": "option-negotiation-rule"
+        }
+      },
+      {
+        "id": "OPT-2",
+        "kind": "requirement",
+        "title": "Option negotiation: Request for current mode should not be acknowledged",
+        "status": "completed",
+        "priority": "should-not",
+        "narrative": {
+          "Description": "If a party receives what appears to be a request to enter some mode it is already in, the request SHOULD NOT be acknowledged. This non-response is essential to prevent endless loops in the negotiation. It is REQUIRED that a response be sent to requests for a change of mode — even if the mode is not changed.",
+          "Acceptance Criteria": "- No acknowledgment sent if already in requested mode\n- Acknowledgment sent only for mode change requests\n- Prevents negotiation loops"
+        },
+        "metadata": {
+          "category": "option-negotiation-rule"
+        }
+      },
+      {
+        "id": "OPT-3",
+        "kind": "requirement",
+        "title": "Option negotiation: Command must be inserted at desired effect point",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "Whenever one party sends an option command to a second party, whether as a request or an acknowledgment, and use of the option will have any effect on the processing of the data being sent from the first party to the second, then the command MUST be inserted in the data stream at the point where it is desired that it take effect.",
+          "Acceptance Criteria": "- Option commands placed in-stream at effect point\n- Ensures correct ordering of data and mode changes\n- Receiver processes option at correct position in stream"
+        },
+        "metadata": {
+          "category": "option-negotiation-rule"
+        }
+      },
+      {
+        "id": "OPT-4",
+        "kind": "requirement",
+        "title": "Option negotiation: Host may buffer data during uncertainty period",
+        "status": "completed",
+        "priority": "may",
+        "narrative": {
+          "Description": "A host MAY wish to buffer data, after requesting an option, until it learns whether the request is accepted or rejected, in order to hide the uncertainty period from the user. (It should be noted that some time will elapse between the transmission of a request and the receipt of an acknowledgment, which may be negative.)",
+          "Acceptance Criteria": "- Host may buffer data after option request\n- Buffering hides latency/uncertainty from user\n- Data released upon acknowledgment"
+        },
+        "metadata": {
+          "category": "option-negotiation-buffering"
+        }
+      },
+      {
+        "id": "OPT-5",
+        "kind": "constraint",
+        "title": "Option designers should not feel constrained by simple syntax",
+        "status": "completed",
+        "narrative": {
+          "Description": "Option designers should not feel constrained by the somewhat limited syntax available for option negotiation (DO, DON'T, WILL, WON'T). If a particular option requires richer negotiation structure, use DO/DON'T/WILL/WON'T to establish mutual understanding, then use a more exotic syntax (sub-negotiation) freely. Such expanded negotiations should never begin until some prior (standard) negotiation has established that both parties are capable of parsing the expanded syntax."
+        },
+        "metadata": {
+          "category": "option-design-guidance"
+        }
+      },
+      {
+        "id": "TX-1",
+        "kind": "requirement",
+        "title": "Transmission discipline: Accumulate data until complete line ready",
+        "status": "completed",
+        "priority": "should",
+        "narrative": {
+          "Description": "Insofar as the availability of local buffer space permits, data SHOULD be accumulated in the host where it is generated until a complete line of data is ready for transmission, or until some locally-defined explicit signal is given by the user to transmit data (e.g., a 'transmit' or 'break' key).",
+          "Acceptance Criteria": "- Data buffered until complete line\n- Line sent when user presses transmit/break key\n- Reduces network overhead for line-at-a-time applications"
+        },
+        "metadata": {
+          "category": "transmission-discipline"
+        }
+      },
+      {
+        "id": "TX-2",
+        "kind": "requirement",
+        "title": "Transmission discipline: Send GA when process idle and no queued input",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "When a process has completed sending data to an NVT printer and has no queued input from the NVT keyboard for further processing (i.e., when a process at one end of a TELNET connection cannot proceed without input from the other end), the process MUST transmit the TELNET Go Ahead (GA) command.",
+          "Acceptance Criteria": "- GA sent when process idle and waiting for input\n- Allows half-duplex operation\n- Signals turn-taking in conversation"
+        },
+        "metadata": {
+          "category": "transmission-discipline"
+        }
+      },
+      {
+        "id": "SYNCH-1",
+        "kind": "requirement",
+        "title": "TELNET SYNCH: Send Data Mark in TCP urgent mode",
+        "status": "completed",
+        "priority": "must",
+        "narrative": {
+          "Description": "To send a TELNET SYNCH signal, the user (or process) MUST transmit the TELNET SYNCH sequence: Send the Data Mark (DM) as the only character in a TCP urgent mode send operation.",
+          "Acceptance Criteria": "- DM sent via TCP urgent mode\n- Urgent wakes TELNET interpreter\n- Allows flushing of input stream"
+        },
+        "metadata": {
+          "category": "synch-signal"
+        }
+      }
+    ],
+    "uris": [
+      {
+        "uri": "https://datatracker.ietf.org/doc/html/rfc854",
+        "type": "text/html",
+        "title": "RFC 854 (official)"
+      },
+      {
+        "uri": "https://www.rfc-editor.org/rfc/rfc854.txt",
+        "type": "text/plain",
+        "title": "RFC 854 plain text"
+      }
+    ],
+    "metadata": {
+      "rfc_number": 854,
+      "published": "1983-05",
+      "obsoletes": "NIC 18639",
+      "status_ietf": "INTERNET STANDARD"
+    }
+  }
+}

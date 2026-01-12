@@ -1,0 +1,1196 @@
+{
+  "vContextInfo": {
+    "version": "0.5"
+  },
+  "vSpec": {
+    "title": "SQLite UI PRD",
+    "status": "draft",
+    "type": "prd",
+    "narratives": {
+      "summary": "Converted from examples/prd.json. Each entry becomes a vSpecItem(kind=requirement). Field mapping: passes→status, steps→narrative[\"Acceptance Criteria\"], and original fields preserved in metadata."
+    },
+    "items": [
+      {
+        "id": "FR-1",
+        "kind": "requirement",
+        "title": "User can drag and drop a SQLite file onto the page to open it",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User drags a .db, .sqlite, .sqlite3, or .db3 file over the drop zone",
+            "Drop zone visual indicator activates (highlight/border change)",
+            "User drops the file",
+            "File is read using the File API",
+            "Database is loaded into sql.js",
+            "UI transitions from empty state to database view"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User drags a .db, .sqlite, .sqlite3, or .db3 file over the drop zone\n- Drop zone visual indicator activates (highlight/border change)\n- User drops the file\n- File is read using the File API\n- Database is loaded into sql.js\n- UI transitions from empty state to database view"
+        }
+      },
+      {
+        "id": "FR-2",
+        "kind": "requirement",
+        "title": "User can click a browse button to select a SQLite file",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User clicks the 'Browse Files' button",
+            "Native file picker dialog opens",
+            "User selects a SQLite file",
+            "File is read and loaded into sql.js",
+            "UI transitions to database view"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User clicks the 'Browse Files' button\n- Native file picker dialog opens\n- User selects a SQLite file\n- File is read and loaded into sql.js\n- UI transitions to database view"
+        }
+      },
+      {
+        "id": "FR-3",
+        "kind": "requirement",
+        "title": "File name and size are displayed after loading a database",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User loads a SQLite file",
+            "File name appears in the header or info area",
+            "File size is displayed in human-readable format (KB/MB)"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User loads a SQLite file\n- File name appears in the header or info area\n- File size is displayed in human-readable format (KB/MB)"
+        }
+      },
+      {
+        "id": "FR-4",
+        "kind": "requirement",
+        "title": "All tables in the database are listed in a sidebar",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Database is loaded",
+            "Query sqlite_master for all tables",
+            "Table names are rendered in a sidebar list",
+            "List is scrollable if many tables exist"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Database is loaded\n- Query sqlite_master for all tables\n- Table names are rendered in a sidebar list\n- List is scrollable if many tables exist"
+        }
+      },
+      {
+        "id": "FR-5",
+        "kind": "requirement",
+        "title": "Each table in the sidebar shows its row count",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Tables are listed in sidebar",
+            "For each table, execute COUNT(*) query",
+            "Row count is displayed next to table name"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Tables are listed in sidebar\n- For each table, execute COUNT(*) query\n- Row count is displayed next to table name"
+        }
+      },
+      {
+        "id": "FR-6",
+        "kind": "requirement",
+        "title": "Clicking a table name loads and displays its contents",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User clicks on a table name in the sidebar",
+            "Table becomes visually selected/highlighted",
+            "SELECT query executes for that table",
+            "Results display in the data viewer panel"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User clicks on a table name in the sidebar\n- Table becomes visually selected/highlighted\n- SELECT query executes for that table\n- Results display in the data viewer panel"
+        }
+      },
+      {
+        "id": "FR-7",
+        "kind": "requirement",
+        "title": "Column names and types are shown in table headers",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Table data is displayed",
+            "Header row shows column names",
+            "Column data types are visible (as subtitle or tooltip)"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Table data is displayed\n- Header row shows column names\n- Column data types are visible (as subtitle or tooltip)"
+        }
+      },
+      {
+        "id": "FR-8",
+        "kind": "requirement",
+        "title": "Table data is paginated with configurable page size",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Table with more rows than page size is selected",
+            "Only first page of results is shown",
+            "Pagination controls appear below the table",
+            "Current page number and total pages are displayed"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Table with more rows than page size is selected\n- Only first page of results is shown\n- Pagination controls appear below the table\n- Current page number and total pages are displayed"
+        }
+      },
+      {
+        "id": "FR-9",
+        "kind": "requirement",
+        "title": "User can change the number of rows per page",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Page size dropdown/selector is visible",
+            "User selects a different page size (25, 50, 100, or 500)",
+            "Table refreshes with new number of rows",
+            "Pagination updates to reflect new total pages"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Page size dropdown/selector is visible\n- User selects a different page size (25, 50, 100, or 500)\n- Table refreshes with new number of rows\n- Pagination updates to reflect new total pages"
+        }
+      },
+      {
+        "id": "FR-10",
+        "kind": "requirement",
+        "title": "User can navigate between pages using pagination controls",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User clicks 'Next' button",
+            "Next page of results loads",
+            "User clicks 'Previous' button",
+            "Previous page loads",
+            "User can click specific page number to jump to it"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User clicks 'Next' button\n- Next page of results loads\n- User clicks 'Previous' button\n- Previous page loads\n- User can click specific page number to jump to it"
+        }
+      },
+      {
+        "id": "FR-11",
+        "kind": "requirement",
+        "title": "Clicking a column header sorts the table by that column",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User clicks on a column header",
+            "Table sorts by that column in ascending order",
+            "Sort indicator (arrow) appears on the column",
+            "User clicks same header again",
+            "Sort order toggles to descending",
+            "Sort indicator updates to show descending"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User clicks on a column header\n- Table sorts by that column in ascending order\n- Sort indicator (arrow) appears on the column\n- User clicks same header again\n- Sort order toggles to descending\n- Sort indicator updates to show descending"
+        }
+      },
+      {
+        "id": "FR-12",
+        "kind": "requirement",
+        "title": "NULL values are displayed with distinct styling",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Table contains NULL values",
+            "NULL cells display 'NULL' text or placeholder",
+            "NULL cells have distinct visual styling (italic, gray, etc.)"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Table contains NULL values\n- NULL cells display 'NULL' text or placeholder\n- NULL cells have distinct visual styling (italic, gray, etc.)"
+        }
+      },
+      {
+        "id": "FR-13",
+        "kind": "requirement",
+        "title": "BLOB data shows a size indicator instead of raw content",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Table contains BLOB columns",
+            "BLOB cells display type indicator (e.g., 'BLOB')",
+            "BLOB size is shown (e.g., '1.2 KB')",
+            "Raw binary data is not rendered as text"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Table contains BLOB columns\n- BLOB cells display type indicator (e.g., 'BLOB')\n- BLOB size is shown (e.g., '1.2 KB')\n- Raw binary data is not rendered as text"
+        }
+      },
+      {
+        "id": "FR-14",
+        "kind": "requirement",
+        "title": "SQL query editor text area is available for custom queries",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Query editor panel is visible in the UI",
+            "Text area accepts user input",
+            "User can type SQL queries",
+            "Text area supports multi-line input"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Query editor panel is visible in the UI\n- Text area accepts user input\n- User can type SQL queries\n- Text area supports multi-line input"
+        }
+      },
+      {
+        "id": "FR-15",
+        "kind": "requirement",
+        "title": "User can execute a query by clicking the Run button",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User types a SQL query in the editor",
+            "User clicks the 'Run' button",
+            "Query is executed against the database",
+            "Results appear in the data viewer"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User types a SQL query in the editor\n- User clicks the 'Run' button\n- Query is executed against the database\n- Results appear in the data viewer"
+        }
+      },
+      {
+        "id": "FR-16",
+        "kind": "requirement",
+        "title": "User can execute a query with Ctrl+Enter keyboard shortcut",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User types a SQL query in the editor",
+            "User presses Ctrl+Enter (or Cmd+Enter on Mac)",
+            "Query executes",
+            "Results display in the data viewer"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User types a SQL query in the editor\n- User presses Ctrl+Enter (or Cmd+Enter on Mac)\n- Query executes\n- Results display in the data viewer"
+        }
+      },
+      {
+        "id": "FR-17",
+        "kind": "requirement",
+        "title": "Query results display in the same table format as table browsing",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User executes a custom SQL query",
+            "Results render in the data table component",
+            "Column headers show result column names",
+            "Pagination works for query results"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User executes a custom SQL query\n- Results render in the data table component\n- Column headers show result column names\n- Pagination works for query results"
+        }
+      },
+      {
+        "id": "FR-18",
+        "kind": "requirement",
+        "title": "Invalid SQL queries show an error message",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User types an invalid SQL query",
+            "User executes the query",
+            "Error message is displayed",
+            "Error message includes the SQL error description",
+            "Previous results remain visible or cleared gracefully"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User types an invalid SQL query\n- User executes the query\n- Error message is displayed\n- Error message includes the SQL error description\n- Previous results remain visible or cleared gracefully"
+        }
+      },
+      {
+        "id": "FR-19",
+        "kind": "requirement",
+        "title": "SQL editor has basic syntax highlighting",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User types SQL in the editor",
+            "SQL keywords (SELECT, FROM, WHERE, etc.) are highlighted",
+            "String literals are highlighted in a different color",
+            "Numbers are highlighted distinctly"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User types SQL in the editor\n- SQL keywords (SELECT, FROM, WHERE, etc.) are highlighted\n- String literals are highlighted in a different color\n- Numbers are highlighted distinctly"
+        }
+      },
+      {
+        "id": "UI-1",
+        "kind": "requirement",
+        "title": "Wide tables scroll horizontally",
+        "status": "pending",
+        "metadata": {
+          "category": "ui",
+          "passes": false,
+          "steps": [
+            "Table with many columns is displayed",
+            "Table container shows horizontal scrollbar",
+            "User can scroll left/right to see all columns"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Table with many columns is displayed\n- Table container shows horizontal scrollbar\n- User can scroll left/right to see all columns"
+        }
+      },
+      {
+        "id": "UI-2",
+        "kind": "requirement",
+        "title": "Table header row remains sticky when scrolling vertically",
+        "status": "pending",
+        "metadata": {
+          "category": "ui",
+          "passes": false,
+          "steps": [
+            "Table with many rows is displayed",
+            "User scrolls down in the table",
+            "Header row stays fixed at the top",
+            "Column names remain visible while scrolling"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Table with many rows is displayed\n- User scrolls down in the table\n- Header row stays fixed at the top\n- Column names remain visible while scrolling"
+        }
+      },
+      {
+        "id": "UI-3",
+        "kind": "requirement",
+        "title": "Long cell values are truncated with ellipsis",
+        "status": "pending",
+        "metadata": {
+          "category": "ui",
+          "passes": false,
+          "steps": [
+            "Cell contains text longer than column width",
+            "Text is truncated with ellipsis (...)",
+            "Column maintains consistent width"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Cell contains text longer than column width\n- Text is truncated with ellipsis (...)\n- Column maintains consistent width"
+        }
+      },
+      {
+        "id": "UI-4",
+        "kind": "requirement",
+        "title": "Hovering over truncated cells shows full content in tooltip",
+        "status": "pending",
+        "metadata": {
+          "category": "ui",
+          "passes": false,
+          "steps": [
+            "Cell has truncated content",
+            "User hovers over the cell",
+            "Tooltip appears with full cell value",
+            "Tooltip disappears when mouse leaves"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Cell has truncated content\n- User hovers over the cell\n- Tooltip appears with full cell value\n- Tooltip disappears when mouse leaves"
+        }
+      },
+      {
+        "id": "UI-5",
+        "kind": "requirement",
+        "title": "Empty state is shown when no database is loaded",
+        "status": "pending",
+        "metadata": {
+          "category": "ui",
+          "passes": false,
+          "steps": [
+            "Application loads without a file",
+            "Drop zone with instructions is displayed",
+            "SQLite icon or graphic is shown",
+            "Supported file formats are listed",
+            "Privacy message about local data is shown"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Application loads without a file\n- Drop zone with instructions is displayed\n- SQLite icon or graphic is shown\n- Supported file formats are listed\n- Privacy message about local data is shown"
+        }
+      },
+      {
+        "id": "UI-6",
+        "kind": "requirement",
+        "title": "Application header displays logo and title",
+        "status": "pending",
+        "metadata": {
+          "category": "ui",
+          "passes": false,
+          "steps": [
+            "Page loads",
+            "Header is visible at top of page",
+            "Logo/icon is displayed",
+            "'SQLite UI' title is shown"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Page loads\n- Header is visible at top of page\n- Logo/icon is displayed\n- 'SQLite UI' title is shown"
+        }
+      },
+      {
+        "id": "FR-20",
+        "kind": "requirement",
+        "title": "Quick filter input filters visible table rows",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Table data is displayed",
+            "Filter input field is visible above the table",
+            "User types in the filter input",
+            "Rows not matching the filter text are hidden",
+            "Matching rows remain visible",
+            "Clearing filter shows all rows again"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Table data is displayed\n- Filter input field is visible above the table\n- User types in the filter input\n- Rows not matching the filter text are hidden\n- Matching rows remain visible\n- Clearing filter shows all rows again"
+        }
+      },
+      {
+        "id": "FR-21",
+        "kind": "requirement",
+        "title": "User can export current view to CSV",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Table data is displayed",
+            "User clicks 'Export CSV' button",
+            "CSV file is generated with current view data",
+            "Browser downloads the CSV file"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Table data is displayed\n- User clicks 'Export CSV' button\n- CSV file is generated with current view data\n- Browser downloads the CSV file"
+        }
+      },
+      {
+        "id": "FR-22",
+        "kind": "requirement",
+        "title": "User can export current view to JSON",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Table data is displayed",
+            "User clicks 'Export JSON' button",
+            "JSON file is generated with current view data",
+            "Browser downloads the JSON file"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Table data is displayed\n- User clicks 'Export JSON' button\n- JSON file is generated with current view data\n- Browser downloads the JSON file"
+        }
+      },
+      {
+        "id": "FR-23",
+        "kind": "requirement",
+        "title": "User can copy cell value to clipboard",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User clicks on a cell or uses context menu",
+            "Copy option is available",
+            "Cell value is copied to clipboard",
+            "Visual feedback confirms copy action"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User clicks on a cell or uses context menu\n- Copy option is available\n- Cell value is copied to clipboard\n- Visual feedback confirms copy action"
+        }
+      },
+      {
+        "id": "FR-24",
+        "kind": "requirement",
+        "title": "Query history stores executed queries in localStorage",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User executes a SQL query",
+            "Query is saved to localStorage",
+            "Query history persists after page reload",
+            "Last N queries are retained (older ones removed)"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User executes a SQL query\n- Query is saved to localStorage\n- Query history persists after page reload\n- Last N queries are retained (older ones removed)"
+        }
+      },
+      {
+        "id": "FR-25",
+        "kind": "requirement",
+        "title": "User can re-run queries from history dropdown",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User opens query history dropdown",
+            "Previous queries are listed",
+            "User clicks on a historical query",
+            "Query populates in the editor",
+            "Query can be executed"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User opens query history dropdown\n- Previous queries are listed\n- User clicks on a historical query\n- Query populates in the editor\n- Query can be executed"
+        }
+      },
+      {
+        "id": "FR-26",
+        "kind": "requirement",
+        "title": "User can clear query history",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Query history contains entries",
+            "User clicks 'Clear History' option",
+            "Confirmation prompt appears (optional)",
+            "History is cleared from localStorage",
+            "History dropdown shows empty state"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Query history contains entries\n- User clicks 'Clear History' option\n- Confirmation prompt appears (optional)\n- History is cleared from localStorage\n- History dropdown shows empty state"
+        }
+      },
+      {
+        "id": "FR-27",
+        "kind": "requirement",
+        "title": "Foreign key columns show a visual indicator",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Table with foreign key constraints is selected",
+            "Columns with FK constraints have an icon or badge",
+            "FK indicator distinguishes FK columns from regular columns"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Table with foreign key constraints is selected\n- Columns with FK constraints have an icon or badge\n- FK indicator distinguishes FK columns from regular columns"
+        }
+      },
+      {
+        "id": "FR-28",
+        "kind": "requirement",
+        "title": "Clicking a foreign key value navigates to the referenced row",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Cell in a FK column is clicked",
+            "Referenced table is loaded",
+            "View jumps to the referenced row",
+            "Referenced row is highlighted"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Cell in a FK column is clicked\n- Referenced table is loaded\n- View jumps to the referenced row\n- Referenced row is highlighted"
+        }
+      },
+      {
+        "id": "FR-29",
+        "kind": "requirement",
+        "title": "Dark mode can be toggled via UI control",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Theme toggle button is visible in header",
+            "User clicks the toggle",
+            "UI switches between light and dark themes",
+            "All components update to new theme colors"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Theme toggle button is visible in header\n- User clicks the toggle\n- UI switches between light and dark themes\n- All components update to new theme colors"
+        }
+      },
+      {
+        "id": "FR-30",
+        "kind": "requirement",
+        "title": "Dark mode respects system preference by default",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User has system dark mode enabled",
+            "Application loads",
+            "Dark theme is applied automatically",
+            "User with light system preference sees light theme"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User has system dark mode enabled\n- Application loads\n- Dark theme is applied automatically\n- User with light system preference sees light theme"
+        }
+      },
+      {
+        "id": "FR-31",
+        "kind": "requirement",
+        "title": "Theme preference is persisted in localStorage",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User toggles theme",
+            "Preference is saved to localStorage",
+            "User reloads the page",
+            "Previously selected theme is applied"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User toggles theme\n- Preference is saved to localStorage\n- User reloads the page\n- Previously selected theme is applied"
+        }
+      },
+      {
+        "id": "NFR-1",
+        "kind": "requirement",
+        "title": "Page loads in under 500ms",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "User navigates to the application URL",
+            "HTML, CSS, and critical JS load",
+            "Initial UI renders within 500ms",
+            "Empty state is interactive"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User navigates to the application URL\n- HTML, CSS, and critical JS load\n- Initial UI renders within 500ms\n- Empty state is interactive"
+        }
+      },
+      {
+        "id": "NFR-2",
+        "kind": "requirement",
+        "title": "sql.js WebAssembly module loads in under 1 second",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "Page load initiates WASM fetch",
+            "sql-wasm.wasm file downloads",
+            "WASM module compiles and initializes",
+            "Total time is under 1 second on broadband"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Page load initiates WASM fetch\n- sql-wasm.wasm file downloads\n- WASM module compiles and initializes\n- Total time is under 1 second on broadband"
+        }
+      },
+      {
+        "id": "NFR-3",
+        "kind": "requirement",
+        "title": "10MB database file opens in under 2 seconds",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "User loads a 10MB SQLite file",
+            "File is read into memory",
+            "sql.js initializes the database",
+            "Table list is populated",
+            "Total time is under 2 seconds"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User loads a 10MB SQLite file\n- File is read into memory\n- sql.js initializes the database\n- Table list is populated\n- Total time is under 2 seconds"
+        }
+      },
+      {
+        "id": "NFR-4",
+        "kind": "requirement",
+        "title": "Simple SELECT queries execute in under 100ms",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "Database is loaded",
+            "User runs a simple SELECT query",
+            "Query executes and returns results",
+            "Results render in under 100ms total"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Database is loaded\n- User runs a simple SELECT query\n- Query executes and returns results\n- Results render in under 100ms total"
+        }
+      },
+      {
+        "id": "NFR-5",
+        "kind": "requirement",
+        "title": "Warning is shown for files over 100MB",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "User attempts to load a file larger than 100MB",
+            "Warning message is displayed",
+            "User can choose to proceed or cancel",
+            "File loads if user confirms"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User attempts to load a file larger than 100MB\n- Warning message is displayed\n- User can choose to proceed or cancel\n- File loads if user confirms"
+        }
+      },
+      {
+        "id": "NFR-6",
+        "kind": "requirement",
+        "title": "Files over 500MB are rejected with an error",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "User attempts to load a file larger than 500MB",
+            "Error message is displayed",
+            "File is not loaded",
+            "Application remains functional"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User attempts to load a file larger than 500MB\n- Error message is displayed\n- File is not loaded\n- Application remains functional"
+        }
+      },
+      {
+        "id": "NFR-7",
+        "kind": "requirement",
+        "title": "Loading progress is shown for files over 10MB",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "User loads a file larger than 10MB",
+            "Progress indicator appears",
+            "Progress updates as file loads",
+            "Progress indicator disappears when complete"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User loads a file larger than 10MB\n- Progress indicator appears\n- Progress updates as file loads\n- Progress indicator disappears when complete"
+        }
+      },
+      {
+        "id": "NFR-8",
+        "kind": "requirement",
+        "title": "Application uses semantic HTML elements",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "Page uses appropriate semantic tags",
+            "Tables use <table>, <thead>, <tbody>, <th>, <td>",
+            "Navigation uses <nav>",
+            "Main content uses <main>",
+            "Buttons use <button> elements"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Page uses appropriate semantic tags\n- Tables use <table>, <thead>, <tbody>, <th>, <td>\n- Navigation uses <nav>\n- Main content uses <main>\n- Buttons use <button> elements"
+        }
+      },
+      {
+        "id": "NFR-9",
+        "kind": "requirement",
+        "title": "Interactive elements have ARIA labels",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "Buttons have aria-label or visible text",
+            "Icon-only buttons have descriptive aria-labels",
+            "Form inputs have associated labels",
+            "Status messages use aria-live regions"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Buttons have aria-label or visible text\n- Icon-only buttons have descriptive aria-labels\n- Form inputs have associated labels\n- Status messages use aria-live regions"
+        }
+      },
+      {
+        "id": "NFR-10",
+        "kind": "requirement",
+        "title": "Application is keyboard navigable",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "User can Tab through all interactive elements",
+            "Focus indicators are visible",
+            "Enter/Space activates buttons",
+            "Escape closes modals/dropdowns"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User can Tab through all interactive elements\n- Focus indicators are visible\n- Enter/Space activates buttons\n- Escape closes modals/dropdowns"
+        }
+      },
+      {
+        "id": "NFR-11",
+        "kind": "requirement",
+        "title": "Color contrast meets WCAG AA standards",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "Text has minimum 4.5:1 contrast ratio against background",
+            "Large text has minimum 3:1 contrast ratio",
+            "Interactive elements are distinguishable",
+            "Both light and dark themes meet contrast requirements"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Text has minimum 4.5:1 contrast ratio against background\n- Large text has minimum 3:1 contrast ratio\n- Interactive elements are distinguishable\n- Both light and dark themes meet contrast requirements"
+        }
+      },
+      {
+        "id": "NFR-12",
+        "kind": "requirement",
+        "title": "No data is transmitted to external servers",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "User loads and queries a database",
+            "Network tab shows no external requests with user data",
+            "All processing happens client-side",
+            "Only static assets are fetched from hosting server"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User loads and queries a database\n- Network tab shows no external requests with user data\n- All processing happens client-side\n- Only static assets are fetched from hosting server"
+        }
+      },
+      {
+        "id": "NFR-13",
+        "kind": "requirement",
+        "title": "User input displayed in UI is properly sanitized",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "Database contains potentially malicious content (script tags, etc.)",
+            "Data is displayed in the table",
+            "No scripts execute",
+            "HTML entities are properly escaped"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Database contains potentially malicious content (script tags, etc.)\n- Data is displayed in the table\n- No scripts execute\n- HTML entities are properly escaped"
+        }
+      },
+      {
+        "id": "NFR-14",
+        "kind": "requirement",
+        "title": "Application works in Chrome 80+",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "Application is opened in Chrome 80 or later",
+            "All features function correctly",
+            "No console errors related to unsupported APIs"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Application is opened in Chrome 80 or later\n- All features function correctly\n- No console errors related to unsupported APIs"
+        }
+      },
+      {
+        "id": "NFR-15",
+        "kind": "requirement",
+        "title": "Application works in Firefox 75+",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "Application is opened in Firefox 75 or later",
+            "All features function correctly",
+            "No console errors related to unsupported APIs"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Application is opened in Firefox 75 or later\n- All features function correctly\n- No console errors related to unsupported APIs"
+        }
+      },
+      {
+        "id": "NFR-16",
+        "kind": "requirement",
+        "title": "Application works in Safari 14+",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "Application is opened in Safari 14 or later",
+            "All features function correctly",
+            "No console errors related to unsupported APIs"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Application is opened in Safari 14 or later\n- All features function correctly\n- No console errors related to unsupported APIs"
+        }
+      },
+      {
+        "id": "NFR-17",
+        "kind": "requirement",
+        "title": "Application works in Edge 80+",
+        "status": "pending",
+        "metadata": {
+          "category": "non-functional",
+          "passes": false,
+          "steps": [
+            "Application is opened in Edge 80 or later",
+            "All features function correctly",
+            "No console errors related to unsupported APIs"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Application is opened in Edge 80 or later\n- All features function correctly\n- No console errors related to unsupported APIs"
+        }
+      },
+      {
+        "id": "UI-7",
+        "kind": "requirement",
+        "title": "Sidebar is resizable or has appropriate fixed width",
+        "status": "pending",
+        "metadata": {
+          "category": "ui",
+          "passes": false,
+          "steps": [
+            "Sidebar displays table list",
+            "Sidebar has reasonable width for table names",
+            "Long table names are truncated or sidebar scrolls horizontally"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Sidebar displays table list\n- Sidebar has reasonable width for table names\n- Long table names are truncated or sidebar scrolls horizontally"
+        }
+      },
+      {
+        "id": "UI-8",
+        "kind": "requirement",
+        "title": "Selected table is visually highlighted in sidebar",
+        "status": "pending",
+        "metadata": {
+          "category": "ui",
+          "passes": false,
+          "steps": [
+            "User clicks on a table in the sidebar",
+            "Selected table has distinct background or border",
+            "Selection is clearly visible",
+            "Previous selection is deselected"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User clicks on a table in the sidebar\n- Selected table has distinct background or border\n- Selection is clearly visible\n- Previous selection is deselected"
+        }
+      },
+      {
+        "id": "UI-9",
+        "kind": "requirement",
+        "title": "Table name and row count displayed above data viewer",
+        "status": "pending",
+        "metadata": {
+          "category": "ui",
+          "passes": false,
+          "steps": [
+            "User selects a table",
+            "Table name appears above the data grid",
+            "Row count is displayed (e.g., '1,234 rows')"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User selects a table\n- Table name appears above the data grid\n- Row count is displayed (e.g., '1,234 rows')"
+        }
+      },
+      {
+        "id": "UI-10",
+        "kind": "requirement",
+        "title": "Query editor panel is collapsible or togglable",
+        "status": "pending",
+        "metadata": {
+          "category": "ui",
+          "passes": false,
+          "steps": [
+            "Query editor panel has expand/collapse control",
+            "User clicks to collapse the panel",
+            "Panel minimizes to save space",
+            "User can expand it again"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Query editor panel has expand/collapse control\n- User clicks to collapse the panel\n- Panel minimizes to save space\n- User can expand it again"
+        }
+      },
+      {
+        "id": "FR-32",
+        "kind": "requirement",
+        "title": "First column can be made sticky via toggle",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "Toggle for sticky first column is available",
+            "User enables the toggle",
+            "First column remains fixed when scrolling horizontally",
+            "User can disable to return to normal scrolling"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- Toggle for sticky first column is available\n- User enables the toggle\n- First column remains fixed when scrolling horizontally\n- User can disable to return to normal scrolling"
+        }
+      },
+      {
+        "id": "FR-33",
+        "kind": "requirement",
+        "title": "Column-specific filtering allows filtering by individual columns",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User opens column filter options",
+            "User can select which column to filter",
+            "User enters filter value",
+            "Only rows matching that column's filter are shown"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User opens column filter options\n- User can select which column to filter\n- User enters filter value\n- Only rows matching that column's filter are shown"
+        }
+      },
+      {
+        "id": "FR-34",
+        "kind": "requirement",
+        "title": "User can copy entire row to clipboard",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User selects a row or uses row context menu",
+            "Copy row option is available",
+            "Row data is copied as tab-separated or JSON",
+            "Visual feedback confirms copy"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User selects a row or uses row context menu\n- Copy row option is available\n- Row data is copied as tab-separated or JSON\n- Visual feedback confirms copy"
+        }
+      },
+      {
+        "id": "FR-35",
+        "kind": "requirement",
+        "title": "Foreign key relationships are shown in schema info",
+        "status": "pending",
+        "metadata": {
+          "category": "functional",
+          "passes": false,
+          "steps": [
+            "User views table schema/structure",
+            "FK relationships are listed",
+            "Referenced table and column are displayed"
+          ]
+        },
+        "narrative": {
+          "Acceptance Criteria": "- User views table schema/structure\n- FK relationships are listed\n- Referenced table and column are displayed"
+        }
+      }
+    ],
+    "metadata": {
+      "source": "examples/prd.json"
+    }
+  }
+}
