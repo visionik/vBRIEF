@@ -1,0 +1,81 @@
+{
+  "vBRIEFInfo": {
+    "version": "0.5",
+    "created": "2026-02-03T09:00:00Z"
+  },
+  "plan": {
+    "id": "build-pipeline",
+    "title": "CI/CD Build Pipeline",
+    "status": "running",
+    "narratives": {
+      "Proposal": "Implement a build pipeline with parallel execution where possible, while maintaining dependency order."
+    },
+    "items": [
+      {
+        "id": "lint",
+        "title": "Lint code",
+        "status": "completed"
+      },
+      {
+        "id": "test",
+        "title": "Run unit tests",
+        "status": "running"
+      },
+      {
+        "id": "build",
+        "title": "Build artifacts",
+        "status": "pending"
+      },
+      {
+        "id": "deploy-staging",
+        "title": "Deploy to staging",
+        "status": "pending"
+      },
+      {
+        "id": "integration-tests",
+        "title": "Run integration tests",
+        "status": "pending"
+      },
+      {
+        "id": "deploy-prod",
+        "title": "Deploy to production",
+        "status": "pending"
+      }
+    ],
+    "edges": [
+      {
+        "from": "lint",
+        "to": "build",
+        "type": "blocks"
+      },
+      {
+        "from": "test",
+        "to": "build",
+        "type": "blocks"
+      },
+      {
+        "from": "build",
+        "to": "deploy-staging",
+        "type": "blocks"
+      },
+      {
+        "from": "deploy-staging",
+        "to": "integration-tests",
+        "type": "blocks"
+      },
+      {
+        "from": "integration-tests",
+        "to": "deploy-prod",
+        "type": "blocks"
+      },
+      {
+        "from": "lint",
+        "to": "test",
+        "type": "informs"
+      }
+    ],
+    "tags": ["cicd", "pipeline", "automation"],
+    "created": "2026-02-03T08:00:00Z",
+    "updated": "2026-02-03T09:00:00Z"
+  }
+}

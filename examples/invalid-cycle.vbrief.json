@@ -1,0 +1,43 @@
+{
+  "vBRIEFInfo": {
+    "version": "0.5"
+  },
+  "plan": {
+    "title": "Invalid Plan with Cycle",
+    "status": "draft",
+    "items": [
+      {
+        "id": "a",
+        "title": "Task A",
+        "status": "pending"
+      },
+      {
+        "id": "b",
+        "title": "Task B",
+        "status": "pending"
+      },
+      {
+        "id": "c",
+        "title": "Task C",
+        "status": "pending"
+      }
+    ],
+    "edges": [
+      {
+        "from": "a",
+        "to": "b",
+        "type": "blocks"
+      },
+      {
+        "from": "b",
+        "to": "c",
+        "type": "blocks"
+      },
+      {
+        "from": "c",
+        "to": "a",
+        "type": "blocks"
+      }
+    ]
+  }
+}

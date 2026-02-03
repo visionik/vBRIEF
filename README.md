@@ -1,24 +1,30 @@
-# vBRIEF Specification v0.4
+# vBRIEF Specification v0.5-beta
 
-> **DRAFT SPECIFICATION**: This document is a draft and subject to change. Feedback, suggestions, and contributions from the community are highly encouraged. Please submit input via GitHub issues or pull requests.
+> **BETA RELEASE**: This specification is in beta. The core architecture is stable but API implementations are pending. Feedback welcome via GitHub issues or pull requests.
 
-Agentic coding systems increasingly rely on structured memory: **short-term memory** (todo lists for immediate tasks), **medium-term memory** (plans for project organization), and **long-term memory** (playbooks for accumulated strategies and learnings). However, proprietary formats used by different agentic systems hamper interoperability and limit cross-agent collaboration.
+vBRIEF (Basic Relational Intent Exchange Format) is an **open, standardized format** for agentic memory systems that unifies todos, plans, playbooks, and prompt-graphs into a single, powerful Plan model.
 
-vBRIEF provides an **open, standardized format** for these memory systems that is:
-- **Agent-friendly**: Token-efficient TRON encoding optimized for LLM workflows
-- **Human-readable**: Clear structure for direct/TUI/GUI editing and review
-- **Interoperable**: JSON compatibility for integration with existing tools
-- **Extensible**: Modular architecture supports simple to complex use cases
+## What's New in v0.5
 
-This enables both agentic systems and human-facing tools to share a common representation of work, plans, and accumulated knowledge.
+🎉 **Unified Plan Model** - Single container replaces TodoList/Plan/Playbook  
+📊 **DAG Support** - Directed acyclic graphs for complex workflows  
+🔗 **Hierarchical IDs** - Dot notation for nested organization  
+⚡ **Token Efficiency** - TRON format with 35-40% savings  
+✅ **Comprehensive Validation** - Schema + conformance + DAG validation  
+📈 **Visual Documentation** - 10+ Mermaid diagrams  
+🛠️ **Developer Tools** - DAG visualizer and validators included  
 
-**Origins and Scope**:
-- This specification began with a review of internal memory formats used by several agentic coding systems to ensure it addresses real-world requirements
-- The design is inspired by established standards such as vCard and vCalendar/iCalendar
+## Key Features
 
-**Specification Version**: 0.4
+- **Graduated Complexity**: Start simple, add features as needed
+- **DAG Workflows**: Four edge types (blocks, informs, invalidates, suggests)
+- **Token Optimized**: TRON encoding reduces LLM token usage by 35-40%
+- **Interoperable**: JSON Schema validation and cross-platform compatibility
+- **Extensible**: Modular architecture with promoted core fields
 
-**Last Updated**: 2025-12-28T00:00:00Z
+**Specification Version**: 0.5-beta
+
+**Release Date**: 2026-02-03
 
 **Author**: Jonathan Taylor (visionik@pobox.com)
 
@@ -80,24 +86,78 @@ By standardizing how agentic systems remember and organize their work, vBRIEF en
 
 **Migration**: See `history/spec-v0.3.md` for previous version.
 
-## Changelog: v0.4 → v0.5 (Beta)
+## Changelog: v0.4 → v0.5-beta (2026-02-03)
 
-**Breaking Changes**:
-- **vContext → vBRIEF**: Complete rebrand from vContext to vBRIEF (Basic Relational Intent Exchange Format)
-- **File extensions**: `.vcontext.json` → `.vbrief.json`, `.vcontext.tron` → `.vbrief.tron`
-- **Schema files**: `vcontext-*.schema.json` → `vbrief-*.schema.json`
-- **Directories**: `vcontext/` → `vbrief/`, `.vcontext/` → `.vbrief/`
-- **Go module path**: `github.com/visionik/vContext` → `github.com/visionik/vBRIEF`
+**MAJOR ARCHITECTURAL REFACTOR** - This release unifies todos, plans, playbooks, and prompt-graphs into a single Plan model.
 
-**Rationale**:
-The new name better communicates the format's purpose:
-- **Basic**: Low-friction, minimal-core promise with simple syntax
-- **Relational**: DAG-like dependencies, cross-references, and hierarchies
-- **Intent**: Preserves narrative, provenance, reasoning traces, and goals
-- **Exchange**: Interoperable format for seamless agent/tool communication
-- **Format**: Explicitly a structured file specification
+### Breaking Changes
 
-**Migration**: All references to vContext/vcontext should be updated to vBRIEF/vbrief. No structural changes to the format itself.
+**Container Model**:
+- ❌ **TodoList removed** - Use Plan with minimal fields
+- ❌ **Playbook removed** - Use Plan with retrospective narratives  
+- ✅ **Single Plan container** - Graduated complexity model
+
+**Field Changes**:
+- ❌ **dependencies field removed** - Use `edges` with `type: "blocks"`
+- ❌ **PlanItem.todoList removed** - Use `subItems` or `planRef`
+- 🔄 **Status enum changed** - `inProgress` → `running`
+- 🔄 **Plan.narratives now optional** - Was required in v0.4
+- 🔄 **PlanItem unified** - Merged TodoItem and PlanItem fields
+
+### New Features
+
+**DAG Support**:
+- ✨ **Edges field** - Plan-level DAG relationships
+- ✨ **4 core edge types** - blocks, informs, invalidates, suggests
+- ✨ **Cycle detection** - O(V+E) validation algorithm
+- ✨ **Hierarchical IDs** - Dot notation (parent.child)
+- ✨ **planRef field** - URI references to external Plans
+
+**Enhanced Model**:
+- ✨ **Universal Status enum** - 8 values (draft→cancelled)
+- ✨ **Promoted core fields** - id, uid, tags, metadata, created, updated
+- ✨ **TitleCase narratives** - Convention for narrative keys
+- ✨ **Retrospective keys** - Outcome, Strengths, Weaknesses, Lessons
+
+**Validation & Tools**:
+- ✨ **dag_validator.py** - Standalone DAG cycle detection
+- ✨ **vbrief_validator.py** - Comprehensive validation (schema + conformance + DAG)
+- ✨ **dag-visualizer.py** - Mermaid diagram generator (3 output formats)
+
+**Documentation**:
+- ✨ **SPECIFICATION.md** - Complete technical spec with implementation plan
+- ✨ **GUIDE.md** - User guide with 10+ Mermaid diagrams
+- ✨ **MIGRATION.md** - Detailed v0.4 → v0.5 migration guide
+- ✨ **docs/tron-encoding.md** - TRON format guide with token counts
+- ✨ **RELEASE-NOTES-v0.5-beta.md** - Beta release notes
+
+**Examples**:
+- 📄 6 complete example documents demonstrating graduated complexity
+- ✅ All examples validate successfully
+
+### Statistics
+- 📊 ~3,600 lines of implementation
+- 📄 5 major documentation files
+- 🔧 3 validation/visualization tools
+- 📐 10+ Mermaid diagrams
+- ✅ 100% example validation pass rate
+
+### Migration Path
+
+All v0.4 documents require migration. See [MIGRATION.md](MIGRATION.md) for:
+- Step-by-step instructions
+- Field mapping tables
+- Common patterns
+- FAQ
+
+**Quick Start**: See [GUIDE.md](GUIDE.md) for examples and best practices.
+
+### Known Limitations (Beta)
+- ⏳ API implementations (Go, Python, TypeScript) - Coming in stable release
+- ⏳ TRON parser libraries - Use JSON for now
+- ⏳ Package publishing - Manual installation for beta
+
+See [RELEASE-NOTES-v0.5-beta.md](RELEASE-NOTES-v0.5-beta.md) for complete details.
 
 ## Conformance and normative language
 

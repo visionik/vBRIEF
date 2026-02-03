@@ -1,0 +1,23 @@
+{
+  "vBRIEFInfo": {
+    "version": "0.5"
+  },
+  "plan": {
+    "title": "Daily Tasks",
+    "status": "running",
+    "items": [
+      {
+        "title": "Fix authentication bug",
+        "status": "pending"
+      },
+      {
+        "title": "Review PR #123",
+        "status": "running"
+      },
+      {
+        "title": "Update documentation",
+        "status": "pending"
+      }
+    ]
+  }
+}

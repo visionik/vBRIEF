@@ -1,0 +1,48 @@
+{
+  "vBRIEFInfo": {
+    "version": "0.5",
+    "created": "2026-02-03T09:00:00Z"
+  },
+  "plan": {
+    "id": "api-redesign",
+    "title": "API Redesign: REST to GraphQL",
+    "status": "proposed",
+    "narratives": {
+      "Proposal": "Migrate the REST API to GraphQL to reduce overfetching and improve developer experience.",
+      "Background": "Current API has 50+ endpoints with inconsistent patterns. Clients fetch multiple endpoints for single views, causing performance issues.",
+      "Problem": "Overfetching wastes bandwidth. Underfetching requires multiple round-trips. API maintenance burden is high.",
+      "Constraint": "Must maintain backward compatibility with existing REST clients during migration period.",
+      "Alternative": "Could use REST with field filtering (JSON:API or similar), but doesn't solve type safety issues.",
+      "Risk": "Learning curve for team unfamiliar with GraphQL. Potential performance issues with N+1 queries if not properly optimized."
+    },
+    "items": [
+      {
+        "id": "research",
+        "title": "Research Phase",
+        "status": "completed",
+        "priority": "high"
+      },
+      {
+        "id": "schema",
+        "title": "Define GraphQL Schema",
+        "status": "running",
+        "priority": "high"
+      },
+      {
+        "id": "implementation",
+        "title": "Implement Resolvers",
+        "status": "pending",
+        "priority": "medium"
+      },
+      {
+        "id": "migration",
+        "title": "Client Migration",
+        "status": "pending",
+        "priority": "medium"
+      }
+    ],
+    "tags": ["api", "graphql", "architecture"],
+    "created": "2026-02-01T10:00:00Z",
+    "updated": "2026-02-03T09:00:00Z"
+  }
+}

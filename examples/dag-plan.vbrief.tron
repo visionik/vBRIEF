@@ -1,0 +1,35 @@
+class Edge: from, to, type
+class PlanItem: id, title, status
+
+vBRIEFInfo: {
+  version: "0.5",
+  created: "2026-02-03T09:00:00Z"
+}
+
+plan: {
+  id: "build-pipeline",
+  title: "CI/CD Build Pipeline",
+  status: "running",
+  narratives: {
+    Proposal: "Implement a build pipeline with parallel execution where possible, while maintaining dependency order."
+  },
+  items: [
+    PlanItem("lint", "Lint code", "completed"),
+    PlanItem("test", "Run unit tests", "running"),
+    PlanItem("build", "Build artifacts", "pending"),
+    PlanItem("deploy-staging", "Deploy to staging", "pending"),
+    PlanItem("integration-tests", "Run integration tests", "pending"),
+    PlanItem("deploy-prod", "Deploy to production", "pending")
+  ],
+  edges: [
+    Edge("lint", "build", "blocks"),
+    Edge("test", "build", "blocks"),
+    Edge("build", "deploy-staging", "blocks"),
+    Edge("deploy-staging", "integration-tests", "blocks"),
+    Edge("integration-tests", "deploy-prod", "blocks"),
+    Edge("lint", "test", "informs")
+  ],
+  tags: ["cicd", "pipeline", "automation"],
+  created: "2026-02-03T08:00:00Z",
+  updated: "2026-02-03T09:00:00Z"
+}

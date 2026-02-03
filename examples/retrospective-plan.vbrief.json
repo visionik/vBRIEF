@@ -1,0 +1,58 @@
+{
+  "vBRIEFInfo": {
+    "version": "0.5",
+    "created": "2026-02-03T09:00:00Z"
+  },
+  "plan": {
+    "id": "incident-db-outage",
+    "title": "Incident Response: Database Outage 2026-02-02",
+    "status": "completed",
+    "narratives": {
+      "Outcome": "Successfully restored service in 45 minutes with no data loss. Impact: 15% of users experienced degraded performance.",
+      "Strengths": "Clear runbook made initial diagnosis fast. Team communication was excellent. Failover process worked as designed.",
+      "Weaknesses": "Monitoring didn't catch the disk space issue until after the failure. Manual failover took 20 minutes due to unclear documentation. No automated alerts for disk utilization.",
+      "Lessons": "Automate database failover to reduce recovery time. Add canary queries to detect degradation early. Implement disk space alerts at 70% threshold. Update runbook with clearer failover steps."
+    },
+    "items": [
+      {
+        "id": "detection",
+        "title": "Issue Detected",
+        "status": "completed",
+        "completed": "2026-02-02T14:05:00Z",
+        "narrative": {
+          "Detail": "Production alert fired for API timeouts"
+        }
+      },
+      {
+        "id": "diagnosis",
+        "title": "Root Cause Identified",
+        "status": "completed",
+        "completed": "2026-02-02T14:15:00Z",
+        "narrative": {
+          "Detail": "Database disk space at 100%, causing writes to fail"
+        }
+      },
+      {
+        "id": "mitigation",
+        "title": "Immediate Mitigation",
+        "status": "completed",
+        "completed": "2026-02-02T14:30:00Z",
+        "narrative": {
+          "Detail": "Cleared old log files to free 20GB space"
+        }
+      },
+      {
+        "id": "resolution",
+        "title": "Full Resolution",
+        "status": "completed",
+        "completed": "2026-02-02T14:50:00Z",
+        "narrative": {
+          "Detail": "Scaled database volume and verified service health"
+        }
+      }
+    ],
+    "tags": ["incident", "database", "postmortem"],
+    "created": "2026-02-02T14:00:00Z",
+    "updated": "2026-02-03T09:00:00Z"
+  }
+}
