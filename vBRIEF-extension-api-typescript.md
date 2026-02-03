@@ -1,4 +1,4 @@
-# vContext Extension Proposal: TypeScript/JavaScript API Library
+# vBRIEF Extension Proposal: TypeScript/JavaScript API Library
 
 > **EARLY DRAFT**: This is an initial proposal and subject to change. Comments, feedback, and suggestions are strongly encouraged. Please provide input via GitHub issues or discussions.
 
@@ -10,7 +10,7 @@
 
 ## Overview
 
-This document describes a TypeScript library implementation for working with vContext documents. The library provides type-safe interfaces for creating, parsing, manipulating, and validating vContext TodoLists and Plans in both JSON and TRON formats, with full JavaScript interoperability.
+This document describes a TypeScript library implementation for working with vBRIEF documents. The library provides type-safe interfaces for creating, parsing, manipulating, and validating vBRIEF TodoLists and Plans in both JSON and TRON formats, with full JavaScript interoperability.
 
 The library enables:
 - **Type-safe operations** with full TypeScript support
@@ -32,10 +32,10 @@ The library enables:
 - Strong integration with modern frameworks
 
 **Use cases**:
-- Web-based vContext editors and viewers (React, Vue, Svelte)
+- Web-based vBRIEF editors and viewers (React, Vue, Svelte)
 - Node.js agentic systems and task orchestrators
 - CLI tools with modern JS runtimes (Bun, Deno)
-- Browser extensions for vContext management
+- Browser extensions for vBRIEF management
 - API servers (Express, Fastify, Hono)
 - Desktop apps (Electron, Tauri)
 - Mobile apps (React Native, Capacitor)
@@ -45,7 +45,7 @@ The library enables:
 ### Package Structure
 
 ```
-@vcontext/
+@vbrief/
 ├── core/                  # Core types and interfaces
 │   ├── src/
 │   │   ├── types.ts       # Core type definitions
@@ -132,10 +132,10 @@ The library enables:
 // types.ts
 
 /**
- * Root vContext document
+ * Root vBRIEF document
  */
 export interface Document {
-  vContextInfo: Info;
+  vBRIEFInfo: Info;
   todoList?: TodoList;
   plan?: Plan;
 }
@@ -236,7 +236,7 @@ export class VAgendaDocument {
    */
   static createTodoList(version: string = "0.4"): VAgendaDocument {
     return new VAgendaDocument({
-      vContextInfo: { version },
+      vBRIEFInfo: { version },
       todoList: { items: [] }
     });
   }
@@ -249,7 +249,7 @@ export class VAgendaDocument {
     version: string = "0.4"
   ): VAgendaDocument {
     return new VAgendaDocument({
-      vContextInfo: { version },
+      vBRIEFInfo: { version },
       plan: {
         title,
         status: "draft",
@@ -331,7 +331,7 @@ export class VAgendaDocument {
 
 export interface Parser {
   /**
-   * Parse a vContext document
+   * Parse a vBRIEF document
    */
   parse(content: string): Document;
   
@@ -402,7 +402,7 @@ export class TodoListBuilder {
 
   constructor(version: string = "0.4") {
     this.doc = {
-      vContextInfo: { version },
+      vBRIEFInfo: { version },
       todoList: { items: [] }
     };
   }
@@ -411,7 +411,7 @@ export class TodoListBuilder {
    * Set document author
    */
   author(name: string): this {
-    this.doc.vContextInfo.author = name;
+    this.doc.vBRIEFInfo.author = name;
     return this;
   }
 
@@ -419,7 +419,7 @@ export class TodoListBuilder {
    * Set document description
    */
   description(desc: string): this {
-    this.doc.vContextInfo.description = desc;
+    this.doc.vBRIEFInfo.description = desc;
     return this;
   }
 
@@ -461,7 +461,7 @@ export class PlanBuilder {
 
   constructor(title: string, version: string = "0.4") {
     this.doc = {
-      vContextInfo: { version },
+      vBRIEFInfo: { version },
       plan: {
         title,
         status: "draft",
@@ -584,7 +584,7 @@ export const InfoSchema = z.object({
 });
 
 export const DocumentSchema = z.object({
-  vContextInfo: InfoSchema,
+  vBRIEFInfo: InfoSchema,
   todoList: TodoListSchema.optional(),
   plan: PlanSchema.optional()
 });
@@ -729,7 +729,7 @@ The library supports document modification through multiple patterns: direct mut
 ```typescript
 // mutator/todo-mutator.ts
 
-import type { TodoList, TodoItem, ItemStatus } from "@vcontext/core";
+import type { TodoList, TodoItem, ItemStatus } from "@vbrief/core";
 
 /**
  * Helper functions for mutating TodoList
@@ -791,7 +791,7 @@ export class TodoListMutator {
 
 // mutator/plan-mutator.ts
 
-import type { Plan, PlanStatus } from "@vcontext/core";
+import type { Plan, PlanStatus } from "@vbrief/core";
 
 /**
  * Helper functions for mutating Plan
@@ -851,7 +851,7 @@ export function mutatePlan(plan: Plan): PlanMutator {
 ```typescript
 // updater/immutable.ts
 
-import type { Document, TodoList, TodoItem, Plan, ItemStatus, PlanStatus } from "@vcontext/core";
+import type { Document, TodoList, TodoItem, Plan, ItemStatus, PlanStatus } from "@vbrief/core";
 
 /**
  * Immutable update helpers using structural sharing
@@ -985,8 +985,8 @@ export class ImmutableUpdater {
 ```typescript
 // updater/validated.ts
 
-import type { Document, TodoItem, ItemStatus, PlanStatus } from "@vcontext/core";
-import { Validator, type ValidationResult } from "@vcontext/validator";
+import type { Document, TodoItem, ItemStatus, PlanStatus } from "@vbrief/core";
+import { Validator, type ValidationResult } from "@vbrief/validator";
 
 export interface UpdateResult {
   success: boolean;
@@ -1237,7 +1237,7 @@ Extensions use TypeScript declaration merging and module augmentation:
 ```typescript
 // extensions/identifiers/types.ts
 
-declare module "@vcontext/core" {
+declare module "@vbrief/core" {
   interface TodoList {
     id?: string;
   }
@@ -1257,7 +1257,7 @@ declare module "@vcontext/core" {
 
 // extensions/timestamps/types.ts
 
-declare module "@vcontext/core" {
+declare module "@vbrief/core" {
   interface Info {
     created?: string;
     updated?: string;
@@ -1274,7 +1274,7 @@ declare module "@vcontext/core" {
 
 export type Priority = "low" | "medium" | "high" | "critical";
 
-declare module "@vcontext/core" {
+declare module "@vbrief/core" {
   interface TodoList {
     title?: string;
     description?: string;
@@ -1295,7 +1295,7 @@ declare module "@vcontext/core" {
 ### Example 1: Creating a TodoList
 
 ```typescript
-import { todo } from "@vcontext/builder";
+import { todo } from "@vbrief/builder";
 
 const doc = todo("0.4")
   .author("agent-alpha")
@@ -1313,8 +1313,8 @@ console.log(doc.toTRON());
 ### Example 2: Parsing and Querying
 
 ```typescript
-import { VAgendaDocument } from "@vcontext/core";
-import { query } from "@vcontext/query";
+import { VAgendaDocument } from "@vbrief/core";
+import { query } from "@vbrief/query";
 import { readFile } from "fs/promises";
 
 // Parse document
@@ -1333,7 +1333,7 @@ pending.forEach(item => console.log(`  - ${item.title}`));
 ### Example 3: Creating a Plan
 
 ```typescript
-import { plan } from "@vcontext/builder";
+import { plan } from "@vbrief/builder";
 
 const doc = plan("Add user authentication", "0.4")
   .status("draft")
@@ -1353,11 +1353,11 @@ console.log(doc.toTRON());
 ### Example 4: Validation
 
 ```typescript
-import { VAgendaDocument } from "@vcontext/core";
-import { validate } from "@vcontext/validator";
+import { VAgendaDocument } from "@vbrief/core";
+import { validate } from "@vbrief/validator";
 
 const doc = VAgendaDocument.fromJSON(`{
-  "vContextInfo": {"version": "0.4"},
+  "vBRIEFInfo": {"version": "0.4"},
   "todoList": {"items": []}
 }`);
 
@@ -1379,7 +1379,7 @@ if (result.valid) {
 // react/hooks/useTodoList.ts
 
 import { useState, useCallback } from "react";
-import { Document, TodoItem, ItemStatus } from "@vcontext/core";
+import { Document, TodoItem, ItemStatus } from "@vbrief/core";
 
 export function useTodoList(initialDoc: Document) {
   const [doc, setDoc] = useState(initialDoc);
@@ -1426,11 +1426,11 @@ export function useTodoList(initialDoc: Document) {
 }
 
 // Usage in component
-import { useTodoList } from "@vcontext/react";
+import { useTodoList } from "@vbrief/react";
 
 function TodoListComponent() {
   const { items, addItem, updateItemStatus } = useTodoList({
-    vContextInfo: { version: "0.4" },
+    vBRIEFInfo: { version: "0.4" },
     todoList: { items: [] }
   });
 
@@ -1456,7 +1456,7 @@ function TodoListComponent() {
 // vue/composables/useTodoList.ts
 
 import { ref, computed } from "vue";
-import type { Document, TodoItem, ItemStatus } from "@vcontext/core";
+import type { Document, TodoItem, ItemStatus } from "@vbrief/core";
 
 export function useTodoList(initialDoc: Document) {
   const doc = ref(initialDoc);
@@ -1488,8 +1488,8 @@ export function useTodoList(initialDoc: Document) {
 ### Example 7: Direct Mutations
 
 ```typescript
-import { VAgendaDocument } from "@vcontext/core";
-import { mutateTodoList } from "@vcontext/mutator";
+import { VAgendaDocument } from "@vbrief/core";
+import { mutateTodoList } from "@vbrief/mutator";
 import { readFile, writeFile } from "fs/promises";
 
 // Parse existing document
@@ -1519,8 +1519,8 @@ await writeFile("tasks.tron", doc.toTRON());
 ### Example 8: Immutable Updates
 
 ```typescript
-import { VAgendaDocument } from "@vcontext/core";
-import { ImmutableUpdater } from "@vcontext/updater";
+import { VAgendaDocument } from "@vbrief/core";
+import { ImmutableUpdater } from "@vbrief/updater";
 import { readFile } from "fs/promises";
 
 // Parse document
@@ -1555,8 +1555,8 @@ console.log(newDoc.toJSON(true));
 ### Example 9: Validated Updates
 
 ```typescript
-import { VAgendaDocument } from "@vcontext/core";
-import { createUpdater } from "@vcontext/updater";
+import { VAgendaDocument } from "@vbrief/core";
+import { createUpdater } from "@vbrief/updater";
 import { readFile, writeFile } from "fs/promises";
 
 // Parse document
@@ -1590,8 +1590,8 @@ if (result2.success) {
 ### Example 10: Transactional Updates
 
 ```typescript
-import { todo } from "@vcontext/builder";
-import { createUpdater } from "@vcontext/updater";
+import { todo } from "@vbrief/builder";
+import { createUpdater } from "@vbrief/updater";
 
 // Create initial document
 const doc = todo("0.4")
@@ -1627,11 +1627,11 @@ if (result.success) {
 
 ```bash
 # Install globally
-npm install -g @vcontext/cli
+npm install -g @vbrief/cli
 # or
-pnpm add -g @vcontext/cli
+pnpm add -g @vbrief/cli
 # or
-bun add -g @vcontext/cli
+bun add -g @vbrief/cli
 
 # Create a new TodoList
 va create todo --version 0.2 --output tasks.tron
@@ -1678,7 +1678,7 @@ va serve tasks.tron --port 3000
 // __tests__/todo-builder.test.ts
 
 import { describe, it, expect } from "vitest";
-import { TodoListBuilder } from "@vcontext/builder";
+import { TodoListBuilder } from "@vbrief/builder";
 
 describe("TodoListBuilder", () => {
   it("creates a valid document", () => {
@@ -1687,8 +1687,8 @@ describe("TodoListBuilder", () => {
       .addItem("Task 1", "pending")
       .build();
 
-    expect(doc.vContextInfo.version).toBe("0.4");
-    expect(doc.vContextInfo.author).toBe("test-author");
+    expect(doc.vBRIEFInfo.version).toBe("0.4");
+    expect(doc.vBRIEFInfo.author).toBe("test-author");
     expect(doc.todoList?.items).toHaveLength(1);
     expect(doc.todoList?.items[0].title).toBe("Task 1");
   });
@@ -1711,8 +1711,8 @@ describe("TodoListBuilder", () => {
 // __tests__/integration/round-trip.test.ts
 
 import { describe, it, expect } from "vitest";
-import { todo } from "@vcontext/builder";
-import { VAgendaDocument } from "@vcontext/core";
+import { todo } from "@vbrief/builder";
+import { VAgendaDocument } from "@vbrief/core";
 
 describe("Round-trip conversion", () => {
   it("JSON -> parse -> JSON preserves data", () => {
@@ -1777,7 +1777,7 @@ describe("Round-trip conversion", () => {
 - Web components
 
 ### Phase 5: Tooling
-- CLI tool (@vcontext/cli)
+- CLI tool (@vbrief/cli)
 - VSCode extension
 - Web-based editor
 - Documentation site
@@ -1794,9 +1794,9 @@ describe("Round-trip conversion", () => {
 
 ```json
 {
-  "name": "@vcontext/core",
+  "name": "@vbrief/core",
   "version": "0.1.0",
-  "description": "Core types and interfaces for vContext",
+  "description": "Core types and interfaces for vBRIEF",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -1825,7 +1825,7 @@ describe("Round-trip conversion", () => {
     "vitest": "^1.0.0"
   },
   "keywords": [
-    "vcontext",
+    "vbrief",
     "todo",
     "plan",
     "agenda",
@@ -1889,40 +1889,40 @@ packages:
 ```yaml
 # Taskfile.yml additions
 tasks:
-  vcontext:ts:install:
+  vbrief:ts:install:
     desc: Install dependencies
     cmds:
       - pnpm install
 
-  vcontext:ts:build:
+  vbrief:ts:build:
     desc: Build all packages
     cmds:
       - pnpm -r build
 
-  vcontext:ts:test:
+  vbrief:ts:test:
     desc: Run tests
     cmds:
       - pnpm -r test
 
-  vcontext:ts:coverage:
+  vbrief:ts:coverage:
     desc: Check test coverage
     cmds:
       - pnpm -r test:coverage
 
-  vcontext:ts:lint:
+  vbrief:ts:lint:
     desc: Lint code
     cmds:
       - pnpm -r lint
 
-  vcontext:ts:typecheck:
+  vbrief:ts:typecheck:
     desc: Type check
     cmds:
       - pnpm -r typecheck
 
-  vcontext:cli:run:
+  vbrief:cli:run:
     desc: Run CLI locally
     cmds:
-      - pnpm --filter @vcontext/cli dev
+      - pnpm --filter @vbrief/cli dev
 ```
 
 ## Runtime Support
@@ -1968,13 +1968,13 @@ The library targets:
 
 ## References
 
-- vContext Specification: https://github.com/visionik/vContext
+- vBRIEF Specification: https://github.com/visionik/vBRIEF
 - TypeScript Handbook: https://www.typescriptlang.org/docs/
 - TRON Format: https://tron-format.github.io/
 - Zod: https://zod.dev/
 - Vitest: https://vitest.dev/
-- vContext Go API: [vContext-extension-api-go.md](./vContext-extension-api-go.md)
-- vContext Beads Extension: [vContext-extension-beads.md](./vContext-extension-beads.md)
+- vBRIEF Go API: [vBRIEF-extension-api-go.md](./vBRIEF-extension-api-go.md)
+- vBRIEF Beads Extension: [vBRIEF-extension-beads.md](./vBRIEF-extension-beads.md)
 
 ## Community Feedback
 
@@ -1987,4 +1987,4 @@ This is a **draft proposal**. Feedback needed:
 5. What additional framework integrations would be valuable?
 6. Should we provide a web component library for framework-agnostic usage?
 
-**Discuss**: https://github.com/visionik/vContext/discussions
+**Discuss**: https://github.com/visionik/vBRIEF/discussions

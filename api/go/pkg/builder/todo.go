@@ -1,7 +1,7 @@
-// Package builder provides fluent APIs for constructing vContext documents.
+// Package builder provides fluent APIs for constructing vBRIEF documents.
 package builder
 
-import "github.com/visionik/vContext/api/go/pkg/core"
+import "github.com/visionik/vBRIEF/api/go/pkg/core"
 
 // TodoListBuilder provides a fluent API for building TodoList documents.
 type TodoListBuilder struct {

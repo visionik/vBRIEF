@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/visionik/vContext/api/go/pkg/convert"
-	"github.com/visionik/vContext/api/go/pkg/core"
-	"github.com/visionik/vContext/api/go/pkg/parser"
-	"github.com/visionik/vContext/api/go/pkg/validator"
+	"github.com/visionik/vBRIEF/api/go/pkg/convert"
+	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/vBRIEF/api/go/pkg/parser"
+	"github.com/visionik/vBRIEF/api/go/pkg/validator"
 )
 
 func main() {

@@ -1,14 +1,14 @@
-# vContext Alternative: Namespaced Extension Fields
+# vBRIEF Alternative: Namespaced Extension Fields
 
 **Status**: Proposal / Discussion Document
 
-**Author**: vContext Project
+**Author**: vBRIEF Project
 
 **Date**: 2025-12-28
 
 ## Overview
 
-This document proposes an alternative architecture for vContext where all extension fields must be grouped within their own nested objects, rather than being added directly to core types. This would provide clear namespace separation and better extensibility at the cost of increased verbosity and a breaking change from v0.4.
+This document proposes an alternative architecture for vBRIEF where all extension fields must be grouped within their own nested objects, rather than being added directly to core types. This would provide clear namespace separation and better extensibility at the cost of increased verbosity and a breaking change from v0.4.
 
 ## Problem Statement
 
@@ -26,7 +26,7 @@ Extension fields are intermingled with core fields at the same level:
 **JSON:**
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4",
     "author": "Team",
     "description": "...",
@@ -44,9 +44,9 @@ In this example:
 
 **TRON:**
 ```tron
-class vContextInfo: version, author, description, created, updated, timezone, metadata
+class vBRIEFInfo: version, author, description, created, updated, timezone, metadata
 
-vContextInfo("0.4", "Team", "...", "2025-12-27T17:20:00Z", "2025-12-28T07:35:00Z", "America/Los_Angeles", {})
+vBRIEFInfo("0.4", "Team", "...", "2025-12-27T17:20:00Z", "2025-12-28T07:35:00Z", "America/Los_Angeles", {})
 ```
 
 ## Proposed Approach (Namespaced)
@@ -56,7 +56,7 @@ Each extension gets its own nested object namespace:
 **JSON:**
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4",
     "author": "Team",
     "description": "...",
@@ -72,10 +72,10 @@ Each extension gets its own nested object namespace:
 
 **TRON:**
 ```tron
-class vContextInfo: version, author, description, metadata, time
+class vBRIEFInfo: version, author, description, metadata, time
 class Time: created, updated, timezone
 
-vContextInfo(
+vBRIEFInfo(
   "0.4",
   "Team",
   "...",
@@ -313,20 +313,20 @@ However, with class reuse across multiple items, the amortized cost is lower:
 ```javascript
 function migrateToNamespaced(v04doc) {
   const v05doc = {
-    vContextInfo: {
+    vBRIEFInfo: {
       version: "0.5",
-      author: v04doc.vContextInfo.author,
-      description: v04doc.vContextInfo.description,
-      metadata: v04doc.vContextInfo.metadata
+      author: v04doc.vBRIEFInfo.author,
+      description: v04doc.vBRIEFInfo.description,
+      metadata: v04doc.vBRIEFInfo.metadata
     }
   };
   
   // Migrate timestamp fields to time namespace
-  if (v04doc.vContextInfo.created) {
-    v05doc.vContextInfo.time = {
-      created: v04doc.vContextInfo.created,
-      updated: v04doc.vContextInfo.updated,
-      timezone: v04doc.vContextInfo.timezone
+  if (v04doc.vBRIEFInfo.created) {
+    v05doc.vBRIEFInfo.time = {
+      created: v04doc.vBRIEFInfo.created,
+      updated: v04doc.vBRIEFInfo.updated,
+      timezone: v04doc.vBRIEFInfo.timezone
     };
   }
   
@@ -353,7 +353,7 @@ Should the core `metadata` field be renamed to avoid confusion with the `meta` e
 - Keep as `metadata`?
 
 ### 4. Cross-Extension Consistency
-Some extensions add fields to multiple types (e.g., timestamps on vContextInfo, TodoItem, Plan). Should the namespace name be consistent?
+Some extensions add fields to multiple types (e.g., timestamps on vBRIEFInfo, TodoItem, Plan). Should the namespace name be consistent?
 - Yes: Always `time` everywhere
 - Context-aware: `documentTime` vs `itemTime`?
 
@@ -418,7 +418,7 @@ Namespaced extension fields offer significant benefits for clarity, maintainabil
 
 1. **Current adoption level**: How many implementations exist?
 2. **Community preference**: What do early adopters prefer?
-3. **Long-term vision**: Is vContext targeting maximum simplicity or maximum clarity?
+3. **Long-term vision**: Is vBRIEF targeting maximum simplicity or maximum clarity?
 4. **Token budget**: How critical is token efficiency for the target use case?
 
 This document serves as a basis for community discussion and should be refined based on feedback from implementers and users.

@@ -1,8 +1,8 @@
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4",
-    "author": "vContext Project",
-    "description": "Development practices and conventions for the vContext project"
+    "author": "vBRIEF Project",
+    "description": "Development practices and conventions for the vBRIEF project"
   },
   "playbook": {
     "version": 1,

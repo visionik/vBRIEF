@@ -1,4 +1,4 @@
-# vContext Common Extensions
+# vBRIEF Common Extensions
 
 **Version**: 0.4
 
@@ -8,13 +8,13 @@
 
 ## Overview
 
-This document defines the common extensions that can be applied to vContext Core v0.4 documents. These extensions add optional fields and capabilities to TodoLists, Plans, and Playbooks.
+This document defines the common extensions that can be applied to vBRIEF Core v0.4 documents. These extensions add optional fields and capabilities to TodoLists, Plans, and Playbooks.
 
 Extensions are modular and can be combined as needed. Implementations SHOULD preserve unknown fields when rewriting documents to avoid data loss.
 
 ## Relationship to Core Specification
 
-This document extends the core specification defined in [README.md](./README.md). All extensions build upon the core data models (vContextInfo, TodoList, TodoItem, Plan, PlanItem, Playbook, PlaybookItem).
+This document extends the core specification defined in [README.md](./README.md). All extensions build upon the core data models (vBRIEFInfo, TodoList, TodoItem, Plan, PlanItem, Playbook, PlaybookItem).
 
 ##Conformance
 
@@ -32,14 +32,14 @@ Extensions add optional fields to core types. Implementations can support any co
 
 Some extensions have dedicated spec documents:
 
-- `vContext-extension-playbooks.md` — Playbooks (long-term, evolving context)
-- `vContext-extension-MCP.md` — Model Context Protocol (MCP) integration
-- `vContext-extension-beads.md` — Beads integration
-- `vContext-extension-claude.md` — Claude integration
-- `vContext-extension-security.md` — Security extension
-- `vContext-extension-api-go.md` — Go API extension
-- `vContext-extension-api-python.md` — Python API extension
-- `vContext-extension-api-typescript.md` — TypeScript API extension
+- `vBRIEF-extension-playbooks.md` — Playbooks (long-term, evolving context)
+- `vBRIEF-extension-MCP.md` — Model Context Protocol (MCP) integration
+- `vBRIEF-extension-beads.md` — Beads integration
+- `vBRIEF-extension-claude.md` — Claude integration
+- `vBRIEF-extension-security.md` — Security extension
+- `vBRIEF-extension-api-go.md` — Go API extension
+- `vBRIEF-extension-api-python.md` — Python API extension
+- `vBRIEF-extension-api-typescript.md` — TypeScript API extension
 
 ## Extension 1: Timestamps
 
@@ -47,9 +47,9 @@ Some extensions have dedicated spec documents:
 
 Adds creation and modification tracking with timezone support.
 
-### vContextInfo Extensions
+### vBRIEFInfo Extensions
 ```javascript
-vContextInfo {
+vBRIEFInfo {
   // Core fields...
   created: datetime        # ISO 8601 timestamp (UTC default)
   updated: datetime        # ISO 8601 timestamp (UTC default)
@@ -70,11 +70,11 @@ TodoItem {
 
 **TRON:**
 ```tron
-class vContextInfo: version, created, updated, timezone
+class vBRIEFInfo: version, created, updated, timezone
 class TodoList: items
 class TodoItem: title, status, created, updated
 
-vContextInfo: vContextInfo("0.4", "2024-12-27T09:00:00Z", "2024-12-27T10:00:00Z", "America/Los_Angeles")
+vBRIEFInfo: vBRIEFInfo("0.4", "2024-12-27T09:00:00Z", "2024-12-27T10:00:00Z", "America/Los_Angeles")
 todoList: TodoList([
   TodoItem(
     "Implement authentication",
@@ -94,7 +94,7 @@ todoList: TodoList([
 **JSON:**
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4",
     "created": "2024-12-27T09:00:00Z",
     "updated": "2024-12-27T10:00:00Z",
@@ -161,11 +161,11 @@ PlanItem {
 
 **TRON:**
 ```tron
-class vContextInfo: version
+class vBRIEFInfo: version
 class TodoList: id, items
 class TodoItem: id, title, status
 
-vContextInfo: vContextInfo("0.4")
+vBRIEFInfo: vBRIEFInfo("0.4")
 todoList: TodoList(
   "todo-001",
   [
@@ -178,7 +178,7 @@ todoList: TodoList(
 **JSON:**
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4"
   },
   "todoList": {
@@ -205,7 +205,7 @@ todoList: TodoList(
 
 Adds descriptive and organizational fields.
 
-**Key atomic: Tagged** - The `tags` field can be added to ALL vContext entities (TodoList, TodoItem, Plan, PlanItem, Playbook, PlaybookItem, ProblemModel) for categorization and filtering. Tags enable flexible organization without rigid taxonomies.
+**Key atomic: Tagged** - The `tags` field can be added to ALL vBRIEF entities (TodoList, TodoItem, Plan, PlanItem, Playbook, PlaybookItem, ProblemModel) for categorization and filtering. Tags enable flexible organization without rigid taxonomies.
 
 ### TodoList Extensions
 ```javascript
@@ -347,12 +347,12 @@ PlanItem {
 
 **TRON:**
 ```tron
-class vContextInfo: version
+class vBRIEFInfo: version
 class TodoItem: id, title, status, dependencies
 class Plan: id, title, status, narratives, items
 class PlanItem: id, title, status, dependencies
 
-vContextInfo: vContextInfo("0.4")
+vBRIEFInfo: vBRIEFInfo("0.4")
 plan: Plan(
   "plan-002",
   "Build authentication system",
@@ -371,7 +371,7 @@ plan: Plan(
 **JSON:**
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4"
   },
   "plan": {
@@ -565,10 +565,10 @@ Location {
 }
 
 VAgendaReference {
-  # Same shape as URI, but MUST point to another vContext document.
-  uri: string             # MUST be a URI to a vContext document (file:// or https://)
+  # Same shape as URI, but MUST point to another vBRIEF document.
+  uri: string             # MUST be a URI to a vBRIEF document (file:// or https://)
   type: enum              # MUST be one of:
-                          #   "x-vcontext/todoList" | "x-vcontext/plan" | "x-vcontext/playbook"
+                          #   "x-vbrief/todoList" | "x-vbrief/plan" | "x-vbrief/playbook"
   title?: string
   description?: string
   tags?: string[]
@@ -604,8 +604,8 @@ PlanItem {
 ```javascript
 Plan {
   // Prior extensions...
-  uris?: URI[]                    # External resources OR other vContext documents
-  references?: VAgendaReference[] # vContext-only links (subset of URI)
+  uris?: URI[]                    # External resources OR other vBRIEF documents
+  references?: VAgendaReference[] # vBRIEF-only links (subset of URI)
 }
 ```
 
@@ -652,12 +652,12 @@ TodoItem(
 
 ### Example: Cross-Container References
 
-URIs enable linking related vContext documents without embedding them:
+URIs enable linking related vBRIEF documents without embedding them:
 
 **JSON (Plan referencing TodoList):**
 ```json
 {
-  "vContextInfo": {"version": "0.4"},
+  "vBRIEFInfo": {"version": "0.4"},
   "plan": {
     "title": "Authentication System",
     "status": "inProgress",
@@ -666,8 +666,8 @@ URIs enable linking related vContext documents without embedding them:
     },
     "uris": [
       {
-        "uri": "file://./auth-tasks.vcontext.json",
-        "type": "x-vcontext/todoList",
+        "uri": "file://./auth-tasks.vbrief.json",
+        "type": "x-vbrief/todoList",
         "description": "Implementation tasks"
       }
     ]
@@ -678,7 +678,7 @@ URIs enable linking related vContext documents without embedding them:
 **JSON (TodoList with items referencing Plans):**
 ```json
 {
-  "vContextInfo": {"version": "0.4"},
+  "vBRIEFInfo": {"version": "0.4"},
   "todoList": {
     "items": [
       {
@@ -686,8 +686,8 @@ URIs enable linking related vContext documents without embedding them:
         "status": "pending",
         "uris": [
           {
-            "uri": "file://./auth-plan.vcontext.json",
-            "type": "x-vcontext/plan"
+            "uri": "file://./auth-plan.vbrief.json",
+            "type": "x-vbrief/plan"
           }
         ]
       },
@@ -696,8 +696,8 @@ URIs enable linking related vContext documents without embedding them:
         "status": "inProgress",
         "uris": [
           {
-            "uri": "file://./auth-plan.vcontext.json#jwt-phase",
-            "type": "x-vcontext/plan",
+            "uri": "file://./auth-plan.vbrief.json#jwt-phase",
+            "type": "x-vbrief/plan",
             "description": "JWT implementation phase"
           }
         ]
@@ -933,13 +933,13 @@ PlanItem {
 
 **TRON:**
 ```tron
-class vContextInfo: version
+class vBRIEFInfo: version
 class TodoList: id, items, uid, agent, sequence, changeLog
 class TodoItem: id, title, status
 class Agent: id, type, name, model
 class Change: sequence, timestamp, agent, operation, reason
 
-vContextInfo: vContextInfo("0.4")
+vBRIEFInfo: vBRIEFInfo("0.4")
 todoList: TodoList(
   "todo-002",
   [
@@ -959,7 +959,7 @@ todoList: TodoList(
 **JSON:**
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4"
   },
   "todoList": {
@@ -1097,11 +1097,11 @@ PlanItem {
 
 **TRON:**
 ```tron
-class vContextInfo: version
+class vBRIEFInfo: version
 class Plan: id, title, status, narratives, uid, fork
 class Fork: parentUid, parentSequence, forkedAt, forkReason, mergeStatus
 
-vContextInfo: vContextInfo("0.4")
+vBRIEFInfo: vBRIEFInfo("0.4")
 plan: Plan(
   "plan-fork-001",
   "Authentication - Alternative approach",
@@ -1121,7 +1121,7 @@ plan: Plan(
 **JSON:**
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4"
   },
   "plan": {
@@ -1145,7 +1145,7 @@ plan: Plan(
 
 ## Extension 12: Playbooks
 
-The Playbooks extension spec is in `vContext-extension-playbooks.md` (see that document for the full schema, invariants, merge semantics, and examples).
+The Playbooks extension spec is in `vBRIEF-extension-playbooks.md` (see that document for the full schema, invariants, merge semantics, and examples).
 
 - **Requires**: Extension 2 (Identifiers)
 - **Recommended**: Extension 10 (Version Control & Sync)
@@ -1169,8 +1169,8 @@ For the complete TRON specification, see: https://tron-format.github.io/
 ### Core TRON Classes
 
 ```tron
-# vContextInfo (Core) - appears once per document at root level
-class vContextInfo: version
+# vBRIEFInfo (Core) - appears once per document at root level
+class vBRIEFInfo: version
 
 # TodoList (Core)
 class TodoList: items
@@ -1207,7 +1207,7 @@ Implementations define only the classes for extensions they support.
 | 9. Security | Core | None |
 | 10. Version Control | Identifiers | None |
 | 11. Forking | Version Control | None |
-|| 12. Playbooks (`vContext-extension-playbooks.md`) | Identifiers, Version Control | None |
+|| 12. Playbooks (`vBRIEF-extension-playbooks.md`) | Identifiers, Version Control | None |
 
 ---
 
@@ -1274,7 +1274,7 @@ Implementation guidance:
 
 Tools should:
 - Read and write both JSON and TRON formats.
-- Validate against `vContextInfo.version`.
+- Validate against `vBRIEFInfo.version`.
 - Preserve unknown fields during updates.
 - Generate unique IDs (UUIDs or similar) when using identifiers.
 - Update timestamps automatically when timestamp fields are present.
@@ -1323,7 +1323,7 @@ Editors should:
 - Use three-way merge for conflict detection
 
 ### Playbooks
-See `vContext-extension-playbooks.md` for playbooks best practices (e.g. grow-and-refine, evidence linking, dedup, and append-only `operation` entries).
+See `vBRIEF-extension-playbooks.md` for playbooks best practices (e.g. grow-and-refine, evidence linking, dedup, and append-only `operation` entries).
 
 ---
 

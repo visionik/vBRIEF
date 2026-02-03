@@ -1,6 +1,6 @@
 # vSpec Conversion Guidelines
 
-Systematic approach to converting specifications (RFCs, PRDs, technical docs) into vContext vSpec format while preserving all normative content and context.
+Systematic approach to converting specifications (RFCs, PRDs, technical docs) into vBRIEF vSpec format while preserving all normative content and context.
 
 ## Core Principle
 

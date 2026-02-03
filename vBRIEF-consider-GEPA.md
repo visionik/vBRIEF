@@ -1,14 +1,14 @@
-# vContext + GEPA Integration Analysis
+# vBRIEF + GEPA Integration Analysis
 
 **Document Status:** Draft  
 **Date:** 2025-12-28  
-**Purpose:** Explore integration opportunities between vContext and GEPA (Genetic-Pareto Reflective Prompt Evolution)
+**Purpose:** Explore integration opportunities between vBRIEF and GEPA (Genetic-Pareto Reflective Prompt Evolution)
 
 ## Executive Summary
 
-GEPA is a framework for optimizing text components (prompts, code, instructions) using LLM-based reflection and evolutionary search. vContext provides structured memory for agentic workflows through TodoLists, Plans, and Playbooks.
+GEPA is a framework for optimizing text components (prompts, code, instructions) using LLM-based reflection and evolutionary search. vBRIEF provides structured memory for agentic workflows through TodoLists, Plans, and Playbooks.
 
-**Key synergy:** vContext provides **structured feedback and persistence** for agentic systems, while GEPA provides **optimization and evolution** for textual components within those systems.
+**Key synergy:** vBRIEF provides **structured feedback and persistence** for agentic systems, while GEPA provides **optimization and evolution** for textual components within those systems.
 
 ## About GEPA
 
@@ -27,9 +27,9 @@ GEPA is a framework for optimizing text components (prompts, code, instructions)
 
 ## Integration Opportunities
 
-### 1. Direct Integration: Optimize vContext Agent Prompts
+### 1. Direct Integration: Optimize vBRIEF Agent Prompts
 
-**Goal:** Use GEPA to evolve textual components stored in vContext documents.
+**Goal:** Use GEPA to evolve textual components stored in vBRIEF documents.
 
 **What to optimize:**
 - System prompts embedded in Plan narratives
@@ -44,28 +44,28 @@ Create a `VContextGEPAAdapter` that implements the `GEPAAdapter` interface:
 
 ```python
 import gepa
-from vcontext import VContextDocument, Parser
+from vbrief import VContextDocument, Parser
 
 class VContextGEPAAdapter(gepa.GEPAAdapter):
-    """Adapter for optimizing prompts within vContext documents."""
+    """Adapter for optimizing prompts within vBRIEF documents."""
     
     def evaluate(self, candidate, minibatch):
         """
-        Execute agents with candidate prompts on vContext documents.
+        Execute agents with candidate prompts on vBRIEF documents.
         
         Args:
             candidate: Proposed text components (prompts)
-            minibatch: List of vContext document paths
+            minibatch: List of vBRIEF document paths
             
         Returns:
             scores: Performance metrics
-            traces: Execution logs and vContext state changes
+            traces: Execution logs and vBRIEF state changes
         """
         scores = []
         traces = []
         
         for doc_path in minibatch:
-            # Parse vContext document
+            # Parse vBRIEF document
             vdoc = Parser.parse_file(doc_path)
             
             # Apply candidate prompts to agent
@@ -74,7 +74,7 @@ class VContextGEPAAdapter(gepa.GEPAAdapter):
             # Collect metrics from execution
             scores.append(compute_metrics(result))
             
-            # Capture execution traces and updated vContext state
+            # Capture execution traces and updated vBRIEF state
             traces.append({
                 'execution_log': result.log,
                 'updated_doc': result.updated_vdoc,
@@ -122,8 +122,8 @@ class VContextGEPAAdapter(gepa.GEPAAdapter):
         return "\n".join(relevant_feedback)
 
 # Usage example
-trainset = load_vcontext_documents("./examples/train/*.vcontext.json")
-valset = load_vcontext_documents("./examples/val/*.vcontext.json")
+trainset = load_vbrief_documents("./examples/train/*.vbrief.json")
+valset = load_vbrief_documents("./examples/val/*.vbrief.json")
 
 adapter = VContextGEPAAdapter()
 metric = lambda scores: compute_aggregate_success_rate(scores)
@@ -146,13 +146,13 @@ optimized = gepa.optimize(
 
 **Goal:** Build a library of proven, GEPA-optimized agentic patterns.
 
-**Proposal:** New vContext Extension 13 - "GEPA Integration"
+**Proposal:** New vBRIEF Extension 13 - "GEPA Integration"
 
 **Extension structure:**
 
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4",
     "extensions": [13]
   },
@@ -211,13 +211,13 @@ interface PlaybookItemWithGEPA extends PlaybookItem {
 4. Agents can load pre-optimized prompts for common workflows
 5. Continue evolution as new data becomes available
 
-### 3. Enhancement to GEPA: vContext as Structured Feedback
+### 3. Enhancement to GEPA: vBRIEF as Structured Feedback
 
-**Goal:** Use vContext's structured format to provide richer feedback to GEPA.
+**Goal:** Use vBRIEF's structured format to provide richer feedback to GEPA.
 
 **Current GEPA approach:** Parses unstructured execution logs and traces.
 
-**vContext advantage:** Provides structured, three-tier memory:
+**vBRIEF advantage:** Provides structured, three-tier memory:
 - **TodoList** (short-term): Immediate task results
 - **Plan** (mid-term): Workflow execution history
 - **Playbook** (long-term): Pattern effectiveness over time
@@ -227,7 +227,7 @@ interface PlaybookItemWithGEPA extends PlaybookItem {
 ```python
 class VContextFeedbackExtractor:
     """
-    Extract structured feedback from vContext documents.
+    Extract structured feedback from vBRIEF documents.
     
     Provides richer, more targeted feedback than raw log parsing.
     """
@@ -238,8 +238,8 @@ class VContextFeedbackExtractor:
         self.long_term_weight = 0.5      # Proven practices
     
     def extract_feedback(self, execution_result) -> Dict:
-        """Parse vContext output for structured feedback."""
-        vdoc = parse_vcontext(execution_result.output_path)
+        """Parse vBRIEF output for structured feedback."""
+        vdoc = parse_vbrief(execution_result.output_path)
         
         feedback = {
             "short_term": self._extract_todo_feedback(vdoc),
@@ -295,8 +295,8 @@ class VContextFeedbackExtractor:
         """Extract cross-document references for context."""
         uris = []
         
-        if hasattr(vdoc.vContextInfo, 'uris'):
-            uris = [uri.uri for uri in vdoc.vContextInfo.uris]
+        if hasattr(vdoc.vBRIEFInfo, 'uris'):
+            uris = [uri.uri for uri in vdoc.vBRIEFInfo.uris]
         
         return uris
     
@@ -353,13 +353,13 @@ for trace in execution_traces:
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                   Agent Execution                        │
-│  (uses vContext documents: TodoList, Plan, Playbook)    │
+│  (uses vBRIEF documents: TodoList, Plan, Playbook)    │
 └─────────────────┬───────────────────────────────────────┘
                   │ Execution traces
-                  │ Updated vContext docs
+                  │ Updated vBRIEF docs
                   ▼
 ┌─────────────────────────────────────────────────────────┐
-│              vContext Feedback Capture                   │
+│              vBRIEF Feedback Capture                   │
 │  • TodoItems record success/failure                      │
 │  • Plan changeHistory tracks workflow evolution          │
 │  • Playbook effectiveness ratings accumulate             │
@@ -369,7 +369,7 @@ for trace in execution_traces:
                   ▼
 ┌─────────────────────────────────────────────────────────┐
 │                   GEPA Optimization                      │
-│  • Reads vContext feedback                               │
+│  • Reads vBRIEF feedback                               │
 │  • Evolves prompts/instructions                          │
 │  • Uses Pareto selection for multi-objective optimization│
 └─────────────────┬───────────────────────────────────────┘
@@ -377,7 +377,7 @@ for trace in execution_traces:
                   │ GEPA metadata
                   ▼
 ┌─────────────────────────────────────────────────────────┐
-│            Write Back to vContext Playbook               │
+│            Write Back to vBRIEF Playbook               │
 │  • Store optimized prompts as Playbook entries           │
 │  • Include GEPA metadata (Extension 13)                  │
 │  • Version control via Extension 10                      │
@@ -435,8 +435,8 @@ for trace in execution_traces:
 
 ### Performance
 - **GEPA evaluations:** Can be expensive (LLM calls per candidate per eval)
-- **Mitigation:** Use vContext's structured feedback to reduce eval count needed
-- **Caching:** Store intermediate results in vContext documents
+- **Mitigation:** Use vBRIEF's structured feedback to reduce eval count needed
+- **Caching:** Store intermediate results in vBRIEF documents
 
 ### Version Control
 - **Challenge:** Managing evolving prompts across optimization runs
@@ -446,11 +446,11 @@ for trace in execution_traces:
 ### Multi-agent Coordination
 - **Challenge:** Optimizing prompts for agents that interact
 - **Solution:** GEPA's multi-component optimization
-- **vContext support:** Cross-document URIs link related agents
+- **vBRIEF support:** Cross-document URIs link related agents
 
 ### Evaluation Metrics
 - **Challenge:** Defining success for complex agentic workflows
-- **Solution:** vContext's three-tier memory provides multiple metrics:
+- **Solution:** vBRIEF's three-tier memory provides multiple metrics:
   - Short-term: TodoItem completion rate
   - Mid-term: Plan adherence score
   - Long-term: Playbook pattern effectiveness
@@ -465,7 +465,7 @@ for trace in execution_traces:
 
 ## Open Questions
 
-1. **Metric design:** What combinations of vContext signals best predict agent success?
+1. **Metric design:** What combinations of vBRIEF signals best predict agent success?
 2. **Evolution speed:** How many GEPA evaluations needed for meaningful improvement?
 3. **Transfer learning:** Can optimized prompts transfer across similar tasks?
 4. **Collaborative optimization:** How to handle multiple agents optimizing shared Playbooks?
@@ -480,15 +480,15 @@ for trace in execution_traces:
 
 ## Conclusion
 
-The integration of GEPA and vContext offers compelling synergies:
+The integration of GEPA and vBRIEF offers compelling synergies:
 
-**GEPA benefits from vContext:**
+**GEPA benefits from vBRIEF:**
 - Structured, multi-tier feedback (TodoList, Plan, Playbook)
 - Time-weighted signals (short/mid/long-term memory)
 - Cross-document context via URIs
 - Version-controlled prompt history
 
-**vContext benefits from GEPA:**
+**vBRIEF benefits from GEPA:**
 - Automated prompt optimization for agents
 - Evidence-based pattern library
 - Continuous improvement of agentic workflows
@@ -506,9 +506,9 @@ The combination could significantly advance both frameworks and provide a powerf
 
 - GEPA Repository: https://github.com/gepa-ai/gepa
 - GEPA Paper: https://arxiv.org/abs/2507.19457
-- vContext Specification: README.md (this repository)
-- Extension 11 (Agentic Patterns): vContext-extension-agentic-patterns.md
-- Extension 10 (Version Control): vContext-extension-common.md
+- vBRIEF Specification: README.md (this repository)
+- Extension 11 (Agentic Patterns): vBRIEF-extension-agentic-patterns.md
+- Extension 10 (Version Control): vBRIEF-extension-common.md
 
 ---
 

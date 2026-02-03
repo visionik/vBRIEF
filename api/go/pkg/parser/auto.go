@@ -5,7 +5,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/visionik/vContext/api/go/pkg/core"
+	"github.com/visionik/vBRIEF/api/go/pkg/core"
 )
 
 // autoParser automatically detects the format and parses accordingly.

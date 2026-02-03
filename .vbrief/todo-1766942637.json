@@ -1,5 +1,5 @@
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4"
   },
   "todoList": {
@@ -42,7 +42,7 @@
       {
         "title": "Review schema files for correctness",
         "status": "completed",
-        "description": "Validate schemas/vcontext-*.schema.json files align with v0.4 spec and test against example documents"
+        "description": "Validate schemas/vbrief-*.schema.json files align with v0.4 spec and test against example documents"
       },
       {
         "title": "Assess Taskfile organization and completeness",

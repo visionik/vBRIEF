@@ -1,7 +1,7 @@
 # API Consistency Analysis: Go, Python, and TypeScript
 
 **Date**: 2025-12-28  
-**Purpose**: Document inconsistencies across the three vContext API implementations (Go, Python, TypeScript) and provide recommendations for alignment.
+**Purpose**: Document inconsistencies across the three vBRIEF API implementations (Go, Python, TypeScript) and provide recommendations for alignment.
 
 ## Executive Summary
 
@@ -11,18 +11,18 @@ All three API documentation files contain **critical type naming inconsistencies
 
 ### 1. Type Name Inconsistencies in All Three Docs
 
-**Go API (`vContext-extension-api-go.md`)**:
+**Go API (`vBRIEF-extension-api-go.md`)**:
 - Line 108: Uses `Phases []PlanItem` (incorrect field name - should be `Items`)
 - Line 126: `Status PhaseStatus` (references non-existent type)
 - Line 130: `type PlanItemStatus string` (declares wrong type name)
 - Lines 133-138: Constants use `PhaseStatus` prefix instead of `PlanItemStatus`
 - Lines 209-212: Builder methods use `AddPhase`, `AddPendingPhase` etc. (should be `AddPlanItem`, `AddPendingPlanItem`)
 
-**Python API (`vContext-extension-api-python.md`)**:
+**Python API (`vBRIEF-extension-api-python.md`)**:
 - Line 140: Declares `PlanItemStatus` enum (correct)
 - Line 186: `status: PhaseStatus` (references wrong type, should be `PlanItemStatus`)
 
-**TypeScript API (`vContext-extension-api-typescript.md`)**:
+**TypeScript API (`vBRIEF-extension-api-typescript.md`)**:
 - Line 203: `status: PhaseStatus` (references wrong type)
 - Line 209: Declares `type PlanItemStatus` (correct name but inconsistent usage)
 
@@ -50,7 +50,7 @@ pkg/
 
 **Python** (proposed):
 ```
-vcontext/
+vbrief/
 ├── core/           # Core types and models
 ├── extensions/     # Extension implementations (13 modules)
 ├── parser/         # Parsing
@@ -64,7 +64,7 @@ vcontext/
 
 **TypeScript** (proposed):
 ```
-@vcontext/
+@vbrief/
 ├── core/           # Core types
 ├── parser/         # Parsing
 ├── builder/        # Builders
@@ -98,7 +98,7 @@ vcontext/
 - **Python**: `VAgendaDocument` class
 - **TypeScript**: `VAgendaDocument` class
 
-**Issue**: "VAgenda" is not defined anywhere in the vContext spec. This appears to be a legacy name.
+**Issue**: "VAgenda" is not defined anywhere in the vBRIEF spec. This appears to be a legacy name.
 
 **Recommendation**: Either:
 1. Use `VContextDocument` for consistency with the spec name, or
@@ -211,7 +211,7 @@ new TodoListBuilder(version)
 
 | Concept | Go | Python | TypeScript |
 |---------|-----|--------|------------|
-| Package prefix | `core.` | `vcontext.` | `@vcontext/` |
+| Package prefix | `core.` | `vbrief.` | `@vbrief/` |
 | Constructor | `builder.NewTodoList()` | `TodoListBuilder()` | `new TodoListBuilder()` |
 | Add method | `.AddItem()` | `.add_item()` | `.addItem()` |
 | Status const | `StatusPending` | `ItemStatus.PENDING` | `"pending"` (literal type) |
@@ -219,14 +219,14 @@ new TodoListBuilder(version)
 
 ## Files to Update
 
-1. `/Users/visionik/Projects/vContext/vContext-extension-api-go.md`
+1. `/Users/visionik/Projects/vBRIEF/vBRIEF-extension-api-go.md`
    - Lines 108, 126, 130, 133-138, 209-212
 
-2. `/Users/visionik/Projects/vContext/vContext-extension-api-python.md`
+2. `/Users/visionik/Projects/vBRIEF/vBRIEF-extension-api-python.md`
    - Line 186 (status type reference)
    - Add missing `items` field to `Plan` class
 
-3. `/Users/visionik/Projects/vContext/vContext-extension-api-typescript.md`
+3. `/Users/visionik/Projects/vBRIEF/vBRIEF-extension-api-typescript.md`
    - Line 203 (status type reference)
 
 ## Conclusion

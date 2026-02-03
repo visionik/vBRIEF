@@ -1,13 +1,13 @@
-# Plan: vContext MCP (Model Context Protocol) Extension
+# Plan: vBRIEF MCP (Model Context Protocol) Extension
 
 **Status**: Draft  
 **Author**: Jonathan Taylor (visionik@pobox.com)  
 **Created**: 2025-12-27  
-**Purpose**: Plan the structure and content for vContext-extension-MCP.md
+**Purpose**: Plan the structure and content for vBRIEF-extension-MCP.md
 
 ## Overview
 
-Create a vContext extension proposal for Model Context Protocol (MCP) integration. MCP is Anthropic's open protocol that enables AI models to securely connect to external data sources and tools. This extension would define how vContext documents are exposed as MCP resources and how vContext operations are exposed as MCP tools.
+Create a vBRIEF extension proposal for Model Context Protocol (MCP) integration. MCP is Anthropic's open protocol that enables AI models to securely connect to external data sources and tools. This extension would define how vBRIEF documents are exposed as MCP resources and how vBRIEF operations are exposed as MCP tools.
 
 ## Context
 
@@ -17,10 +17,10 @@ Create a vContext extension proposal for Model Context Protocol (MCP) integratio
 - Supported by Claude, and increasingly by other AI systems
 - Enables secure, consistent data access across different AI applications
 
-**Why vContext needs MCP integration:**
-- Makes vContext documents natively accessible to Claude and other LLM-based agents
-- Standardizes how tools read/write vContext (vs custom implementations)
-- Enables discovery - agents can find vContext servers automatically
+**Why vBRIEF needs MCP integration:**
+- Makes vBRIEF documents natively accessible to Claude and other LLM-based agents
+- Standardizes how tools read/write vBRIEF (vs custom implementations)
+- Enables discovery - agents can find vBRIEF servers automatically
 - Provides security/permission model for multi-user scenarios
 
 **Relationship to existing extensions:**
@@ -39,8 +39,8 @@ Create a vContext extension proposal for Model Context Protocol (MCP) integratio
 
 ### 2. Overview
 - Brief explanation of MCP (with link to spec)
-- How MCP enables AI agents to access vContext
-- Integration goal: Make vContext a first-class MCP resource type
+- How MCP enables AI agents to access vBRIEF
+- Integration goal: Make vBRIEF a first-class MCP resource type
 
 ### 3. Motivation
 **MCP strengths:**
@@ -49,8 +49,8 @@ Create a vContext extension proposal for Model Context Protocol (MCP) integratio
 - Security/authentication built-in
 - Transport agnostic (stdio, SSE, HTTP)
 
-**vContext benefits from MCP:**
-- AI agents can discover and use vContext without custom code
+**vBRIEF benefits from MCP:**
+- AI agents can discover and use vBRIEF without custom code
 - Standardized CRUD operations on todos/plans/playbooks
 - Real-time updates (vs polling files)
 - Multi-user coordination with permissions
@@ -58,60 +58,60 @@ Create a vContext extension proposal for Model Context Protocol (MCP) integratio
 ### 4. Dependencies
 **Required:**
 - Extension 2 (Identifiers) - for referencing specific items
-- Core vContext types
+- Core vBRIEF types
 
 **Recommended:**
 - Extension 10 (Version Control) - change tracking
 - Extension 11 (Forking) - for conflict resolution
 
-### 5. MCP Resources (How vContext is exposed)
+### 5. MCP Resources (How vBRIEF is exposed)
 
-Define vContext as MCP resources:
+Define vBRIEF as MCP resources:
 
 ```typescript
-// Resources expose vContext documents
+// Resources expose vBRIEF documents
 resources: [
   {
-    uri: "vcontext://todos/current",
+    uri: "vbrief://todos/current",
     name: "Current Tasks",
     mimeType: "text/x-tron"
   },
   {
-    uri: "vcontext://plans/{id}",
+    uri: "vbrief://plans/{id}",
     name: "Plan by ID",
     mimeType: "text/x-tron"
   },
   {
-    uri: "vcontext://playbook",
+    uri: "vbrief://playbook",
     name: "Project Playbook",
     mimeType: "text/x-tron"
   }
 ]
 ```
 
-### 6. MCP Tools (How vContext is modified)
+### 6. MCP Tools (How vBRIEF is modified)
 
-Define vContext operations as MCP tools:
+Define vBRIEF operations as MCP tools:
 
 ```typescript
 tools: [
   {
-    name: "vcontext_create_todo",
+    name: "vbrief_create_todo",
     description: "Create a new todo item",
     inputSchema: { /* JSON schema */ }
   },
   {
-    name: "vcontext_update_todo",
+    name: "vbrief_update_todo",
     description: "Update todo status/content",
     inputSchema: { /* JSON schema */ }
   },
   {
-    name: "vcontext_create_plan",
+    name: "vbrief_create_plan",
     description: "Create a new plan document",
     inputSchema: { /* JSON schema */ }
   },
   {
-    name: "vcontext_add_learning",
+    name: "vbrief_add_learning",
     description: "Add learning to playbook",
     inputSchema: { /* JSON schema */ }
   }
@@ -120,18 +120,18 @@ tools: [
 
 ### 7. MCP Prompts (Optional)
 
-Predefined prompt templates for common vContext workflows:
+Predefined prompt templates for common vBRIEF workflows:
 
 ```typescript
 prompts: [
   {
-    name: "vcontext_session_start",
-    description: "Load vContext context at session start",
+    name: "vbrief_session_start",
+    description: "Load vBRIEF context at session start",
     arguments: []
   },
   {
-    name: "vcontext_session_end",
-    description: "Save vContext state at session end",
+    name: "vbrief_session_end",
+    description: "Save vBRIEF state at session end",
     arguments: []
   }
 ]
@@ -140,19 +140,19 @@ prompts: [
 ### 8. Usage Patterns
 
 #### Pattern 1: MCP Server Discovery
-Show how AI agents discover and connect to vContext MCP server
+Show how AI agents discover and connect to vBRIEF MCP server
 
-#### Pattern 2: Reading vContext via Resources
+#### Pattern 2: Reading vBRIEF via Resources
 Examples of agents reading current todos, plans, playbooks
 
-#### Pattern 3: Modifying vContext via Tools
+#### Pattern 3: Modifying vBRIEF via Tools
 Examples of agents creating/updating items through MCP tools
 
 #### Pattern 4: Real-Time Collaboration
-Multiple agents/users working on shared vContext through MCP
+Multiple agents/users working on shared vBRIEF through MCP
 
 #### Pattern 5: Integration with Claude Desktop
-Specific example of Claude Desktop app using vContext MCP server
+Specific example of Claude Desktop app using vBRIEF MCP server
 
 ### 9. Implementation Notes
 
@@ -163,7 +163,7 @@ Specific example of Claude Desktop app using vContext MCP server
 - Authentication/authorization considerations
 
 #### Client Usage
-- How AI agents connect to vContext MCP server
+- How AI agents connect to vBRIEF MCP server
 - Configuration examples for different tools
 - Error handling and fallbacks
 
@@ -196,7 +196,7 @@ Full JSON schemas for:
 
 1. Should MCP server support both TRON and JSON, or TRON only?
 2. How to handle large playbooks that exceed MCP message size limits?
-3. Should vContext MCP server be mandatory or optional?
+3. Should vBRIEF MCP server be mandatory or optional?
 4. How to handle offline scenarios (MCP requires server connection)?
 
 ### 14. Examples
@@ -228,14 +228,14 @@ Phase 3: Ecosystem integration
 
 Questions for community:
 - What MCP transports are most important?
-- Should server handle multiple vContext projects?
+- Should server handle multiple vBRIEF projects?
 - What permission model makes sense?
 
 ### 17. References
 
 - MCP specification: https://modelcontextprotocol.io
 - MCP SDK: https://github.com/modelcontextprotocol/sdk
-- vContext spec
+- vBRIEF spec
 - Claude extension (references MCP)
 
 ## Key Differentiators from Claude Extension
@@ -247,13 +247,13 @@ The Claude extension showed a brief MCP example but didn't:
 - Address security/multi-user
 - Show non-Claude MCP clients
 
-This extension should be **comprehensive and protocol-focused**, serving as the reference for anyone implementing vContext MCP support.
+This extension should be **comprehensive and protocol-focused**, serving as the reference for anyone implementing vBRIEF MCP support.
 
 ## Technical Decisions Needed
 
 ### 1. Resource URI Scheme
-Option A: `vcontext://todos/current`, `vcontext://plans/{id}`
-Option B: `file:///path/to/vContext/current.tron`
+Option A: `vbrief://todos/current`, `vbrief://plans/{id}`
+Option B: `file:///path/to/vBRIEF/current.tron`
 Option C: Both supported
 
 **Recommendation**: Option A (custom scheme) for abstraction, with server handling file mapping internally.
@@ -282,9 +282,9 @@ What happens when two clients modify same todo?
 ## Success Criteria
 
 The extension document should enable:
-1. Developer can implement vContext MCP server from spec
-2. AI agent can discover and use vContext MCP server
-3. Multiple clients can coordinate through vContext MCP
+1. Developer can implement vBRIEF MCP server from spec
+2. AI agent can discover and use vBRIEF MCP server
+3. Multiple clients can coordinate through vBRIEF MCP
 4. Clear migration path from file-based to MCP-based access
 
 ## Next Steps

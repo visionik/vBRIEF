@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://vcontext.dev/schemas/vcontext-extension-playbooks.schema.json",
-  "title": "vContext Extension Schema: Playbooks",
-  "description": "JSON Schema for vContext Playbooks types (v0.4).",
+  "$id": "https://vbrief.dev/schemas/vbrief-extension-playbooks.schema.json",
+  "title": "vBRIEF Extension Schema: Playbooks",
+  "description": "JSON Schema for vBRIEF Playbooks types (v0.4).",
   "type": "object",
   "additionalProperties": true,
   "$defs": {
@@ -11,8 +11,8 @@
       "required": ["version", "created", "updated", "items"],
       "properties": {
         "version": {"type": "integer", "minimum": 0},
-        "created": {"$ref": "./vcontext-core.schema.json#/$defs/dateTime"},
-        "updated": {"$ref": "./vcontext-core.schema.json#/$defs/dateTime"},
+        "created": {"$ref": "./vbrief-core.schema.json#/$defs/dateTime"},
+        "updated": {"$ref": "./vbrief-core.schema.json#/$defs/dateTime"},
         "items": {
           "type": "array",
           "items": {"$ref": "#/$defs/PlaybookItem"}
@@ -51,7 +51,7 @@
         },
 
         "feedbackType": {"enum": ["humanReview", "executionOutcome", "selfReport", "unknown"]},
-        "createdAt": {"$ref": "./vcontext-core.schema.json#/$defs/dateTime"},
+        "createdAt": {"$ref": "./vbrief-core.schema.json#/$defs/dateTime"},
 
         "status": {"enum": ["active", "deprecated", "quarantined"]},
         "deprecatedReason": {"type": "string"},
@@ -79,7 +79,7 @@
       "properties": {
         "totalEntries": {"type": "integer", "minimum": 0},
         "averageConfidence": {"type": "number", "minimum": 0, "maximum": 1},
-        "lastUpdated": {"$ref": "./vcontext-core.schema.json#/$defs/dateTime"}
+        "lastUpdated": {"$ref": "./vbrief-core.schema.json#/$defs/dateTime"}
       },
       "additionalProperties": true
     }

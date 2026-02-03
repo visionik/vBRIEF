@@ -9,15 +9,15 @@
 
 | Document | Lines | Category | Purpose |
 |----------|-------|----------|---------|
-| `vContext-extension-common.md` | 1,320 | Core | Extensions 1-12 (timestamps, IDs, metadata, etc.) |
-| `vContext-extension-security.md` | 1,201 | Domain | Security, permissions, access control |
-| `vContext-extension-MCP.md` | 1,668 | Integration | Model Context Protocol integration |
-| `vContext-extension-playbooks.md` | 534 | Core | Playbook format & patterns |
-| `vContext-extension-beads.md` | 753 | Integration | Beads framework integration |
-| `vContext-extension-claude.md` | 515 | Integration | Claude-specific features |
-| `vContext-extension-api-python.md` | 1,928 | API | Python library design |
-| `vContext-extension-api-typescript.md` | 1,989 | API | TypeScript library design |
-| `vContext-extension-api-go.md` | 493 | API | Go library status (implemented) |
+| `vBRIEF-extension-common.md` | 1,320 | Core | Extensions 1-12 (timestamps, IDs, metadata, etc.) |
+| `vBRIEF-extension-security.md` | 1,201 | Domain | Security, permissions, access control |
+| `vBRIEF-extension-MCP.md` | 1,668 | Integration | Model Context Protocol integration |
+| `vBRIEF-extension-playbooks.md` | 534 | Core | Playbook format & patterns |
+| `vBRIEF-extension-beads.md` | 753 | Integration | Beads framework integration |
+| `vBRIEF-extension-claude.md` | 515 | Integration | Claude-specific features |
+| `vBRIEF-extension-api-python.md` | 1,928 | API | Python library design |
+| `vBRIEF-extension-api-typescript.md` | 1,989 | API | TypeScript library design |
+| `vBRIEF-extension-api-go.md` | 493 | API | Go library status (implemented) |
 
 ## Analysis
 
@@ -28,14 +28,14 @@
 - `extension-security.md` - Security features
 - `extension-playbooks.md` - Long-term memory
 
-These define the vContext spec itself.
+These define the vBRIEF spec itself.
 
 **Group 2: Integrations** (~2,936 lines)
 - `extension-MCP.md` - MCP protocol
 - `extension-beads.md` - Beads framework
 - `extension-claude.md` - Claude AI
 
-These show how to integrate vContext with specific tools/systems.
+These show how to integrate vBRIEF with specific tools/systems.
 
 **Group 3: API Designs** (~4,410 lines)
 - `extension-api-python.md` - Python implementation
@@ -49,7 +49,7 @@ These are language-specific API proposals/designs.
 ### Rationale
 
 **1. Different Audiences**
-- Core extensions: Anyone implementing vContext
+- Core extensions: Anyone implementing vBRIEF
 - Integrations: Users of specific tools (MCP/Beads/Claude)
 - API designs: Language-specific implementers
 
@@ -79,29 +79,29 @@ These are language-specific API proposals/designs.
 
 Create `extensions/README.md`:
 ```markdown
-# vContext Extensions
+# vBRIEF Extensions
 
 ## Core Extensions
-- [Common Extensions](./vContext-extension-common.md) - Extensions 1-12
-- [Security](./vContext-extension-security.md) - Access control, permissions
-- [Playbooks](./vContext-extension-playbooks.md) - Long-term memory patterns
+- [Common Extensions](./vBRIEF-extension-common.md) - Extensions 1-12
+- [Security](./vBRIEF-extension-security.md) - Access control, permissions
+- [Playbooks](./vBRIEF-extension-playbooks.md) - Long-term memory patterns
 
 ## Integrations
-- [Model Context Protocol (MCP)](./vContext-extension-MCP.md)
-- [Beads Framework](./vContext-extension-beads.md)
-- [Claude AI](./vContext-extension-claude.md)
+- [Model Context Protocol (MCP)](./vBRIEF-extension-MCP.md)
+- [Beads Framework](./vBRIEF-extension-beads.md)
+- [Claude AI](./vBRIEF-extension-claude.md)
 
 ## API Implementations
-- [Python API](./vContext-extension-api-python.md)
-- [TypeScript API](./vContext-extension-api-typescript.md)
-- [Go API](./vContext-extension-api-go.md) - ✅ Implemented
+- [Python API](./vBRIEF-extension-api-python.md)
+- [TypeScript API](./vBRIEF-extension-api-typescript.md)
+- [Go API](./vBRIEF-extension-api-go.md) - ✅ Implemented
 ```
 
 ### 2. Move to `extensions/` Directory
 
 Create clear separation:
 ```
-vContext/
+vBRIEF/
 ├── extensions/
 │   ├── README.md               # Navigation index
 │   ├── common.md               # Core extensions
@@ -130,15 +130,15 @@ docs:extensions:organize:
   desc: Organize extension documentation
   cmds:
     - mkdir -p extensions/api
-    - cp vContext-extension-common.md extensions/common.md
-    - cp vContext-extension-security.md extensions/security.md
-    - cp vContext-extension-playbooks.md extensions/playbooks.md
-    - cp vContext-extension-MCP.md extensions/mcp.md
-    - cp vContext-extension-beads.md extensions/beads.md
-    - cp vContext-extension-claude.md extensions/claude.md
-    - cp vContext-extension-api-python.md extensions/api/python.md
-    - cp vContext-extension-api-typescript.md extensions/api/typescript.md
-    - cp vContext-extension-api-go.md extensions/api/go.md
+    - cp vBRIEF-extension-common.md extensions/common.md
+    - cp vBRIEF-extension-security.md extensions/security.md
+    - cp vBRIEF-extension-playbooks.md extensions/playbooks.md
+    - cp vBRIEF-extension-MCP.md extensions/mcp.md
+    - cp vBRIEF-extension-beads.md extensions/beads.md
+    - cp vBRIEF-extension-claude.md extensions/claude.md
+    - cp vBRIEF-extension-api-python.md extensions/api/python.md
+    - cp vBRIEF-extension-api-typescript.md extensions/api/typescript.md
+    - cp vBRIEF-extension-api-go.md extensions/api/go.md
     # Create navigation index
     - cat > extensions/README.md < navigation_template.md
 ```

@@ -1,4 +1,4 @@
-# vContext Extension: Model-First Reasoning (MFR)
+# vBRIEF Extension: Model-First Reasoning (MFR)
 
 **Extension Name**: Model-First Reasoning (MFR)  
 **Version**: 0.2 (Simplified)  
@@ -10,7 +10,7 @@
 
 ## Overview
 
-This extension adds explicit problem modeling to vContext Plans, inspired by [Kumar & Rana (2025)](https://arxiv.org/abs/2512.14474). Model-First Reasoning (MFR) argues that LLM planning failures arise from **implicit and unstable problem representations**. By requiring explicit models—defining entities, state, actions with preconditions/effects, and constraints—before generating plans, we dramatically reduce hallucinations and constraint violations.
+This extension adds explicit problem modeling to vBRIEF Plans, inspired by [Kumar & Rana (2025)](https://arxiv.org/abs/2512.14474). Model-First Reasoning (MFR) argues that LLM planning failures arise from **implicit and unstable problem representations**. By requiring explicit models—defining entities, state, actions with preconditions/effects, and constraints—before generating plans, we dramatically reduce hallucinations and constraint violations.
 
 **Key insight**: **PlanItems are already actions.** Rather than creating separate workflow types, we extend Plans and PlanItems to capture problem model semantics directly.
 
@@ -31,7 +31,7 @@ This extension adds explicit problem modeling to vContext Plans, inspired by [Ku
 ## Dependencies
 
 **Required:**
-- vContext Core (Plan, PlanItem)
+- vBRIEF Core (Plan, PlanItem)
 - Extension 2 (Identifiers) - for referencing entities
 
 **Recommended:**
@@ -50,7 +50,7 @@ Rather than introducing separate `ProblemModel` and `Action` types, we recognize
 - **PlanItems** = The actions to execute (already ordered, have status, dependencies)
 - **PlanItem preconditions/effects** = Action semantics (new fields)
 
-This keeps vContext simple while enabling full MFR validation.
+This keeps vBRIEF simple while enabling full MFR validation.
 
 ---
 
@@ -284,7 +284,7 @@ TemplateParam {
 
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.3"
   },
   "plan": {
@@ -498,7 +498,7 @@ TemplateParam {
 
 ```json
 {
-  "vContextInfo": {"version": "0.4"},
+  "vBRIEFInfo": {"version": "0.4"},
   "playbook": {
     "version": 1,
     "created": "2025-12-27T00:00:00Z",
@@ -866,8 +866,8 @@ Output as Plan.items array.
 - **Fikes, R. & Nilsson, N.** (1971). "STRIPS: A New Approach to the Application of Theorem Proving to Problem Solving".
 - **McDermott, D. et al.** (1998). "PDDL - The Planning Domain Definition Language".
 
-### vContext
-- vContext Core Specification v0.3
+### vBRIEF
+- vBRIEF Core Specification v0.3
 - Extension 2: Identifiers
 - Extension 4: Hierarchical Structures
 - Extension 12: Playbooks

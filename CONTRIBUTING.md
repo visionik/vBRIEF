@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for contributing to vContext.
+Thanks for contributing to vBRIEF.
 
 ## Development workflow
 

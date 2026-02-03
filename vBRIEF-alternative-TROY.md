@@ -19,14 +19,14 @@ Like TRON, TROY would allow defining schemas once and then using positional or n
 **Class definitions:**
 ```yaml
 classes:
-  vContextInfo: [version, author, description]
+  vBRIEFInfo: [version, author, description]
   TodoList: [items]
   TodoItem: [title, status]
 ```
 
 **Instance creation:**
 ```yaml
-vContextInfo: !vContextInfo ["0.4", "Platform Team", "My tasks"]
+vBRIEFInfo: !vBRIEFInfo ["0.4", "Platform Team", "My tasks"]
 
 todoList: !TodoList
   - !TodoItem ["Implement auth", "pending"]
@@ -41,7 +41,7 @@ todoList: !TodoList
 **Class definitions:**
 ```yaml
 classes:
-  vContextInfo:
+  vBRIEFInfo:
     fields: [version, author, description]
   TodoItem:
     fields: [title, status]
@@ -49,7 +49,7 @@ classes:
 
 **Instance creation with positional:**
 ```yaml
-vContextInfo: !c ["0.4", "Platform Team", "My tasks"]
+vBRIEFInfo: !c ["0.4", "Platform Team", "My tasks"]
 
 todoList:
   items:
@@ -64,12 +64,12 @@ todoList:
 ```yaml
 @define:
   TodoItem: [title, status]
-  vContextInfo: [version, author, description]
+  vBRIEFInfo: [version, author, description]
 ```
 
 **Instance creation:**
 ```yaml
-vContextInfo: @vContextInfo
+vBRIEFInfo: @vBRIEFInfo
   - "0.4"
   - "Platform Team"
   - "My tasks"
@@ -89,7 +89,7 @@ Uses YAML's built-in custom type system:
 ```yaml
 # schema.troy.yaml
 types:
-  !vContextInfo:
+  !vBRIEFInfo:
     version: string
     author: string
     description: string
@@ -100,7 +100,7 @@ types:
 
 **Instance creation:**
 ```yaml
-vContextInfo: !vContextInfo
+vBRIEFInfo: !vBRIEFInfo
   - "0.4"
   - "Platform Team" 
   - "My tasks"
@@ -116,7 +116,7 @@ todoList:
 ### Pure YAML (Baseline)
 
 ```yaml
-vContextInfo:
+vBRIEFInfo:
   version: "0.4"
   author: "Platform Team"
   description: "Development tasks"
@@ -143,11 +143,11 @@ todoList:
 ### TRON (Current)
 
 ```tron
-class vContextInfo: version, author, description
+class vBRIEFInfo: version, author, description
 class TodoList: items
 class TodoItem: title, status, description, priority, tags
 
-vContextInfo: vContextInfo("0.4", "Platform Team", "Development tasks")
+vBRIEFInfo: vBRIEFInfo("0.4", "Platform Team", "Development tasks")
 
 todoList: TodoList([
   TodoItem("Implement authentication", "inProgress", "Add JWT-based auth", "critical", ["backend", "security"]),
@@ -162,11 +162,11 @@ todoList: TodoList([
 
 ```yaml
 @schema:
-  vContextInfo: [version, author, description]
+  vBRIEFInfo: [version, author, description]
   TodoList: [items]
   TodoItem: [title, status, description, priority, tags]
 
-vContextInfo: !vContextInfo ["0.4", "Platform Team", "Development tasks"]
+vBRIEFInfo: !vBRIEFInfo ["0.4", "Platform Team", "Development tasks"]
 
 todoList: !TodoList
   - !TodoItem ["Implement authentication", "inProgress", "Add JWT-based auth", "critical", ["backend", "security"]]
@@ -265,29 +265,29 @@ If you're already using TRON (JSON-based), what's the compelling reason to switc
     tags: ["backend"]
 ```
 
-## Integration with vContext
+## Integration with vBRIEF
 
-If TROY were added to vContext, it might look like:
+If TROY were added to vBRIEF, it might look like:
 
-### vContext v0.5 (Hypothetical)
+### vBRIEF v0.5 (Hypothetical)
 
 **Supported formats:**
 1. JSON - Maximum compatibility
 2. TRON - Maximum token efficiency
 3. TROY - Maximum human readability with good token efficiency
 
-**Example vContext document in TROY:**
+**Example vBRIEF document in TROY:**
 
 ```yaml
 @schema:
-  vContextInfo: [version, author, description]
+  vBRIEFInfo: [version, author, description]
   Playbook: [title, description, items]
   PlaybookItem: [title, status, content]
 
-vContextInfo: !vContextInfo ["0.4", "vContext Project", "Development practices"]
+vBRIEFInfo: !vBRIEFInfo ["0.4", "vBRIEF Project", "Development practices"]
 
 playbook: !Playbook
-  - "vContext Development Practices"
+  - "vBRIEF Development Practices"
   - "Accumulated best practices"
   - 
     - !PlaybookItem

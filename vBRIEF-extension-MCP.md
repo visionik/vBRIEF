@@ -1,4 +1,4 @@
-# vContext Extension Proposal: Model Context Protocol (MCP) Integration
+# vBRIEF Extension Proposal: Model Context Protocol (MCP) Integration
 
 > **VERY EARLY DRAFT**: This is an initial proposal and subject to significant change. Comments, feedback, and suggestions are strongly encouraged. Please provide input via GitHub issues or discussions.
 
@@ -12,7 +12,7 @@
 
 [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open protocol created by Anthropic that enables AI models to securely connect to external data sources and tools. MCP provides a standardized way for LLMs to access resources (data) and invoke tools (operations) across different systems and applications.
 
-This extension defines how vContext documents are exposed as MCP resources and how vContext operations are exposed as MCP tools. It makes vContext a first-class MCP resource type, enabling AI agents to discover, read, and modify vContext documents through a standardized protocol.
+This extension defines how vBRIEF documents are exposed as MCP resources and how vBRIEF operations are exposed as MCP tools. It makes vBRIEF a first-class MCP resource type, enabling AI agents to discover, read, and modify vBRIEF documents through a standardized protocol.
 
 ## Motivation
 
@@ -23,20 +23,20 @@ This extension defines how vContext documents are exposed as MCP resources and h
 - Transport agnostic (stdio, SSE, HTTP)
 - Growing ecosystem support (Claude, Cursor, Aider, etc.)
 
-**vContext benefits from MCP**:
-- **Discoverability**: AI agents can find and use vContext without custom code
+**vBRIEF benefits from MCP**:
+- **Discoverability**: AI agents can find and use vBRIEF without custom code
 - **Standardization**: CRUD operations on todos/plans follow consistent patterns
 - **Real-time access**: Agents get live updates instead of polling files
-- **Multi-user coordination**: Multiple agents/humans work on shared vContext with permissions
+- **Multi-user coordination**: Multiple agents/humans work on shared vBRIEF with permissions
 - **Ecosystem integration**: Works automatically with MCP-enabled tools
 
-**Integration goal**: Make vContext the standard memory format for MCP-enabled agentic systems, providing structured persistence for todos, plans, and accumulated learnings.
+**Integration goal**: Make vBRIEF the standard memory format for MCP-enabled agentic systems, providing structured persistence for todos, plans, and accumulated learnings.
 
 ## Dependencies
 
 **Required**:
 - Extension 2 (Identifiers) - for referencing specific items via MCP tools
-- Core vContext types (TodoList, TodoItem, Plan, PlanItem)
+- Core vBRIEF types (TodoList, TodoItem, Plan, PlanItem)
 
 **Recommended**:
 - Extension 1 (Timestamps) - track when MCP operations occurred
@@ -46,22 +46,22 @@ This extension defines how vContext documents are exposed as MCP resources and h
 
 ## MCP Resources
 
-Resources are read-only endpoints that expose vContext documents. Clients use MCP's `resources/read` to fetch these.
+Resources are read-only endpoints that expose vBRIEF documents. Clients use MCP's `resources/read` to fetch these.
 
 ### Resource URIs
 
 ```typescript
-// Standard vContext resources
-vcontext://todos/current              # Current TodoList
-vcontext://todos/{id}                 # Specific TodoList by ID
-vcontext://plans/current              # Current Plan
-vcontext://plans/{id}                 # Specific Plan by ID
-vcontext://playbook                   # Project playbook
-vcontext://playbook/{category}        # Playbook section (strategies, decisions, etc.)
+// Standard vBRIEF resources
+vbrief://todos/current              # Current TodoList
+vbrief://todos/{id}                 # Specific TodoList by ID
+vbrief://plans/current              # Current Plan
+vbrief://plans/{id}                 # Specific Plan by ID
+vbrief://playbook                   # Project playbook
+vbrief://playbook/{category}        # Playbook section (strategies, decisions, etc.)
 
 // Collection resources
-vcontext://todos                      # List all TodoLists
-vcontext://plans                      # List all Plans
+vbrief://todos                      # List all TodoLists
+vbrief://plans                      # List all Plans
 ```
 
 ### Resource Schema
@@ -87,19 +87,19 @@ interface VAgendaResource {
   },
   "resources": [
     {
-      "uri": "vcontext://todos/current",
+      "uri": "vbrief://todos/current",
       "name": "Current Tasks",
       "description": "Active TodoList for this project",
       "mimeType": "text/x-tron"
     },
     {
-      "uri": "vcontext://plans/current",
+      "uri": "vbrief://plans/current",
       "name": "Current Plan",
       "description": "Active implementation plan",
       "mimeType": "text/x-tron"
     },
     {
-      "uri": "vcontext://playbook",
+      "uri": "vbrief://playbook",
       "name": "Project Playbook",
       "description": "Accumulated learnings (playbook)",
       "mimeType": "text/x-tron"
@@ -119,7 +119,7 @@ Client requests resource content:
   "id": 1,
   "method": "resources/read",
   "params": {
-    "uri": "vcontext://todos/current"
+    "uri": "vbrief://todos/current"
   }
 }
 
@@ -130,9 +130,9 @@ Client requests resource content:
   "result": {
     "contents": [
       {
-        "uri": "vcontext://todos/current",
+        "uri": "vbrief://todos/current",
         "mimeType": "text/x-tron",
-        "text": "class vContextInfo: version\nclass TodoList: items\n..."
+        "text": "class vBRIEFInfo: version\nclass TodoList: items\n..."
       }
     ]
   }
@@ -141,13 +141,13 @@ Client requests resource content:
 
 ## MCP Tools
 
-Tools are operations that modify vContext state. Clients use MCP's `tools/call` to invoke them.
+Tools are operations that modify vBRIEF state. Clients use MCP's `tools/call` to invoke them.
 
 ### Core Tools
 
 ```typescript
 // Create a new TodoItem
-vcontext_create_todo({
+vbrief_create_todo({
   title: string,
   description?: string,
   status?: TodoStatus,
@@ -155,7 +155,7 @@ vcontext_create_todo({
 })
 
 // Update a TodoItem
-vcontext_update_todo({
+vbrief_update_todo({
   id: string,
   title?: string,
   description?: string,
@@ -164,12 +164,12 @@ vcontext_update_todo({
 })
 
 // Delete a TodoItem
-vcontext_delete_todo({
+vbrief_delete_todo({
   id: string
 })
 
 // Create a new Plan
-vcontext_create_plan({
+vbrief_create_plan({
   title: string,
   status?: PlanStatus,
   narratives?: Record<string, string>,
@@ -177,7 +177,7 @@ vcontext_create_plan({
 })
 
 // Update a Plan
-vcontext_update_plan({
+vbrief_update_plan({
   id: string,
   title?: string,
   status?: PlanStatus,
@@ -185,14 +185,14 @@ vcontext_update_plan({
 })
 
 // Add a PlanItem to a Plan
-vcontext_add_plan_item({
+vbrief_add_plan_item({
   planId: string,
   item: PlanItem,
   position?: number                # Insert at position, defaults to end
 })
 
 // Update a PlanItem
-vcontext_update_plan_item({
+vbrief_update_plan_item({
   planId: string,
   itemId: string,
   title?: string,
@@ -200,7 +200,7 @@ vcontext_update_plan_item({
 })
 
 // Add learning to playbook (append-only)
-vcontext_add_learning({
+vbrief_add_learning({
   targetId: string,
   kind: "strategy" | "learning" | "rule" | "warning" | "note",
   title?: string,
@@ -211,7 +211,7 @@ vcontext_add_learning({
 })
 
 // Query playbook learnings
-vcontext_query_playbook({
+vbrief_query_playbook({
   kind?: "strategy" | "learning" | "rule" | "warning" | "note",
   tags?: string[],
   searchText?: string,
@@ -221,12 +221,12 @@ vcontext_query_playbook({
 
 ### Tool Input Schemas
 
-Full JSON schema example for `vcontext_create_todo`:
+Full JSON schema example for `vbrief_create_todo`:
 
 ```json
 {
-  "name": "vcontext_create_todo",
-  "description": "Create a new todo item in vContext",
+  "name": "vbrief_create_todo",
+  "description": "Create a new todo item in vBRIEF",
   "inputSchema": {
     "type": "object",
     "properties": {
@@ -290,20 +290,20 @@ Full JSON schema example for `vcontext_create_todo`:
 
 ## MCP Prompts
 
-Prompts are pre-defined templates for common vContext workflows. They help AI agents use vContext effectively.
+Prompts are pre-defined templates for common vBRIEF workflows. They help AI agents use vBRIEF effectively.
 
 ```typescript
 // Prompt declarations
 {
   "prompts": [
     {
-      "name": "vcontext_session_start",
-      "description": "Load vContext context at the start of a coding session",
+      "name": "vbrief_session_start",
+      "description": "Load vBRIEF context at the start of a coding session",
       "arguments": []
     },
     {
-      "name": "vcontext_session_end",
-      "description": "Save current work state to vContext at session end",
+      "name": "vbrief_session_end",
+      "description": "Save current work state to vBRIEF at session end",
       "arguments": [
         {
           "name": "summary",
@@ -313,12 +313,12 @@ Prompts are pre-defined templates for common vContext workflows. They help AI ag
       ]
     },
     {
-      "name": "vcontext_plan_review",
+      "name": "vbrief_plan_review",
       "description": "Review current plan and suggest next steps",
       "arguments": []
     },
     {
-      "name": "vcontext_add_learning",
+      "name": "vbrief_add_learning",
       "description": "Extract a learning from recent work and add to playbook",
       "arguments": [
         {
@@ -334,19 +334,19 @@ Prompts are pre-defined templates for common vContext workflows. They help AI ag
 
 ### Example Prompt Content
 
-When `vcontext_session_start` is invoked, the server returns:
+When `vbrief_session_start` is invoked, the server returns:
 
 ```
-You are starting a new coding session. Here is the current vContext context:
+You are starting a new coding session. Here is the current vBRIEF context:
 
 ## Current Tasks (TodoList)
-[reads vcontext://todos/current]
+[reads vbrief://todos/current]
 
 ## Current Plan (if any)
-[reads vcontext://plans/current]
+[reads vbrief://plans/current]
 
 ## Recent Learnings
-[reads vcontext://playbook with recent items]
+[reads vbrief://playbook with recent items]
 
 Based on this context, what would you like to work on?
 ```
@@ -355,13 +355,13 @@ Based on this context, what would you like to work on?
 
 ### Pattern 1: MCP Server Discovery
 
-AI agent discovers vContext MCP server:
+AI agent discovers vBRIEF MCP server:
 
 ```typescript
 // Agent connects to MCP server (via stdio, SSE, or HTTP)
 const client = new MCPClient({
   transport: new StdioClientTransport({
-    command: "vcontext-mcp-server",
+    command: "vbrief-mcp-server",
     args: ["--project", "/path/to/project"]
   })
 });
@@ -370,21 +370,21 @@ await client.connect();
 
 // Discover available resources
 const resources = await client.listResources();
-// Returns: vcontext://todos/current, vcontext://plans/current, etc.
+// Returns: vbrief://todos/current, vbrief://plans/current, etc.
 
 // Discover available tools
 const tools = await client.listTools();
-// Returns: vcontext_create_todo, vcontext_update_todo, etc.
+// Returns: vbrief_create_todo, vbrief_update_todo, etc.
 ```
 
-### Pattern 2: Reading vContext via Resources
+### Pattern 2: Reading vBRIEF via Resources
 
 Claude reads current tasks at session start:
 
 ```typescript
 // Claude (via MCP client) reads current todos
 const response = await client.readResource({
-  uri: "vcontext://todos/current"
+  uri: "vbrief://todos/current"
 });
 
 // Response contains TRON document
@@ -394,14 +394,14 @@ const tronContent = response.contents[0].text;
 // Can reason about priorities, dependencies, etc.
 ```
 
-### Pattern 3: Modifying vContext via Tools
+### Pattern 3: Modifying vBRIEF via Tools
 
-Claude completes a task and updates vContext:
+Claude completes a task and updates vBRIEF:
 
 ```typescript
 // Claude invokes tool to mark task completed
 const result = await client.callTool({
-  name: "vcontext_update_todo",
+  name: "vbrief_update_todo",
   arguments: {
     id: "todo-abc123",
     status: "completed"
@@ -409,18 +409,18 @@ const result = await client.callTool({
 });
 
 // Tool returns success confirmation
-// vContext document is updated
+// vBRIEF document is updated
 // Other connected agents see the change
 ```
 
 ### Pattern 4: Real-Time Collaboration
 
-Multiple agents working on shared vContext:
+Multiple agents working on shared vBRIEF:
 
 ```typescript
 // Agent A updates todo status
 await clientA.callTool({
-  name: "vcontext_update_todo",
+  name: "vbrief_update_todo",
   arguments: { id: "todo-1", status: "inProgress" }
 });
 
@@ -429,27 +429,27 @@ await clientA.callTool({
 {
   "method": "notifications/resources/updated",
   "params": {
-    "uri": "vcontext://todos/current"
+    "uri": "vbrief://todos/current"
   }
 }
 
 // Agent B receives notification and re-reads resource
 const updated = await clientB.readResource({
-  uri: "vcontext://todos/current"
+  uri: "vbrief://todos/current"
 });
 // Agent B now sees Agent A's changes
 ```
 
 ### Pattern 5: Integration with Claude Desktop
 
-Claude Desktop app configured to use vContext MCP server:
+Claude Desktop app configured to use vBRIEF MCP server:
 
 ```json
 // claude_desktop_config.json
 {
   "mcpServers": {
-    "vcontext": {
-      "command": "vcontext-mcp-server",
+    "vbrief": {
+      "command": "vbrief-mcp-server",
       "args": ["--project", "~/Projects/myapp"],
       "env": {
         "VCONTEXT_FORMAT": "tron"
@@ -459,7 +459,7 @@ Claude Desktop app configured to use vContext MCP server:
 }
 ```
 
-When Claude Desktop starts, it automatically connects to vContext server and has access to all resources and tools.
+When Claude Desktop starts, it automatically connects to vBRIEF server and has access to all resources and tools.
 
 ## Implementation Notes
 
@@ -485,7 +485,7 @@ class VAgendaMCPServer {
     this.projectPath = projectPath;
     this.server = new Server(
       {
-        name: "vcontext-mcp-server",
+        name: "vbrief-mcp-server",
         version: "0.1.0",
       },
       {
@@ -507,17 +507,17 @@ class VAgendaMCPServer {
       async () => ({
         resources: [
           {
-            uri: "vcontext://todos/current",
+            uri: "vbrief://todos/current",
             name: "Current Tasks",
             mimeType: "text/x-tron",
           },
           {
-            uri: "vcontext://plans/current",
+            uri: "vbrief://plans/current",
             name: "Current Plan",
             mimeType: "text/x-tron",
           },
           {
-            uri: "vcontext://playbook",
+            uri: "vbrief://playbook",
             name: "Project Playbook",
             mimeType: "text/x-tron",
           },
@@ -550,7 +550,7 @@ class VAgendaMCPServer {
       async () => ({
         tools: [
           {
-            name: "vcontext_create_todo",
+            name: "vbrief_create_todo",
             description: "Create a new todo item",
             inputSchema: {
               type: "object",
@@ -566,7 +566,7 @@ class VAgendaMCPServer {
             },
           },
           {
-            name: "vcontext_update_todo",
+            name: "vbrief_update_todo",
             description: "Update a todo item",
             inputSchema: {
               type: "object",
@@ -590,9 +590,9 @@ class VAgendaMCPServer {
         const { name, arguments: args } = request.params;
         
         switch (name) {
-          case "vcontext_create_todo":
+          case "vbrief_create_todo":
             return await this.createTodo(args);
-          case "vcontext_update_todo":
+          case "vbrief_update_todo":
             return await this.updateTodo(args);
           default:
             throw new Error(`Unknown tool: ${name}`);
@@ -629,7 +629,7 @@ class VAgendaMCPServer {
     await this.saveTodoList(todoList);
     
     // Send notification to subscribers
-    await this.notifyResourceChanged("vcontext://todos/current");
+    await this.notifyResourceChanged("vbrief://todos/current");
     
     return {
       content: [
@@ -661,7 +661,7 @@ server.run().catch(console.error);
 
 ### Client Usage
 
-AI agents connect to vContext MCP server:
+AI agents connect to vBRIEF MCP server:
 
 ```typescript
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
@@ -669,7 +669,7 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 
 // Create client
 const transport = new StdioClientTransport({
-  command: "vcontext-mcp-server",
+  command: "vbrief-mcp-server",
   args: ["--project", "/path/to/project"],
 });
 
@@ -691,7 +691,7 @@ const response = await client.request(
   {
     method: "resources/read",
     params: {
-      uri: "vcontext://todos/current",
+      uri: "vbrief://todos/current",
     },
   },
   ReadResourceResultSchema
@@ -704,7 +704,7 @@ await client.request(
   {
     method: "tools/call",
     params: {
-      name: "vcontext_create_todo",
+      name: "vbrief_create_todo",
       arguments: {
         title: "Fix authentication bug",
         status: "pending",
@@ -725,14 +725,14 @@ class FileBackend {
   
   async readTodos(): Promise<string> {
     return fs.readFile(
-      path.join(this.rootPath, "vContext", "current.tron"),
+      path.join(this.rootPath, "vBRIEF", "current.tron"),
       "utf-8"
     );
   }
   
   async writeTodos(content: string): Promise<void> {
     await fs.writeFile(
-      path.join(this.rootPath, "vContext", "current.tron"),
+      path.join(this.rootPath, "vBRIEF", "current.tron"),
       content
     );
   }
@@ -747,18 +747,18 @@ class DatabaseBackend {
   
   async readTodos(): Promise<string> {
     const row = await this.db.get(
-      "SELECT content FROM vcontext_documents WHERE uri = ?",
-      "vcontext://todos/current"
+      "SELECT content FROM vbrief_documents WHERE uri = ?",
+      "vbrief://todos/current"
     );
     return row.content;
   }
   
   async writeTodos(content: string): Promise<void> {
     await this.db.run(
-      "UPDATE vcontext_documents SET content = ?, updated_at = ? WHERE uri = ?",
+      "UPDATE vbrief_documents SET content = ?, updated_at = ? WHERE uri = ?",
       content,
       Date.now(),
-      "vcontext://todos/current"
+      "vbrief://todos/current"
     );
   }
 }
@@ -772,7 +772,7 @@ Best for: Single-user, local development
 
 ```bash
 # Start server
-vcontext-mcp-server --project ~/Projects/myapp
+vbrief-mcp-server --project ~/Projects/myapp
 
 # Client connects via stdin/stdout
 ```
@@ -793,7 +793,7 @@ Best for: Multi-user, distributed systems
 
 ```typescript
 const transport = new HTTPClientTransport(
-  new URL("https://vcontext.example.com/mcp")
+  new URL("https://vbrief.example.com/mcp")
 );
 ```
 
@@ -859,7 +859,7 @@ Handle concurrent modifications:
 ```typescript
 // Use Extension 10 (Version Control) sequence numbers
 interface VAgendaDocument {
-  vContextInfo: {
+  vBRIEFInfo: {
     version: string;
     sequence: number;        // Increment on each modification
   };
@@ -872,11 +872,11 @@ class ConcurrencySafeServer extends VAgendaMCPServer {
     const currentSeq = args.expectedSequence;
     const doc = await this.loadDocument();
     
-    if (doc.vContextInfo.sequence !== currentSeq) {
+    if (doc.vBRIEFInfo.sequence !== currentSeq) {
       return {
         content: [{
           type: "text",
-          text: `Conflict: document was modified (expected seq ${currentSeq}, actual ${doc.vContextInfo.sequence})`
+          text: `Conflict: document was modified (expected seq ${currentSeq}, actual ${doc.vBRIEFInfo.sequence})`
         }],
         isError: true
       };
@@ -884,7 +884,7 @@ class ConcurrencySafeServer extends VAgendaMCPServer {
     
     // Perform update
     // ...
-    doc.vContextInfo.sequence++;
+    doc.vBRIEFInfo.sequence++;
     await this.saveDocument(doc);
     
     return { content: [{ type: "text", text: "Success" }], isError: false };
@@ -924,7 +924,7 @@ Clients can request TRON or JSON format:
 ```typescript
 // Client specifies preferred format via Accept-like mechanism
 const response = await client.readResource({
-  uri: "vcontext://todos/current",
+  uri: "vbrief://todos/current",
   // Custom parameter (not in MCP spec, but could be added)
   format: "json"  // or "tron"
 });
@@ -953,7 +953,7 @@ Server pushes updates to subscribed clients:
 await client.request({
   method: "resources/subscribe",
   params: {
-    uri: "vcontext://todos/current"
+    uri: "vbrief://todos/current"
   }
 });
 
@@ -961,7 +961,7 @@ await client.request({
 server.sendNotification({
   method: "notifications/resources/updated",
   params: {
-    uri: "vcontext://todos/current"
+    uri: "vbrief://todos/current"
   }
 });
 
@@ -979,19 +979,19 @@ client.setNotificationHandler(
 
 ## Relationship to Existing Extensions
 
-### Claude Extension (vContext-extension-claude.md)
+### Claude Extension (vBRIEF-extension-claude.md)
 
 The Claude extension mentioned MCP briefly but didn't define the protocol. This extension provides:
 - Full MCP resource/tool definitions that Claude extension referenced
 - Server implementation that Claude clients can connect to
-- Standard way for Claude to access vContext (vs custom file reading)
+- Standard way for Claude to access vBRIEF (vs custom file reading)
 
-### Beads Extension (vContext-extension-beads.md)
+### Beads Extension (vBRIEF-extension-beads.md)
 
 Beads currently uses file-based sync. With MCP:
 - Beads could expose its data via MCP server
-- vContext MCP server could import/export Beads format
-- Real-time sync between Beads and vContext via MCP notifications
+- vBRIEF MCP server could import/export Beads format
+- Real-time sync between Beads and vBRIEF via MCP notifications
 
 ### Extension 10 (Version Control)
 
@@ -1002,7 +1002,7 @@ MCP operations should generate version control events:
 
 ### Extension 11 (Multi-Agent Forking)
 
-When multiple agents access vContext via MCP:
+When multiple agents access vBRIEF via MCP:
 - Each agent can fork for independent exploration
 - MCP tools for creating/merging forks
 - Notification mechanism for fork events
@@ -1010,18 +1010,18 @@ When multiple agents access vContext via MCP:
 ### Extension 12 (Playbooks)
 
 MCP makes playbooks accessible:
-- `vcontext://playbook` resource for reading learnings
-- `vcontext_add_learning` tool for accumulating knowledge
-- `vcontext_query_playbook` tool for semantic search
+- `vbrief://playbook` resource for reading learnings
+- `vbrief_add_learning` tool for accumulating knowledge
+- `vbrief_query_playbook` tool for semantic search
 - Agents automatically build institutional memory via MCP
 
 ## Complete Tool Schema Definitions
 
-### vcontext_create_todo
+### vbrief_create_todo
 
 ```json
 {
-  "name": "vcontext_create_todo",
+  "name": "vbrief_create_todo",
   "description": "Create a new todo item in the current or specified TodoList",
   "inputSchema": {
     "type": "object",
@@ -1059,11 +1059,11 @@ MCP makes playbooks accessible:
 }
 ```
 
-### vcontext_update_todo
+### vbrief_update_todo
 
 ```json
 {
-  "name": "vcontext_update_todo",
+  "name": "vbrief_update_todo",
   "description": "Update an existing todo item",
   "inputSchema": {
     "type": "object",
@@ -1099,11 +1099,11 @@ MCP makes playbooks accessible:
 }
 ```
 
-### vcontext_create_plan
+### vbrief_create_plan
 
 ```json
 {
-  "name": "vcontext_create_plan",
+  "name": "vbrief_create_plan",
   "description": "Create a new implementation plan",
   "inputSchema": {
     "type": "object",
@@ -1145,11 +1145,11 @@ MCP makes playbooks accessible:
 }
 ```
 
-### vcontext_add_learning
+### vbrief_add_learning
 
 ```json
 {
-  "name": "vcontext_add_learning",
+  "name": "vbrief_add_learning",
   "description": "Append a new PlaybookItem event (requires Extension 12)",
   "inputSchema": {
     "type": "object",
@@ -1192,11 +1192,11 @@ MCP makes playbooks accessible:
 }
 ```
 
-### vcontext_query_playbook
+### vbrief_query_playbook
 
 ```json
 {
-  "name": "vcontext_query_playbook",
+  "name": "vbrief_query_playbook",
   "description": "Search the playbook for relevant entries (requires Extension 12)",
   "inputSchema": {
     "type": "object",
@@ -1230,9 +1230,9 @@ MCP makes playbooks accessible:
 ### Example 1: Complete MCP Server Session
 
 ```bash
-# Terminal 1: Start vContext MCP server
-$ vcontext-mcp-server --project ~/Projects/myapp
-[INFO] vContext MCP Server v0.1.0
+# Terminal 1: Start vBRIEF MCP server
+$ vbrief-mcp-server --project ~/Projects/myapp
+[INFO] vBRIEF MCP Server v0.1.0
 [INFO] Project: /Users/me/Projects/myapp
 [INFO] Listening on stdio
 ```
@@ -1245,7 +1245,7 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 async function main() {
   // Connect to server
   const transport = new StdioClientTransport({
-    command: "vcontext-mcp-server",
+    command: "vbrief-mcp-server",
     args: ["--project", "~/Projects/myapp"],
   });
   
@@ -1255,7 +1255,7 @@ async function main() {
   );
   
   await client.connect(transport);
-  console.log("Connected to vContext MCP server");
+  console.log("Connected to vBRIEF MCP server");
   
   // List resources
   const resources = await client.request({
@@ -1266,7 +1266,7 @@ async function main() {
   // Read current todos
   const todosResponse = await client.request({
     method: "resources/read",
-    params: { uri: "vcontext://todos/current" },
+    params: { uri: "vbrief://todos/current" },
   });
   console.log("Current todos:");
   console.log(todosResponse.contents[0].text);
@@ -1275,7 +1275,7 @@ async function main() {
   const createResponse = await client.request({
     method: "tools/call",
     params: {
-      name: "vcontext_create_todo",
+      name: "vbrief_create_todo",
       arguments: {
         title: "Add MCP integration tests",
         description: "Write comprehensive tests for MCP server",
@@ -1290,7 +1290,7 @@ async function main() {
   const updateResponse = await client.request({
     method: "tools/call",
     params: {
-      name: "vcontext_update_todo",
+      name: "vbrief_update_todo",
       arguments: {
         id: "todo-abc123",
         status: "inProgress",
@@ -1304,7 +1304,7 @@ async function main() {
   await client.request({
     method: "tools/call",
     params: {
-      name: "vcontext_add_learning",
+      name: "vbrief_add_learning",
       arguments: {
         category: "patterns",
         title: "MCP server stdio transport pattern",
@@ -1326,11 +1326,11 @@ main().catch(console.error);
 // ~/Library/Application Support/Claude/claude_desktop_config.json
 {
   "mcpServers": {
-    "vcontext": {
+    "vbrief": {
       "command": "npx",
       "args": [
         "-y",
-        "@vcontext/mcp-server",
+        "@vbrief/mcp-server",
         "--project",
         "/Users/me/Projects/myapp"
       ],
@@ -1342,13 +1342,13 @@ main().catch(console.error);
 }
 ```
 
-When Claude Desktop starts, it automatically connects to the vContext MCP server. Now Claude can:
+When Claude Desktop starts, it automatically connects to the vBRIEF MCP server. Now Claude can:
 
 ```
 User: What tasks do I have pending?
 
-Claude: Let me check your current vContext tasks.
-[calls resources/read on vcontext://todos/current]
+Claude: Let me check your current vBRIEF tasks.
+[calls resources/read on vbrief://todos/current]
 
 You have 3 pending tasks:
 1. "Add MCP integration tests" - High priority
@@ -1362,7 +1362,7 @@ Would you like me to help with any of these?
 User: Start working on the MCP integration tests
 
 Claude: I'll mark that task as in progress and begin working on it.
-[calls tools/call with vcontext_update_todo]
+[calls tools/call with vbrief_update_todo]
 
 Updated task status to inProgress. Let me review the current codebase...
 [continues with implementation]
@@ -1371,7 +1371,7 @@ Updated task status to inProgress. Let me review the current codebase...
 ### Example 3: Aider Integration
 
 ```python
-# aider_vcontext.py - Aider plugin for vContext MCP
+# aider_vbrief.py - Aider plugin for vBRIEF MCP
 from mcp import Client, StdioClientTransport
 
 class VAgendaIntegration:
@@ -1381,7 +1381,7 @@ class VAgendaIntegration:
             {"capabilities": {}}
         )
         self.transport = StdioClientTransport(
-            command="vcontext-mcp-server",
+            command="vbrief-mcp-server",
             args=["--project", project_path]
         )
     
@@ -1391,17 +1391,17 @@ class VAgendaIntegration:
         # Read current context
         response = await self.client.request({
             "method": "resources/read",
-            "params": {"uri": "vcontext://todos/current"}
+            "params": {"uri": "vbrief://todos/current"}
         })
         
         todos_content = response["contents"][0]["text"]
-        return f"Current vContext context:\n{todos_content}"
+        return f"Current vBRIEF context:\n{todos_content}"
     
     async def complete_task(self, task_id):
         await self.client.request({
             "method": "tools/call",
             "params": {
-                "name": "vcontext_update_todo",
+                "name": "vbrief_update_todo",
                 "arguments": {
                     "id": task_id,
                     "status": "completed"
@@ -1413,7 +1413,7 @@ class VAgendaIntegration:
         await self.client.request({
             "method": "tools/call",
             "params": {
-                "name": "vcontext_add_learning",
+                "name": "vbrief_add_learning",
                 "arguments": {
                     "category": category,
                     "title": title,
@@ -1423,9 +1423,9 @@ class VAgendaIntegration:
         })
 
 # Usage in Aider
-vcontext = VAgendaIntegration("/path/to/project")
-await vcontext.start_session()
-# Aider now has full vContext context
+vbrief = VAgendaIntegration("/path/to/project")
+await vbrief.start_session()
+# Aider now has full vBRIEF context
 ```
 
 ### Example 4: Multi-Agent Coordination
@@ -1440,7 +1440,7 @@ await agentA.connect(...);
 await agentA.request({
   method: "tools/call",
   params: {
-    name: "vcontext_create_todo",
+    name: "vbrief_create_todo",
     arguments: {
       title: "Implement OAuth login",
       status: "inProgress",
@@ -1457,11 +1457,11 @@ await agentB.connect(...);
 await agentB.setNotificationHandler(
   "notifications/resources/updated",
   async (params) => {
-    if (params.uri === "vcontext://todos/current") {
+    if (params.uri === "vbrief://todos/current") {
       console.log("Tasks updated, checking for review work...");
       const todos = await agentB.request({
         method: "resources/read",
-        params: { uri: "vcontext://todos/current" }
+        params: { uri: "vbrief://todos/current" }
       });
       // Agent B sees Agent A's work and can review
     }
@@ -1472,7 +1472,7 @@ await agentB.setNotificationHandler(
 await agentA.request({
   method: "tools/call",
   params: {
-    name: "vcontext_update_todo",
+    name: "vbrief_update_todo",
     arguments: {
       id: "todo-oauth",
       status: "completed"
@@ -1484,7 +1484,7 @@ await agentA.request({
 await agentB.request({
   method: "tools/call",
   params: {
-    name: "vcontext_create_todo",
+    name: "vbrief_create_todo",
     arguments: {
       title: "Review OAuth implementation",
       assignee: "agent-b",
@@ -1505,7 +1505,7 @@ await agentB.request({
 - File-based backend
 
 **Deliverables**:
-- `vcontext-mcp-server` npm package
+- `vbrief-mcp-server` npm package
 - Basic documentation
 - Example integrations for Claude Desktop
 
@@ -1564,16 +1564,16 @@ await agentB.request({
 - A: Paginate results (multiple requests)
 - B: Compress content (gzip)
 - C: Return summaries with links to full content
-- D: Split into smaller resources (e.g., `vcontext://playbook/strategies`)
+- D: Split into smaller resources (e.g., `vbrief://playbook/strategies`)
 
 **Recommendation**: Option D + C. Split playbook into category-specific resources, provide summary resource with links.
 
 ### 3. Server Scope
 
-**Question**: Should vContext MCP server be mandatory or optional?
+**Question**: Should vBRIEF MCP server be mandatory or optional?
 
 **Options**:
-- A: Mandatory - all vContext tools must use MCP
+- A: Mandatory - all vBRIEF tools must use MCP
 - B: Optional - file-based and MCP both supported
 - C: Recommended - MCP preferred but not required
 
@@ -1596,15 +1596,15 @@ await agentB.request({
 We're seeking feedback on:
 
 1. **Transport priorities**: Which transports are most important? (stdio, SSE, HTTP)
-2. **Multi-project support**: Should one MCP server handle multiple vContext projects?
+2. **Multi-project support**: Should one MCP server handle multiple vBRIEF projects?
 3. **Permission model**: What permission granularity makes sense?
 4. **Tool set**: Are there additional MCP tools we should include?
-5. **Discovery**: How should clients discover vContext MCP servers?
-6. **Interop**: Should vContext MCP server support other formats (Beads, markdown)?
+5. **Discovery**: How should clients discover vBRIEF MCP servers?
+6. **Interop**: Should vBRIEF MCP server support other formats (Beads, markdown)?
 
 Please provide feedback via:
-- GitHub issues: https://github.com/visionik/vContext/issues
-- GitHub discussions: https://github.com/visionik/vContext/discussions
+- GitHub issues: https://github.com/visionik/vBRIEF/issues
+- GitHub discussions: https://github.com/visionik/vBRIEF/discussions
 - Email: visionik@pobox.com
 
 ## References
@@ -1612,9 +1612,9 @@ Please provide feedback via:
 - **MCP Specification**: https://modelcontextprotocol.io
 - **MCP TypeScript SDK**: https://github.com/modelcontextprotocol/typescript-sdk
 - **MCP Python SDK**: https://github.com/modelcontextprotocol/python-sdk
-- **vContext Core Specification**: SPEC-v2.md
-- **vContext Claude Extension**: vContext-extension-claude.md
-- **vContext Beads Extension**: vContext-extension-beads.md
+- **vBRIEF Core Specification**: SPEC-v2.md
+- **vBRIEF Claude Extension**: vBRIEF-extension-claude.md
+- **vBRIEF Beads Extension**: vBRIEF-extension-beads.md
 - **Claude Desktop MCP Setup**: https://modelcontextprotocol.io/quickstart/user
 
 ## Appendix: MCP Protocol Basics
@@ -1626,7 +1626,7 @@ For those unfamiliar with MCP, here's a quick primer:
 ```
 ┌─────────────────┐         ┌──────────────────┐
 │   AI Client     │◄───────►│   MCP Server     │
-│  (Claude, etc)  │   MCP   │  (vContext, etc)  │
+│  (Claude, etc)  │   MCP   │  (vBRIEF, etc)  │
 └─────────────────┘ Protocol└──────────────────┘
                                │
                                ▼
@@ -1639,17 +1639,17 @@ For those unfamiliar with MCP, here's a quick primer:
 ### Core MCP Concepts
 
 **Resources**: Read-only data endpoints
-- Example: `vcontext://todos/current`
+- Example: `vbrief://todos/current`
 - Accessed via `resources/read`
 - Can be files, API responses, database queries
 
 **Tools**: Operations that modify state
-- Example: `vcontext_create_todo`
+- Example: `vbrief_create_todo`
 - Invoked via `tools/call`
 - Can have side effects
 
 **Prompts**: Pre-defined templates
-- Example: `vcontext_session_start`
+- Example: `vbrief_session_start`
 - Help AI agents use the system correctly
 
 ### MCP Request/Response Flow
@@ -1661,15 +1661,15 @@ Client                          Server
   │◄──────list of resources───────┤
   │                               │
   ├──────resources/read ─────────►│
-  │      (uri: vcontext://todos)   │
+  │      (uri: vbrief://todos)   │
   │◄──────TRON content ───────────┤
   │                               │
   ├──────tools/call ─────────────►│
-  │      (name: vcontext_create_todo)
+  │      (name: vbrief_create_todo)
   │◄──────success response────────┤
   │                               │
   ◄──notifications/resources/updated─
-         (uri: vcontext://todos)
+         (uri: vbrief://todos)
 ```
 
-This extension leverages MCP's standardized protocol to make vContext universally accessible to AI agents.
+This extension leverages MCP's standardized protocol to make vBRIEF universally accessible to AI agents.

@@ -1,10 +1,10 @@
-# vContext Go API Library
+# vBRIEF Go API Library
 
-A Go library for working with vContext documents, providing type-safe operations, format conversion, validation, builders, and query interfaces for TodoLists and Plans.
+A Go library for working with vBRIEF documents, providing type-safe operations, format conversion, validation, builders, and query interfaces for TodoLists and Plans.
 
 ## Features
 
-- **Type-safe operations** on vContext documents
+- **Type-safe operations** on vBRIEF documents
 - **Format conversion** between JSON and TRON
 - **Validation** against core schema
 - **Builder patterns** for fluent document construction  
@@ -14,7 +14,7 @@ A Go library for working with vContext documents, providing type-safe operations
 ## Installation
 
 ```bash
-go get github.com/visionik/vContext/api/go
+go get github.com/visionik/vBRIEF/api/go
 ```
 
 ## Quick Start
@@ -26,8 +26,8 @@ package main
 
 import (
     "fmt"
-    "github.com/visionik/vContext/api/go/pkg/builder"
-    "github.com/visionik/vContext/api/go/pkg/convert"
+    "github.com/visionik/vBRIEF/api/go/pkg/builder"
+    "github.com/visionik/vBRIEF/api/go/pkg/convert"
 )
 
 func main() {
@@ -66,9 +66,9 @@ planDoc := builder.NewPlan("Add user authentication", "0.2").
 
 ```go
 import (
-    "github.com/visionik/vContext/api/go/pkg/parser"
-    "github.com/visionik/vContext/api/go/pkg/query"
-    "github.com/visionik/vContext/api/go/pkg/core"
+    "github.com/visionik/vBRIEF/api/go/pkg/parser"
+    "github.com/visionik/vBRIEF/api/go/pkg/query"
+    "github.com/visionik/vBRIEF/api/go/pkg/core"
 )
 
 // Parse from JSON or TRON (auto-detect)
@@ -89,7 +89,7 @@ highPriority := q.
 ### Validation
 
 ```go
-import "github.com/visionik/vContext/api/go/pkg/validator"
+import "github.com/visionik/vBRIEF/api/go/pkg/validator"
 
 v := validator.NewValidator()
 if err := v.Validate(doc); err != nil {
@@ -100,7 +100,7 @@ if err := v.Validate(doc); err != nil {
 ## Package Structure
 
 ```
-github.com/visionik/vContext/api/go/
+github.com/visionik/vBRIEF/api/go/
 ├── pkg/
 │   ├── core/           # Core types (Document, TodoList, Plan, etc.)
 │   ├── parser/         # JSON/TRON parsing
@@ -116,7 +116,7 @@ github.com/visionik/vContext/api/go/
 ## Core Types
 
 ### Document
-Root vContext document containing metadata and either a TodoList or Plan.
+Root vBRIEF document containing metadata and either a TodoList or Plan.
 
 ### TodoList
 Collection of actionable work items for short-term memory.
@@ -230,7 +230,7 @@ plan.UpdatePlanItem(index int, updates func(*PlanItem)) error
 The `updater` package provides validated mutations that ensure the document remains valid:
 
 ```go
-import "github.com/visionik/vContext/api/go/pkg/updater"
+import "github.com/visionik/vBRIEF/api/go/pkg/updater"
 
 // Create updater
 upd := updater.NewUpdater(doc) // Binds to a single document
@@ -313,6 +313,6 @@ See the [LICENSE](../../LICENSE) file in the repository root.
 
 ## References
 
-- [vContext Specification](https://github.com/visionik/vContext)
+- [vBRIEF Specification](https://github.com/visionik/vBRIEF)
 - [TRON Format](https://tron-format.github.io/)
-- [vContext Extension: Go API](../../vContext-extension-api-go.md)
+- [vBRIEF Extension: Go API](../../vBRIEF-extension-api-go.md)

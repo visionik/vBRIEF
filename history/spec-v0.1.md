@@ -1,4 +1,4 @@
-# vContext Specification v1.0
+# vBRIEF Specification v1.0
 
 A flexible, extensible specification for todo lists and plan files, designed for both agentic development environments and human workflows.
 
@@ -959,7 +959,7 @@ draft → proposed → approved → inProgress → completed
 
 ## Multi-Agent Collaboration
 
-vContext supports multiple agents (AI or human) working on plans and todo lists in parallel through forking, conflict detection, and merge operations.
+vBRIEF supports multiple agents (AI or human) working on plans and todo lists in parallel through forking, conflict detection, and merge operations.
 
 ### Forking Workflow
 
@@ -1181,7 +1181,7 @@ changes.forEach(c => {
 
 ### Evolving Playbooks
 
-vContext supports evolving playbooks where plans and todo lists accumulate, refine, and organize strategies through execution feedback.
+vBRIEF supports evolving playbooks where plans and todo lists accumulate, refine, and organize strategies through execution feedback.
 
 #### Playbook Structure
 
@@ -1434,7 +1434,7 @@ When archiving TodoLists or Plans, include these in document metadata:
       "url": "https://permanent.url/path"
     },
     "softwareUsed": [
-      {"name": "vContext Client", "version": "1.0.0"},
+      {"name": "vBRIEF Client", "version": "1.0.0"},
       {"name": "Task Management System", "version": "2.3.1"}
     ],
     "checksums": {
@@ -1459,7 +1459,7 @@ When archiving TodoLists or Plans, include these in document metadata:
 1. **Compression**: Use ZIP, tar, or 7z without encryption for bundling
 2. **Manifest**: Include a manifest file listing all contents with checksums
 3. **README**: Include human-readable documentation explaining the archive
-4. **Schemas**: Bundle the vContext specification version used
+4. **Schemas**: Bundle the vBRIEF specification version used
 
 #### Example Archive Structure
 
@@ -1467,7 +1467,7 @@ When archiving TodoLists or Plans, include these in document metadata:
 project-archive-2024-12-27.zip
 ├── README.txt                    # Human-readable overview
 ├── MANIFEST.txt                  # File list with SHA256 checksums
-├── vcontext-spec-v1.0.md         # Specification version used
+├── vbrief-spec-v1.0.md         # Specification version used
 ├── metadata.json                 # Archival metadata
 ├── plans/
 │   ├── plan-001.json
@@ -1496,7 +1496,7 @@ project-archive-2024-12-27.zip
 
 ### Compatibility with iCalendar/vCard
 
-vContext draws inspiration from iCalendar (RFC 5545) and vCard (RFC 6350) standards:
+vBRIEF draws inspiration from iCalendar (RFC 5545) and vCard (RFC 6350) standards:
 
 - **UID**: Compatible with iCalendar UID for cross-system sync
 - **Recurrence**: Based on iCalendar RRULE syntax
@@ -1509,7 +1509,7 @@ vContext draws inspiration from iCalendar (RFC 5545) and vCard (RFC 6350) standa
 
 ### Differences from iCalendar
 
-- vContext uses JSON/TRON instead of plain text format
+- vBRIEF uses JSON/TRON instead of plain text format
 - Hierarchical phases extend beyond iCalendar's VTODO parent-child
 - TodoList as a first-class container (not just individual VTODOs)
 - Embedded todo lists within phases for better organization

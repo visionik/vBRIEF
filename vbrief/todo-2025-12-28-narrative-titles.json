@@ -1,10 +1,10 @@
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4"
   },
   "todoList": {
     "narrative": {
-      "Overview": "Expand vContext standard narrative titles from 9 to 13, replacing Context with Background and adding Hypothesis, Observation, Constraint, and Reflection."
+      "Overview": "Expand vBRIEF standard narrative titles from 9 to 13, replacing Context with Background and adding Hypothesis, Observation, Constraint, and Reflection."
     },
     "items": [
       {
@@ -20,7 +20,7 @@
         "title": "Update Plan narratives structure in Extension 3",
         "status": "completed",
         "narrative": {
-          "Result": "Updated vContext-extension-common.md Plan Extensions to include all 13 narrative keys: overview, background, problem, constraint, hypothesis, alternative, risk, test, action, observation, result, reflection."
+          "Result": "Updated vBRIEF-extension-common.md Plan Extensions to include all 13 narrative keys: overview, background, problem, constraint, hypothesis, alternative, risk, test, action, observation, result, reflection."
         }
       },
       {
@@ -28,7 +28,7 @@
         "title": "Update JSON schema with new narrative keys",
         "status": "completed",
         "narrative": {
-          "Result": "Updated vcontext-core.schema.json to replace context with background and add constraint, hypothesis, observation, reflection to Plan narratives properties."
+          "Result": "Updated vbrief-core.schema.json to replace context with background and add constraint, hypothesis, observation, reflection to Plan narratives properties."
         }
       },
       {
@@ -36,7 +36,7 @@
         "title": "Update all examples to use Background instead of Context",
         "status": "completed",
         "narrative": {
-          "Result": "Replaced all occurrences of Context → Background in examples across README.md and vContext-extension-common.md. Updated both TRON and JSON format examples, including TodoItem, Playbook, and Plan narratives."
+          "Result": "Replaced all occurrences of Context → Background in examples across README.md and vBRIEF-extension-common.md. Updated both TRON and JSON format examples, including TodoItem, Playbook, and Plan narratives."
         }
       },
       {

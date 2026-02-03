@@ -1,4 +1,4 @@
-# vContext Extension Documentation Alignment Issues
+# vBRIEF Extension Documentation Alignment Issues
 
 **Date**: 2025-12-28  
 **Current Spec Version**: 0.4  
@@ -14,7 +14,7 @@ The extension documents have several alignment issues with the current v0.4 spec
 
 ## Issues by File
 
-### vContext-extension-common.md
+### vBRIEF-extension-common.md
 
 **Status**: ❌ Needs updates
 
@@ -26,7 +26,7 @@ The extension documents have several alignment issues with the current v0.4 spec
 **Examples to fix**:
 ```
 Line references with "0.3":
-- TRON: vContextInfo("0.3", ...)
+- TRON: vBRIEFInfo("0.3", ...)
 - JSON: "version": "0.3"
 ```
 
@@ -34,7 +34,7 @@ Line references with "0.3":
 
 ---
 
-### vContext-extension-playbooks.md
+### vBRIEF-extension-playbooks.md
 
 **Status**: ❌ Needs updates
 
@@ -44,7 +44,7 @@ Line references with "0.3":
 
 **Examples to fix**:
 ```
-- vContextInfo("0.2")
+- vBRIEFInfo("0.2")
 - "version": "0.2"
 ```
 
@@ -55,7 +55,7 @@ Line references with "0.3":
 
 ---
 
-### vContext-extension-security.md
+### vBRIEF-extension-security.md
 
 **Status**: ❌ Needs updates
 
@@ -67,7 +67,7 @@ Line references with "0.3":
 **Specific issues**:
 ```
 Line content:
-- "Core vContext types (vContextInfo, TodoList, TodoItem, Plan, Phase, Narrative)"
+- "Core vBRIEF types (vBRIEFInfo, TodoList, TodoItem, Plan, Phase, Narrative)"
   Should be: "... Plan, PlanItem, Narrative)"
 
 - "## Phase Extensions"
@@ -91,7 +91,7 @@ Line content:
 
 ---
 
-### vContext-extension-claude.md
+### vBRIEF-extension-claude.md
 
 **Status**: ❌ Needs updates
 
@@ -101,15 +101,15 @@ Line content:
 
 **Examples to fix**:
 ```
-- vContextInfo("0.2", "claude-3.5-sonnet")
-- vContextInfo("0.2")
+- vBRIEFInfo("0.2", "claude-3.5-sonnet")
+- vBRIEFInfo("0.2")
 ```
 
 **Action needed**: Update version strings from "0.2" to "0.4"
 
 ---
 
-### vContext-extension-beads.md
+### vBRIEF-extension-beads.md
 
 **Status**: ❌ Needs updates
 
@@ -118,14 +118,14 @@ Line content:
 
 **Examples to fix**:
 ```
-- "vContextInfo": {"version": "0.3"}
+- "vBRIEFInfo": {"version": "0.3"}
 ```
 
 **Action needed**: Update version strings from "0.3" to "0.4"
 
 ---
 
-### vContext-extension-typescript.md
+### vBRIEF-extension-typescript.md
 
 **Status**: ⚠️ Minor issue
 
@@ -134,26 +134,26 @@ Line content:
 
 **Example to fix**:
 ```
-- "vContextInfo": {"version": "0.2"}
+- "vBRIEFInfo": {"version": "0.2"}
 ```
 
 **Action needed**: Update version string from "0.2" to "0.4"
 
 ---
 
-### vContext-extension-api-go.md
+### vBRIEF-extension-api-go.md
 
 **Status**: ✅ OK (no version strings in examples found)
 
 ---
 
-### vContext-extension-api-python.md
+### vBRIEF-extension-api-python.md
 
 **Status**: ✅ OK (no version strings in examples found)
 
 ---
 
-### vContext-extension-MCP.md
+### vBRIEF-extension-MCP.md
 
 **Status**: ✅ OK (no version strings in examples found)
 
@@ -170,24 +170,24 @@ Per the spec changelog, these terms were renamed:
 | phases (array) | items (array) | Plan.items |
 
 **Files needing terminology updates**:
-- vContext-extension-security.md (extensive Phase → PlanItem changes)
-- vContext-extension-common.md (review for any Phase references)
-- vContext-extension-playbooks.md (review for PlaybookEntry references)
+- vBRIEF-extension-security.md (extensive Phase → PlanItem changes)
+- vBRIEF-extension-common.md (review for any Phase references)
+- vBRIEF-extension-playbooks.md (review for PlaybookEntry references)
 
 ## Recommended Action Plan
 
 ### Phase 1: Version String Updates (Quick wins)
-- [ ] vContext-extension-common.md: 0.3 → 0.4 (all examples)
-- [ ] vContext-extension-playbooks.md: 0.2 → 0.4
-- [ ] vContext-extension-claude.md: 0.2 → 0.4
-- [ ] vContext-extension-beads.md: 0.3 → 0.4
-- [ ] vContext-extension-typescript.md: 0.2 → 0.4
-- [ ] vContext-extension-security.md: 0.2 → 0.4
+- [ ] vBRIEF-extension-common.md: 0.3 → 0.4 (all examples)
+- [ ] vBRIEF-extension-playbooks.md: 0.2 → 0.4
+- [ ] vBRIEF-extension-claude.md: 0.2 → 0.4
+- [ ] vBRIEF-extension-beads.md: 0.3 → 0.4
+- [ ] vBRIEF-extension-typescript.md: 0.2 → 0.4
+- [ ] vBRIEF-extension-security.md: 0.2 → 0.4
 
 ### Phase 2: Terminology Updates (More involved)
-- [ ] vContext-extension-security.md: Phase → PlanItem (comprehensive)
-- [ ] vContext-extension-common.md: Review for Phase/PlaybookEntry
-- [ ] vContext-extension-playbooks.md: Review for PlaybookEntry
+- [ ] vBRIEF-extension-security.md: Phase → PlanItem (comprehensive)
+- [ ] vBRIEF-extension-common.md: Review for Phase/PlaybookEntry
+- [ ] vBRIEF-extension-playbooks.md: Review for PlaybookEntry
 
 ### Phase 3: Verification
 - [ ] Run grep for any remaining "0\.[0-3]" version strings
@@ -200,13 +200,13 @@ Per the spec changelog, these terms were renamed:
 
 ```bash
 # Find all version string occurrences
-rg '"version":\s*"0\.[0-3]"|vContextInfo\("0\.[0-3]"' vContext-extension-*.md
+rg '"version":\s*"0\.[0-3]"|vBRIEFInfo\("0\.[0-3]"' vBRIEF-extension-*.md
 
 # Find Phase terminology
-rg -i 'phase[^d]|phases:' vContext-extension-*.md
+rg -i 'phase[^d]|phases:' vBRIEF-extension-*.md
 
 # Find PlaybookEntry terminology
-rg 'PlaybookEntry' vContext-extension-*.md
+rg 'PlaybookEntry' vBRIEF-extension-*.md
 
 # Bulk replace (after review)
 # Use sed or manual editing with care

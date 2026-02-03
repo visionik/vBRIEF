@@ -1,4 +1,4 @@
-# vContext Extension Proposal: Session Memory & Compression
+# vBRIEF Extension Proposal: Session Memory & Compression
 
 > **VERY EARLY DRAFT**: This is an initial proposal and subject to significant change. Comments, feedback, and suggestions are strongly encouraged. Please provide input via GitHub issues or discussions.
 
@@ -13,7 +13,7 @@
 This extension introduces automatic session capture, AI-powered compression, and progressive disclosure of context, inspired by [claude-mem](https://github.com/thedotmack/claude-mem). While Extension 12 (ACE) provides long-term memory, it doesn't address the challenge of **automatic capture** from agent sessions or **intelligent compression** to manage token costs.
 
 Session Memory & Compression enables:
-- **Automatic vContext generation** from agent work sessions
+- **Automatic vBRIEF generation** from agent work sessions
 - **AI-powered compression** of observations and learnings
 - **Progressive disclosure** with explicit token cost visibility
 - **Cross-session continuity** without manual documentation
@@ -23,14 +23,14 @@ Session Memory & Compression enables:
 ## Motivation
 
 **Current limitations:**
-- **Manual documentation burden**: Agents must explicitly create vContext documents
+- **Manual documentation burden**: Agents must explicitly create vBRIEF documents
 - **Token cost explosion**: Long ACE playbooks consume thousands of tokens
 - **Loss of context**: Session ends → knowledge vanishes unless manually saved
 - **Unstructured memory**: Free-form notes lack queryability
 - **No token visibility**: Users don't know cost of loading context
 
 **How Session Memory & Compression helps:**
-- **Automatic capture**: Session observations → structured vContext
+- **Automatic capture**: Session observations → structured vBRIEF
 - **Intelligent compression**: 500-token observation → 50-token summary (90% reduction)
 - **Progressive loading**: Load only what's needed, show token costs upfront
 - **Semantic retention**: Key insights preserved, boilerplate discarded
@@ -38,14 +38,14 @@ Session Memory & Compression enables:
 
 **Research foundation:**
 
-claude-mem demonstrates that automatic capture + AI compression enables persistent memory without overwhelming context windows. By combining claude-mem's compression with vContext's structure, we get **queryable, reusable, token-efficient memory**.
+claude-mem demonstrates that automatic capture + AI compression enables persistent memory without overwhelming context windows. By combining claude-mem's compression with vBRIEF's structure, we get **queryable, reusable, token-efficient memory**.
 
-**Integration goal**: Make vContext the automatic, intelligent memory layer for all agentic systems, not just those with explicit documentation workflows.
+**Integration goal**: Make vBRIEF the automatic, intelligent memory layer for all agentic systems, not just those with explicit documentation workflows.
 
 ## Dependencies
 
 **Required**:
-- Core vContext types (vContextInfo, TodoList, TodoItem, Plan)
+- Core vBRIEF types (vBRIEFInfo, TodoList, TodoItem, Plan)
 - Extension 2 (Identifiers) - for session IDs and observation references
 - Extension 12 (ACE) - for storing compressed learnings
 
@@ -67,13 +67,13 @@ claude-mem demonstrates that automatic capture + AI compression enables persiste
    └─> Each action recorded with: tool, input, output, tokens, timestamp
    
 3. Session End
-   └─> Trigger compression & vContext generation
+   └─> Trigger compression & vBRIEF generation
    
 4. Compression
    └─> AI summarizes observations → key learnings + completed todos
    
 5. Storage
-   └─> Save compressed vContext document
+   └─> Save compressed vBRIEF document
    
 6. Future Session
    └─> Progressive disclosure: load relevant context with token costs
@@ -207,7 +207,7 @@ MemoryTier {
 
 ### SessionSnapshot
 
-Complete session state for vContext export.
+Complete session state for vBRIEF export.
 
 ```javascript
 SessionSnapshot {
@@ -236,10 +236,10 @@ CompressionStats {
 }
 ```
 
-## vContextInfo Extensions
+## vBRIEFInfo Extensions
 
 ```javascript
-vContextInfo {
+vBRIEFInfo {
   // Core fields...
   sessionInfo?: SessionInfo        # If auto-generated from session
   compressionStats?: CompressionStats  # Compression metadata
@@ -279,9 +279,9 @@ PlaybookEntry {
 
 ## Usage Patterns
 
-### Pattern 1: Automatic vContext Generation from Session
+### Pattern 1: Automatic vBRIEF Generation from Session
 
-**Use case**: Session ends, automatically create vContext document.
+**Use case**: Session ends, automatically create vBRIEF document.
 
 ```typescript
 // Agent session completes
@@ -329,15 +329,15 @@ const observations: Observation[] = [
   // ... 46 more observations
 ];
 
-// Auto-generate vContext
-const vContext: VAgendaDocument = await generateFromSession(
+// Auto-generate vBRIEF
+const vBRIEF: VAgendaDocument = await generateFromSession(
   session,
   observations
 );
 
 // Result
 {
-  vContextInfo: {
+  vBRIEFInfo: {
     version: "0.2",
     author: "claude-3.5-sonnet",
     sessionInfo: session,
@@ -417,7 +417,7 @@ const newSession = await startSession({
 });
 
 // Agent queries memory
-const memorySearch = await vcontextMemorySearch({
+const memorySearch = await vbriefMemorySearch({
   query: "oauth implementation",
   includeTokenCosts: true
 });
@@ -672,7 +672,7 @@ const aggregated = await aggregateLearnings([
 **Use case**: Agent has 2000-token budget, search and load optimally.
 
 ```typescript
-const searchResults = await vcontextMemorySearch({
+const searchResults = await vbriefMemorySearch({
   query: "authentication implementation issues",
   tokenBudget: 2000,
   optimizeFor: "relevance"  // vs "coverage"
@@ -1070,13 +1070,13 @@ New MCP tools for memory:
 
 ```typescript
 {
-  name: "vcontext_memory_search",
+  name: "vbrief_memory_search",
   description: "Search session history semantically",
   inputSchema: { ... }
 }
 
 {
-  name: "vcontext_load_session",
+  name: "vbrief_load_session",
   description: "Load session with progressive disclosure",
   inputSchema: {
     sessionId: string,
@@ -1086,7 +1086,7 @@ New MCP tools for memory:
 }
 
 {
-  name: "vcontext_expand_memory",
+  name: "vbrief_expand_memory",
   description: "Expand compressed content to full detail",
   inputSchema: {
     contentRef: string
@@ -1094,7 +1094,7 @@ New MCP tools for memory:
 }
 
 {
-  name: "vcontext_compress_playbook",
+  name: "vbrief_compress_playbook",
   description: "Compress ACE playbook entries",
   inputSchema: {
     targetRatio: number,  // 0.1 = 90% compression
@@ -1111,7 +1111,7 @@ Track compression versions:
 - Audit trail of compressions
 
 ```javascript
-vContextInfo {
+vBRIEFInfo {
   // Existing fields...
   compressionVersion?: string      # e.g., "llm-summarize-v2"
 }
@@ -1243,8 +1243,8 @@ We're seeking feedback on:
 6. **Tooling**: What tools most needed (viewer, search, compression UI)?
 
 Please provide feedback via:
-- GitHub issues: https://github.com/visionik/vContext/issues
-- GitHub discussions: https://github.com/visionik/vContext/discussions
+- GitHub issues: https://github.com/visionik/vBRIEF/issues
+- GitHub discussions: https://github.com/visionik/vBRIEF/discussions
 - Email: visionik@pobox.com
 
 ## References
@@ -1256,11 +1256,11 @@ Please provide feedback via:
   - Progressive disclosure pattern
   - Privacy controls
 
-### vContext Extensions
+### vBRIEF Extensions
 - **Extension 12 (ACE)**: README.md#extension-12-ace
-- **Extension 9 (Security)**: vContext-extension-security.md
+- **Extension 9 (Security)**: vBRIEF-extension-security.md
 - **Extension 10 (Version Control)**: README.md#extension-10-version-control
-- **MCP Extension**: vContext-extension-MCP.md
+- **MCP Extension**: vBRIEF-extension-MCP.md
 
 ### Compression & Memory
 - **Compression in LLMs**: Token efficiency for long-context applications
@@ -1269,7 +1269,7 @@ Please provide feedback via:
 
 ## Acknowledgments
 
-This extension is directly inspired by [claude-mem](https://github.com/thedotmack/claude-mem) by @thedotmack. claude-mem pioneered the concepts of automatic capture, AI compression, and progressive disclosure for LLM agents. We bring these patterns to vContext to make them available across all agentic systems, not just Claude Code.
+This extension is directly inspired by [claude-mem](https://github.com/thedotmack/claude-mem) by @thedotmack. claude-mem pioneered the concepts of automatic capture, AI compression, and progressive disclosure for LLM agents. We bring these patterns to vBRIEF to make them available across all agentic systems, not just Claude Code.
 
 The progressive disclosure pattern elegantly solves the token cost problem that plagues long-term memory systems. By showing costs upfront and loading incrementally, users maintain control while agents access rich historical context.
 

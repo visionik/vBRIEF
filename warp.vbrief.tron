@@ -1,16 +1,16 @@
-class vContextInfo: version, author, description
+class vBRIEFInfo: version, author, description
 class Playbook: title, description, items
 class PlaybookItem: title, status, content
 
-vContextInfo: vContextInfo(
+vBRIEFInfo: vBRIEFInfo(
   "0.4",
-  "vContext Project",
-  "Development practices and conventions for the vContext project"
+  "vBRIEF Project",
+  "Development practices and conventions for the vBRIEF project"
 )
 
 playbook: Playbook(
-  "vContext Development Practices",
-  "Accumulated best practices and conventions for contributing to the vContext project",
+  "vBRIEF Development Practices",
+  "Accumulated best practices and conventions for contributing to the vBRIEF project",
   [
     PlaybookItem(
       "Use task targets for repeatable actions",

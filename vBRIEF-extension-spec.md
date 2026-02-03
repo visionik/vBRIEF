@@ -1,4 +1,4 @@
-# vContext Extension: Specifications (vSpec)
+# vBRIEF Extension: Specifications (vSpec)
 
 **Version**: 0.5
 
@@ -8,7 +8,7 @@
 
 ## Overview
 
-This extension adds **vSpec** (Specification) as a fourth core container type to vContext, alongside TodoList, Plan, and Playbook. vSpec is designed for structured specification documents including Product Requirements Documents (PRDs), Request for Comments (RFCs), technical design documents, API specifications, and architecture decision records.
+This extension adds **vSpec** (Specification) as a fourth core container type to vBRIEF, alongside TodoList, Plan, and Playbook. vSpec is designed for structured specification documents including Product Requirements Documents (PRDs), Request for Comments (RFCs), technical design documents, API specifications, and architecture decision records.
 
 vSpec enables specifications to be:
 - **Structured**: Requirements, risks, metrics, and decisions as first-class entities
@@ -19,7 +19,7 @@ vSpec enables specifications to be:
 
 ## Relationship to Core Specification
 
-This extension builds upon vContext Core v0.4 (see [README.md](./README.md)) and follows the established container patterns:
+This extension builds upon vBRIEF Core v0.4 (see [README.md](./README.md)) and follows the established container patterns:
 - Container: `vSpec` (analogous to TodoList, Plan, Playbook)
 - Item: `vSpecItem` (analogous to TodoItem, PlanItem, PlaybookItem)
 - Container-level narratives use **lowercase keys** (like Plan)
@@ -35,7 +35,7 @@ vSpec introduces **kebab-case** for multi-word enum values, which represents a b
 **Priority enum:**
 - Uses lowercase with hyphens: `"must"`, `"should"`, `"may"`, `"must-not"`, `"should-not"`
 
-These changes improve consistency and readability across all vContext container types.
+These changes improve consistency and readability across all vBRIEF container types.
 
 ## When to Use vSpec vs Plan
 
@@ -132,7 +132,7 @@ vSpec {
 
 ## vSpecItem (Core Item)
 
-**Purpose**: A discrete component of a specification — requirement, risk, metric, open question, or decision. vSpecItem follows the vContext `Item` abstract base pattern (requires `title` and `status`).
+**Purpose**: A discrete component of a specification — requirement, risk, metric, open question, or decision. vSpecItem follows the vBRIEF `Item` abstract base pattern (requires `title` and `status`).
 
 ```javascript
 vSpecItem extends Item {
@@ -193,7 +193,7 @@ vSpecItemStatus: "pending" | "in-progress" | "completed" | "blocked" | "cancelle
 
 ### Item Narratives (Title Case keys)
 
-Following vContext patterns, vSpecItem uses Title Case narrative keys:
+Following vBRIEF patterns, vSpecItem uses Title Case narrative keys:
 
 ```javascript
 vSpecItem {
@@ -225,11 +225,11 @@ vSpecItem {
 
 **TRON:**
 ```tron
-class vContextInfo: version
+class vBRIEFInfo: version
 class vSpec: title, status, type, narratives, items
 class vSpecItem: id, kind, title, status, priority, narrative
 
-vContextInfo: vContextInfo("0.5")
+vBRIEFInfo: vBRIEFInfo("0.5")
 
 vSpec: vSpec(
   "User Authentication - OAuth 2.0",
@@ -305,7 +305,7 @@ vSpec: vSpec(
 **JSON:**
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.5"
   },
   "vSpec": {
@@ -383,12 +383,12 @@ vSpec: vSpec(
 
 **TRON:**
 ```tron
-class vContextInfo: version
+class vBRIEFInfo: version
 class vSpec: title, status, type, author, reviewers, tags, narratives, items, uris
 class vSpecItem: id, kind, title, status, priority, narrative, metadata
 class URI: uri, type, title
 
-vContextInfo: vContextInfo("0.5")
+vBRIEFInfo: vBRIEFInfo("0.5")
 
 vSpec: vSpec(
   "RFC-042: Adopt Event Sourcing for User State",
@@ -517,12 +517,12 @@ vSpec: vSpec(
 
 **TRON:**
 ```tron
-class vContextInfo: version
+class vBRIEFInfo: version
 class vSpec: title, status, type, author, tags, narratives, items, references
 class vSpecItem: id, kind, title, status, priority, narrative, metadata
 class URI: uri, type, title
 
-vContextInfo: vContextInfo("0.5")
+vBRIEFInfo: vBRIEFInfo("0.5")
 
 vSpec: vSpec(
   "Rate Limiting Service: Token Bucket Implementation",
@@ -625,8 +625,8 @@ vSpec: vSpec(
     )
   ],
   [
-    URI("file://./plans/rate-limiting-implementation.vcontext.json", "x-vcontext/plan", "Implementation plan"),
-    URI("file://./playbooks/redis-best-practices.vcontext.json", "x-vcontext/playbook", "Redis playbook")
+    URI("file://./plans/rate-limiting-implementation.vbrief.json", "x-vbrief/plan", "Implementation plan"),
+    URI("file://./playbooks/redis-best-practices.vbrief.json", "x-vbrief/playbook", "Redis playbook")
   ]
 )
 ```
@@ -636,7 +636,7 @@ vSpec: vSpec(
 **JSON:**
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.5"
   },
   "vSpec": {
@@ -777,7 +777,7 @@ vSpec: vSpec(
 
 # Extension Fields
 
-vSpec leverages existing vContext extensions for additional functionality:
+vSpec leverages existing vBRIEF extensions for additional functionality:
 
 ## Extension 1: Timestamps
 
@@ -879,13 +879,13 @@ Participant {
 
 ## Extension 7: Resources & References
 
-Adds `uris` and `references` for linking to external resources and vContext documents.
+Adds `uris` and `references` for linking to external resources and vBRIEF documents.
 
 ```javascript
 vSpec {
   // Core fields...
   uris?: URI[]              // External resources (docs, mockups, tickets)
-  references?: Reference[]  // Links to other vContext documents
+  references?: Reference[]  // Links to other vBRIEF documents
 }
 
 vSpecItem {
@@ -903,15 +903,15 @@ URI {
 }
 
 Reference {
-  uri: string               // vContext document URI
-  type: string              // "x-vcontext/todoList" | "x-vcontext/plan" | "x-vcontext/playbook"
+  uri: string               // vBRIEF document URI
+  type: string              // "x-vbrief/todoList" | "x-vbrief/plan" | "x-vbrief/playbook"
   title?: string            // Document title
 }
 ```
 
 **Common URI types:**
 - `x-github/issue`, `x-github/pr`: GitHub issues and pull requests
-- `x-vcontext/todoList`, `x-vcontext/plan`, `x-vcontext/playbook`: vContext documents
+- `x-vbrief/todoList`, `x-vbrief/plan`, `x-vbrief/playbook`: vBRIEF documents
 - `text/markdown`, `application/pdf`, `image/png`: Standard MIME types
 - `x-incident`, `x-design`, `x-competitor-analysis`: Custom types
 
@@ -946,7 +946,7 @@ Agent {
 
 # Cross-Container Relationships
 
-vSpec works seamlessly with other vContext containers:
+vSpec works seamlessly with other vBRIEF containers:
 
 ## vSpec → Plan
 **Relationship**: Specification defines **what**, Plan defines **how**.
@@ -960,8 +960,8 @@ vSpec works seamlessly with other vContext containers:
     "status": "approved",
     "references": [
       {
-        "uri": "file://./plans/auth-implementation.vcontext.json",
-        "type": "x-vcontext/plan",
+        "uri": "file://./plans/auth-implementation.vbrief.json",
+        "type": "x-vbrief/plan",
         "title": "OAuth Implementation Plan"
       }
     ]
@@ -975,8 +975,8 @@ vSpec works seamlessly with other vContext containers:
     "status": "in-progress",
     "uris": [
       {
-        "uri": "file://./specs/oauth-prd.vcontext.json",
-        "type": "x-vcontext/spec",
+        "uri": "file://./specs/oauth-prd.vbrief.json",
+        "type": "x-vbrief/spec",
         "title": "User Authentication PRD"
       }
     ]
@@ -1017,8 +1017,8 @@ vSpec works seamlessly with other vContext containers:
     "type": "rfc",
     "references": [
       {
-        "uri": "file://./playbooks/distributed-systems-playbook.vcontext.json",
-        "type": "x-vcontext/playbook",
+        "uri": "file://./playbooks/distributed-systems-playbook.vbrief.json",
+        "type": "x-vbrief/playbook",
         "title": "Distributed Systems Best Practices"
       }
     ]
@@ -1060,15 +1060,15 @@ Complete specification-to-execution-to-learning workflow:
 4. **Playbook**: Capture lessons learned during implementation
 
 ```
-specs/auth-prd.vcontext.json (vSpec)
+specs/auth-prd.vbrief.json (vSpec)
   ↓ references
-plans/auth-implementation.vcontext.json (Plan)
+plans/auth-implementation.vbrief.json (Plan)
   ↓ contains
-plans/auth-implementation.vcontext.json#phase-1 (PlanItem)
+plans/auth-implementation.vbrief.json#phase-1 (PlanItem)
   ↓ todoList
   [TodoItem, TodoItem, TodoItem]
   ↓ after completion
-playbooks/authentication-playbook.vcontext.json (Playbook)
+playbooks/authentication-playbook.vbrief.json (Playbook)
   ↓ contains
   [PlaybookItem: "Always test OAuth token refresh under load"]
 ```
@@ -1104,7 +1104,7 @@ RFC review process with decision tracking:
       "background": "RFC-042 chose PostgreSQL for simplicity. After 6 months, performance limitations suggest dedicated event store."
     },
     "uris": [
-      {"uri": "file://./specs/rfc-042.vcontext.json", "type": "x-vcontext/spec", "title": "RFC-042"}
+      {"uri": "file://./specs/rfc-042.vbrief.json", "type": "x-vbrief/spec", "title": "RFC-042"}
     ]
   }
 }
@@ -1136,7 +1136,7 @@ API specification driving implementation:
       }
     ],
     "references": [
-      {"uri": "file://./plans/api-v2-rollout.vcontext.json", "type": "x-vcontext/plan"}
+      {"uri": "file://./plans/api-v2-rollout.vbrief.json", "type": "x-vbrief/plan"}
     ]
   }
 }
@@ -1290,8 +1290,8 @@ Always cross-link specifications to execution artifacts:
   "vSpec": {
     "title": "PRD: Feature X",
     "references": [
-      {"uri": "file://./plans/feature-x.vcontext.json", "type": "x-vcontext/plan", "title": "Implementation Plan"},
-      {"uri": "file://./playbooks/feature-playbook.vcontext.json", "type": "x-vcontext/playbook", "title": "Lessons Learned"}
+      {"uri": "file://./plans/feature-x.vbrief.json", "type": "x-vbrief/plan", "title": "Implementation Plan"},
+      {"uri": "file://./playbooks/feature-playbook.vbrief.json", "type": "x-vbrief/playbook", "title": "Lessons Learned"}
     ]
   }
 }
@@ -1417,7 +1417,7 @@ vSpec {
   sequence?: number                // Ext 10: Version number
   changeLog?: Change[]             // Ext 10: Change history
   uris?: URI[]                     // Ext 7: External resources
-  references?: Reference[]         // Ext 7: vContext document links
+  references?: Reference[]         // Ext 7: vBRIEF document links
 }
 ```
 
@@ -1504,4 +1504,4 @@ This extension specification is released under CC BY 4.0.
 
 # Feedback and Contributions
 
-Feedback, suggestions, and contributions are highly encouraged. Please submit input via GitHub issues or pull requests at: https://github.com/visionik/vcontext
+Feedback, suggestions, and contributions are highly encouraged. Please submit input via GitHub issues or pull requests at: https://github.com/visionik/vbrief

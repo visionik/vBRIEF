@@ -1,4 +1,4 @@
-# vContext Extension: Agentic Design Patterns
+# vBRIEF Extension: Agentic Design Patterns
 
 **Extension Name**: Agentic Patterns
 
@@ -17,7 +17,7 @@
 
 ## Overview
 
-This extension adds support for capturing and orchestrating **agentic design patterns** within vContext documents. It enables AI agents and agentic systems to document their workflows, track pattern usage, capture pattern effectiveness, and build institutional knowledge about which patterns work best for different types of tasks.
+This extension adds support for capturing and orchestrating **agentic design patterns** within vBRIEF documents. It enables AI agents and agentic systems to document their workflows, track pattern usage, capture pattern effectiveness, and build institutional knowledge about which patterns work best for different types of tasks.
 
 ### Motivation
 
@@ -29,11 +29,11 @@ Modern agentic systems employ sophisticated design patterns such as prompt chain
 4. **Enable pattern discovery** from historical execution data
 5. **Facilitate agent-to-agent learning** about successful approaches
 
-vContext's three-tier memory system (TodoList for short-term, Plan for medium-term, Playbook for long-term) provides the ideal foundation for capturing this agentic workflow metadata.
+vBRIEF's three-tier memory system (TodoList for short-term, Plan for medium-term, Playbook for long-term) provides the ideal foundation for capturing this agentic workflow metadata.
 
 ### Design Philosophy
 
-This extension follows vContext's principle of **capturing the "why" alongside the "what"**. By documenting not just task completion but also the patterns, strategies, and agent reasoning employed, we enable:
+This extension follows vBRIEF's principle of **capturing the "why" alongside the "what"**. By documenting not just task completion but also the patterns, strategies, and agent reasoning employed, we enable:
 
 - **Reflection and learning** - Agents can analyze what worked and why
 - **Pattern reuse** - Successful patterns can be identified and applied to similar tasks
@@ -92,14 +92,14 @@ This extension captures data at each stage:
 
 ## Design Principle: Plans ARE Workflows
 
-This extension recognizes that **vContext Plans are natural workflow containers**. Rather than introducing separate workflow types, we extend Plans to capture agentic pattern metadata:
+This extension recognizes that **vBRIEF Plans are natural workflow containers**. Rather than introducing separate workflow types, we extend Plans to capture agentic pattern metadata:
 
 - **Plan** = Workflow container (already has title, status, narratives, timing)
 - **PlanItems** = Workflow steps (already ordered, have status, can nest via `subItems`)
 - **Narratives** = Reasoning and context (already capture the "why")
 - **Existing Extensions** provide Agent tracking, timestamps, participants, etc.
 
-This keeps vContext simple while enabling full pattern capture.
+This keeps vBRIEF simple while enabling full pattern capture.
 
 ---
 
@@ -377,7 +377,7 @@ A multi-step research task using prompt chaining. **The Plan itself is the workf
 **JSON**:
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.3",
     "created": "2025-12-27T10:00:00Z",
     "updated": "2025-12-27T10:04:00Z"
@@ -502,7 +502,7 @@ A development task routed to specialized agents using TodoList.
 **JSON**:
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.3"
   },
   "todoList": {
@@ -615,7 +615,7 @@ Using reflection pattern to iteratively improve code.
 **JSON**:
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.3"
   },
   "todoList": {
@@ -661,7 +661,7 @@ Long-term learning about pattern effectiveness.
 **JSON**:
 ```json
 {
-  "vContextInfo": {"version": "0.4"},
+  "vBRIEFInfo": {"version": "0.4"},
   "playbook": {
     "version": 1,
     "created": "2025-12-27T00:00:00Z",
@@ -1014,7 +1014,7 @@ Future versions may add:
 ## References
 
 - Gulli, A. (2025). *Agentic Design Patterns: A Hands-On Guide to Building Intelligent Systems*. Springer.
-- vContext Core Specification v0.3
+- vBRIEF Core Specification v0.3
 - Extension 2: Identifiers
 - Extension 10: Version Control & Sync
 - Extension 12: Playbooks

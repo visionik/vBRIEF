@@ -1,5 +1,5 @@
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4"
   },
   "todoList": {
@@ -28,7 +28,7 @@
         "title": "Update JSON schema Plan narratives to string type",
         "status": "completed",
         "narrative": {
-          "Result": "Changed all Plan narrative properties from Narrative refs to string type in vcontext-core.schema.json. Updated custom from array of Narrative to array of string."
+          "Result": "Changed all Plan narrative properties from Narrative refs to string type in vbrief-core.schema.json. Updated custom from array of Narrative to array of string."
         }
       },
       {

@@ -1,4 +1,4 @@
-# vContext Extension: Experimental Workflows
+# vBRIEF Extension: Experimental Workflows
 
 **Extension Name**: Experimental Workflows
 
@@ -10,7 +10,7 @@
 
 ## Overview
 
-This extension adds support for **hypothesis-driven development** and **constraint-based execution** to vContext. It formalizes the iterative refinement loop: hypothesis → experiment → critique → revision.
+This extension adds support for **hypothesis-driven development** and **constraint-based execution** to vBRIEF. It formalizes the iterative refinement loop: hypothesis → experiment → critique → revision.
 
 ### Motivation
 
@@ -34,7 +34,7 @@ Traditional project management tools treat work as deterministic. This extension
 
 ## Dependencies
 
-- **Requires**: Core vContext
+- **Requires**: Core vBRIEF
 - **Recommended**: Extension 3 (Rich Metadata), Extension 7 (Resources & References)
 
 ## Data Model
@@ -152,7 +152,7 @@ Define explicit boundaries before starting work:
 **JSON Example:**
 ```json
 {
-  "vContextInfo": {"version": "0.3"},
+  "vBRIEFInfo": {"version": "0.3"},
   "plan": {
     "title": "API Response Optimization",
     "status": "inProgress",
@@ -197,7 +197,7 @@ Track experiments and their outcomes:
 **JSON Example:**
 ```json
 {
-  "vContextInfo": {"version": "0.3"},
+  "vBRIEFInfo": {"version": "0.3"},
   "plan": {
     "title": "Database Query Optimization",
     "status": "inProgress",
@@ -255,7 +255,7 @@ Generate → Critique → Revise:
 **JSON Example:**
 ```json
 {
-  "vContextInfo": {"version": "0.3"},
+  "vBRIEFInfo": {"version": "0.3"},
   "plan": {
     "title": "Authentication System Design",
     "status": "inProgress",
@@ -330,7 +330,7 @@ Using constraints to control LLM output quality:
 **JSON Example:**
 ```json
 {
-  "vContextInfo": {"version": "0.3"},
+  "vBRIEFInfo": {"version": "0.3"},
   "todoList": {
     "items": [
       {
@@ -428,7 +428,7 @@ Constraints and experimental outcomes can inform Playbook entries:
 **JSON Example (Full cycle):**
 ```json
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.3",
     "description": "Caching layer implementation with experimental validation"
   },
@@ -592,7 +592,7 @@ Experiment(
 
 ## Compatibility
 
-This extension is fully backward compatible with core vContext v0.3. Documents without experimental workflow fields remain valid.
+This extension is fully backward compatible with core vBRIEF v0.3. Documents without experimental workflow fields remain valid.
 
 Tools that don't understand this extension should:
 - Ignore `constraints`, `experiments`, and `critique` fields
@@ -613,12 +613,12 @@ Potential future additions:
 
 ## References
 
-- **vContext Core Specification v0.3**: README.md
+- **vBRIEF Core Specification v0.3**: README.md
 - **Extension 3 (Rich Metadata)**: README.md#extension-3-rich-metadata
 - **Extension 7 (Resources & References)**: README.md#extension-7-resources-references
-- **Extension 12 (Playbooks)**: vContext-extension-playbooks.md
-- **Agentic Patterns Extension**: vContext-extension-agentic-patterns.md
-- **Model-First Reasoning Extension**: vContext-extension-model-first-reasoning.md
+- **Extension 12 (Playbooks)**: vBRIEF-extension-playbooks.md
+- **Agentic Patterns Extension**: vBRIEF-extension-agentic-patterns.md
+- **Model-First Reasoning Extension**: vBRIEF-extension-model-first-reasoning.md
 
 ---
 
@@ -631,7 +631,7 @@ This specification is released under CC BY 4.0.
 ## Changelog
 
 ### Version 0.2 (2025-12-27)
-- Updated to vContext v0.3 terminology
+- Updated to vBRIEF v0.3 terminology
 - Embedded `Measurement` as inline object in `Experiment` (not separate type)
 - Embedded `Finding` as inline object in `Critique` (not separate type)
 - Added integration section showing relationship to Agentic Patterns, MFR, and Playbooks

@@ -1,4 +1,4 @@
-# vContext: Atomic TRON Classes Proposal
+# vBRIEF: Atomic TRON Classes Proposal
 
 **Date**: 2025-12-27  
 **Status**: Draft Proposal  
@@ -6,7 +6,7 @@
 
 ## Overview
 
-This document proposes a set of atomic TRON classes that capture common patterns across vContext's core data structures. By defining these atomic classes, we can:
+This document proposes a set of atomic TRON classes that capture common patterns across vBRIEF's core data structures. By defining these atomic classes, we can:
 - Reduce duplication in type definitions
 - Make composition patterns explicit
 - Simplify extension definitions
@@ -14,15 +14,15 @@ This document proposes a set of atomic TRON classes that capture common patterns
 
 ## Composition Rules
 
-**All vContext entities MUST:**
+**All vBRIEF entities MUST:**
 - Be **Titled** (have `title` and optional `description`)
 
-**All vContext lifecycle entities (TodoList, TodoItem, Plan, Phase, Playbook, PlaybookEntry) MUST:**
+**All vBRIEF lifecycle entities (TodoList, TodoItem, Plan, Phase, Playbook, PlaybookEntry) MUST:**
 - Be **Statused** (have lifecycle `status`)
 
 **Exception**: ProblemModel is a pure specification/structure (not lifecycle-tracked), so it is Titled but NOT Statused. However, its children (Entity, StateVar, Action, Constraint, Goal) ARE both Titled and Statused.
 
-**All vContext entities MAY (via extensions):**
+**All vBRIEF entities MAY (via extensions):**
 - Be **Identifiable** (have stable `id`) — Extension 2
 - Be **Timestamped** (have `created`/`updated`) — Extension 1
 - Be **Versioned** (have `version`/`sequence`) — Extension 10
@@ -42,7 +42,7 @@ This creates a clear two-tier system:
 
 ### Core Tier (REQUIRED)
 
-These atomics MUST be present in all vContext entities.
+These atomics MUST be present in all vBRIEF entities.
 
 #### Titled
 
@@ -56,9 +56,9 @@ class Titled: title, description
 - `title: string` (required) - Brief, human-readable summary
 - `description: string` (optional) - Detailed context or explanation
 
-**Used by**: ALL vContext entities (TodoList, TodoItem, Plan, Phase, Playbook, PlaybookEntry, ProblemModel)
+**Used by**: ALL vBRIEF entities (TodoList, TodoItem, Plan, Phase, Playbook, PlaybookEntry, ProblemModel)
 
-**Rationale**: Every vContext entity must be understandable to humans and agents. A title is the minimum viable description. The description field provides an escape hatch for additional context without requiring new fields.
+**Rationale**: Every vBRIEF entity must be understandable to humans and agents. A title is the minimum viable description. The description field provides an escape hatch for additional context without requiring new fields.
 
 ---
 
@@ -80,7 +80,7 @@ class Statused: status
 - **TodoList/Playbook**: Status inferred from items/entries (no explicit status)
 - **ProblemModel**: No explicit status (structural, not lifecycle-tracked)
 
-**Used by**: ALL vContext entities except containers (TodoList, Playbook) and pure structures (ProblemModel)
+**Used by**: ALL vBRIEF entities except containers (TodoList, Playbook) and pure structures (ProblemModel)
 
 **Rationale**: Status is the primary mechanism for tracking progress and filtering. Making it required ensures all actionable entities have clear lifecycle states. Container status is derivable from children.
 
@@ -220,7 +220,7 @@ class Tagged: tags
 
 **Used by**: All entities when Extension 3 (Rich Metadata) is active
 
-**Rationale**: Tags enable flexible categorization without rigid taxonomies. Essential for filtering, searching, and grouping across vContext documents. Common use cases:
+**Rationale**: Tags enable flexible categorization without rigid taxonomies. Essential for filtering, searching, and grouping across vBRIEF documents. Common use cases:
 - TodoItem: `["bug", "security", "p0"]`
 - Plan: `["architecture", "q1-2025"]`
 - Phase: `["database", "migration"]`
@@ -1098,7 +1098,7 @@ function migratePlaybook(playbook: any): any {
 ## Next Steps
 
 1. **Update atomic-classes-questions.md** with Option C decision
-2. **Validate with Examples**: Ensure all current vContext examples can be expressed with Item base
+2. **Validate with Examples**: Ensure all current vBRIEF examples can be expressed with Item base
 3. **JSON Schema Update**: Generate schemas using Item composition
 4. **Spec Update**: Refactor README.md to introduce Item abstraction
 5. **Tool Support**: Update reference implementations with migration support
@@ -1110,7 +1110,7 @@ function migratePlaybook(playbook: any): any {
 This refactored proposal establishes a clear two-tier architecture:
 
 ### Core Tier (REQUIRED - Zero Extensions)
-Every vContext entity gets:
+Every vBRIEF entity gets:
 - **Titled**: `title` + optional `description`
 - **Statused**: `status` enum (except ProblemModel)
 
@@ -1165,11 +1165,11 @@ Entities MAY add:
 
 **Core-conformant document** (no extensions):
 ```tron
-class vContextInfo: version
+class vBRIEFInfo: version
 class TodoItemCore: Titled, Statused
 class TodoListCore: Titled, items
 
-vContextInfo: vContextInfo("0.2")
+vBRIEFInfo: vBRIEFInfo("0.2")
 todoList: TodoListCore(
   "Sprint Tasks",
   [

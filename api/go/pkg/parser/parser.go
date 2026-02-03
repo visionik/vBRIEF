@@ -1,4 +1,4 @@
-// Package parser provides interfaces and implementations for parsing vContext documents.
+// Package parser provides interfaces and implementations for parsing vBRIEF documents.
 package parser
 
 import (
@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/visionik/vContext/api/go/pkg/core"
+	"github.com/visionik/vBRIEF/api/go/pkg/core"
 )
 
 var (

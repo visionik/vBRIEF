@@ -1,4 +1,4 @@
-# vContext Extension Proposal: Python API Library
+# vBRIEF Extension Proposal: Python API Library
 
 > **EARLY DRAFT**: This is an initial proposal and subject to change. Comments, feedback, and suggestions are strongly encouraged. Please provide input via GitHub issues or discussions.
 
@@ -10,7 +10,7 @@
 
 ## Overview
 
-This document describes a Python library implementation for working with vContext documents. The library provides Pythonic interfaces for creating, parsing, manipulating, and validating vContext TodoLists and Plans in both JSON and TRON formats.
+This document describes a Python library implementation for working with vBRIEF documents. The library provides Pythonic interfaces for creating, parsing, manipulating, and validating vBRIEF TodoLists and Plans in both JSON and TRON formats.
 
 The library enables:
 - **Type-safe operations** with Python type hints and dataclasses
@@ -35,7 +35,7 @@ The library enables:
 - Agentic systems (LangChain, AutoGPT, CrewAI, etc.)
 - AI/ML workflows (task tracking for model training, experiments)
 - Web APIs (FastAPI, Django REST framework, Flask)
-- CLI tools for vContext management
+- CLI tools for vBRIEF management
 - Jupyter notebooks for interactive planning
 - Data pipelines and workflow orchestration (Airflow, Prefect)
 - VS Code extensions and IDE integrations
@@ -45,9 +45,9 @@ The library enables:
 ### Package Structure
 
 ```
-vcontext-python/
+vbrief-python/
 ├── src/
-│   └── vcontext/
+│   └── vbrief/
 │       ├── __init__.py
 │       ├── core/              # Core types and models
 │       │   ├── __init__.py
@@ -111,7 +111,7 @@ vcontext-python/
 ### Core Types (Pydantic Models)
 
 ```python
-# vcontext/core/types.py
+# vbrief/core/types.py
 
 from enum import Enum
 from typing import Any, Dict, List, Optional
@@ -201,8 +201,8 @@ class Plan(BaseModel):
 
 
 class Document(BaseModel):
-    """Root vContext document."""
-    vContextInfo: Info = Field(alias="vContextInfo")
+    """Root vBRIEF document."""
+    vBRIEFInfo: Info = Field(alias="vBRIEFInfo")
     todoList: Optional[TodoList] = Field(None, alias="todoList")
     plan: Optional[Plan] = None
 
@@ -213,7 +213,7 @@ class Document(BaseModel):
 ### Document Class API
 
 ```python
-# vcontext/core/document.py
+# vbrief/core/document.py
 
 from typing import Optional, Union
 from pathlib import Path
@@ -221,7 +221,7 @@ from .types import Document, Info, TodoList, Plan
 
 
 class VAgendaDocument:
-    """Main interface for working with vContext documents."""
+    """Main interface for working with vBRIEF documents."""
     
     def __init__(self, data: Document):
         self._data = data
@@ -230,7 +230,7 @@ class VAgendaDocument:
     def create_todo_list(cls, version: str = "0.4") -> "VAgendaDocument":
         """Create a new TodoList document."""
         doc = Document(
-            vContextInfo=Info(version=version),
+            vBRIEFInfo=Info(version=version),
             todoList=TodoList()
         )
         return cls(doc)
@@ -239,7 +239,7 @@ class VAgendaDocument:
     def create_plan(cls, title: str, version: str = "0.4") -> "VAgendaDocument":
         """Create a new Plan document."""
         doc = Document(
-            vContextInfo=Info(version=version),
+            vBRIEFInfo=Info(version=version),
             plan=Plan(
                 title=title,
                 status=PlanStatus.DRAFT,
@@ -343,7 +343,7 @@ class VAgendaDocument:
 ### Builder API
 
 ```python
-# vcontext/builder/todo_builder.py
+# vbrief/builder/todo_builder.py
 
 from typing import List, Optional
 from ..core.types import Document, Info, TodoList, TodoItem, ItemStatus
@@ -383,7 +383,7 @@ class TodoListBuilder:
     def build(self) -> Document:
         """Build the document."""
         return Document(
-            vContextInfo=self._info,
+            vBRIEFInfo=self._info,
             todoList=TodoList(items=self._items)
         )
 
@@ -393,7 +393,7 @@ class TodoListBuilder:
         return VAgendaDocument(self.build())
 
 
-# vcontext/builder/plan_builder.py
+# vbrief/builder/plan_builder.py
 
 from typing import Dict, Optional
 from ..core.types import Document, Info, Plan, PlanStatus
@@ -440,7 +440,7 @@ class PlanBuilder:
     def build(self) -> Document:
         """Build the document."""
         return Document(
-            vContextInfo=self._info,
+            vBRIEFInfo=self._info,
             plan=self._plan
         )
 
@@ -464,7 +464,7 @@ def plan(title: str, version: str = "0.4") -> PlanBuilder:
 ### Query API
 
 ```python
-# vcontext/query/todo_query.py
+# vbrief/query/todo_query.py
 
 from typing import Callable, List, Optional
 from ..core.types import TodoItem, ItemStatus
@@ -537,7 +537,7 @@ def query(items: List[TodoItem]) -> TodoQuery:
 ### Validator API
 
 ```python
-# vcontext/validator/schemas.py
+# vbrief/validator/schemas.py
 
 from typing import List
 from pydantic import ValidationError
@@ -573,7 +573,7 @@ The library supports document modification through Pythonic patterns: direct mut
 #### Direct Mutation Helpers
 
 ```python
-# vcontext/mutator/todo_mutator.py
+# vbrief/mutator/todo_mutator.py
 
 from typing import Callable, List, Optional
 from ..core.types import TodoList, TodoItem, ItemStatus
@@ -626,7 +626,7 @@ class TodoListMutator:
         self._list.items.clear()
 
 
-# vcontext/mutator/plan_mutator.py
+# vbrief/mutator/plan_mutator.py
 
 from typing import Optional
 from ..core.types import Plan, PlanStatus
@@ -672,7 +672,7 @@ def mutate_plan(plan: Plan) -> PlanMutator:
 #### Immutable Update Helpers
 
 ```python
-# vcontext/updater/immutable.py
+# vbrief/updater/immutable.py
 
 from typing import Callable, Dict
 from copy import deepcopy
@@ -768,7 +768,7 @@ class ImmutableUpdater:
 #### Validated Updater
 
 ```python
-# vcontext/updater/validated.py
+# vbrief/updater/validated.py
 
 from typing import Callable, List, Optional, Any
 from dataclasses import dataclass
@@ -971,7 +971,7 @@ def create_updater(doc: Document, validate: bool = True) -> ValidatedUpdater:
 #### Context Manager for Transactions
 
 ```python
-# vcontext/updater/transaction.py
+# vbrief/updater/transaction.py
 
 from typing import Optional
 from contextlib import contextmanager
@@ -1016,7 +1016,7 @@ def transaction(doc: Document, validate: bool = True):
 Extensions use Pydantic's model inheritance:
 
 ```python
-# vcontext/extensions/identifiers.py
+# vbrief/extensions/identifiers.py
 
 from pydantic import Field
 from ..core.types import TodoItem as CoreTodoItem, TodoList as CoreTodoList
@@ -1043,7 +1043,7 @@ class PlanItemWithId(CorePlanItem):
     id: str = Field(description="Unique identifier")
 
 
-# vcontext/extensions/timestamps.py
+# vbrief/extensions/timestamps.py
 
 from datetime import datetime
 from typing import Optional
@@ -1064,7 +1064,7 @@ class TodoItemWithTimestamps(CoreTodoItem):
     updated: datetime = Field(description="Last update time")
 
 
-# vcontext/extensions/metadata.py
+# vbrief/extensions/metadata.py
 
 from typing import Any, Dict, List, Optional
 from enum import Enum
@@ -1100,7 +1100,7 @@ class TodoListWithMetadata(CoreTodoList):
 ### Example 1: Creating a TodoList
 
 ```python
-from vcontext import todo, VAgendaDocument, ItemStatus
+from vbrief import todo, VAgendaDocument, ItemStatus
 
 # Using builder
 doc = (todo("0.4")
@@ -1122,7 +1122,7 @@ doc.to_file("tasks.tron")
 ### Example 2: Parsing and Querying
 
 ```python
-from vcontext import VAgendaDocument, query, ItemStatus
+from vbrief import VAgendaDocument, query, ItemStatus
 
 # Load and parse
 doc = VAgendaDocument.from_file("tasks.tron")
@@ -1142,7 +1142,7 @@ for item in query(doc.todo_list.items).by_status(ItemStatus.PENDING):
 ### Example 3: Creating a Plan
 
 ```python
-from vcontext import plan, PlanStatus
+from vbrief import plan, PlanStatus
 
 doc = (plan("Add user authentication", "0.4")
     .status(PlanStatus.DRAFT)
@@ -1163,9 +1163,9 @@ print(doc.to_tron())
 
 ```python
 from datetime import datetime
-from vcontext.extensions.identifiers import TodoItemWithId
-from vcontext.extensions.timestamps import TodoItemWithTimestamps
-from vcontext.extensions.metadata import TodoItemWithMetadata, Priority
+from vbrief.extensions.identifiers import TodoItemWithId
+from vbrief.extensions.timestamps import TodoItemWithTimestamps
+from vbrief.extensions.metadata import TodoItemWithMetadata, Priority
 
 # Create item with multiple extensions (using composition)
 item_data = {
@@ -1193,8 +1193,8 @@ print(item.model_dump_json(indent=2))
 # app.py
 
 from fastapi import FastAPI, HTTPException
-from vcontext import VAgendaDocument, todo, ItemStatus
-from vcontext.core.types import TodoItem
+from vbrief import VAgendaDocument, todo, ItemStatus
+from vbrief.core.types import TodoItem
 
 app = FastAPI()
 
@@ -1245,7 +1245,7 @@ async def get_items(doc_id: str, status: ItemStatus = None):
 
 ```python
 from langchain.tools import tool
-from vcontext import VAgendaDocument, todo, ItemStatus
+from vbrief import VAgendaDocument, todo, ItemStatus
 
 # Global document (use database in production)
 current_doc = todo().build_document()
@@ -1308,7 +1308,7 @@ agent.run("Mark the authentication task as complete")
 ```python
 # In Jupyter notebook
 
-from vcontext import VAgendaDocument, query, ItemStatus
+from vbrief import VAgendaDocument, query, ItemStatus
 import matplotlib.pyplot as plt
 
 # Load document
@@ -1339,7 +1339,7 @@ for i, item in enumerate(pending, 1):
 # models.py
 
 from django.db import models
-from vcontext import VAgendaDocument
+from vbrief import VAgendaDocument
 
 class VAgendaProject(models.Model):
     name = models.CharField(max_length=200)
@@ -1363,7 +1363,7 @@ class VAgendaProject(models.Model):
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import VAgendaProject
-from vcontext import todo
+from vbrief import todo
 
 class CreateTodoListView(APIView):
     def post(self, request):
@@ -1379,8 +1379,8 @@ class CreateTodoListView(APIView):
 ### Example 9: Direct Mutations
 
 ```python
-from vcontext import VAgendaDocument, ItemStatus
-from vcontext.mutator import mutate_todo_list
+from vbrief import VAgendaDocument, ItemStatus
+from vbrief.mutator import mutate_todo_list
 
 # Load existing document
 doc = VAgendaDocument.from_file("tasks.tron")
@@ -1408,8 +1408,8 @@ doc.to_file("tasks.tron")
 ### Example 10: Immutable Updates
 
 ```python
-from vcontext import VAgendaDocument, ItemStatus
-from vcontext.updater import ImmutableUpdater
+from vbrief import VAgendaDocument, ItemStatus
+from vbrief.updater import ImmutableUpdater
 
 # Load document
 doc = VAgendaDocument.from_file("tasks.tron")
@@ -1446,8 +1446,8 @@ print(new_doc.to_json(indent=2))
 ### Example 11: Validated Updates
 
 ```python
-from vcontext import VAgendaDocument, ItemStatus
-from vcontext.updater import create_updater
+from vbrief import VAgendaDocument, ItemStatus
+from vbrief.updater import create_updater
 
 # Load document
 doc = VAgendaDocument.from_file("tasks.tron")
@@ -1477,9 +1477,9 @@ else:
 ### Example 12: Transactional Updates with Context Manager
 
 ```python
-from vcontext import VAgendaDocument, ItemStatus
-from vcontext.updater import transaction
-from vcontext.core.types import TodoItem
+from vbrief import VAgendaDocument, ItemStatus
+from vbrief.updater import transaction
+from vbrief.core.types import TodoItem
 
 # Load document
 doc = VAgendaDocument.from_file("tasks.tron")
@@ -1506,8 +1506,8 @@ except ValueError as e:
 ### Example 13: Transactional Updates with ValidatedUpdater
 
 ```python
-from vcontext import todo, ItemStatus
-from vcontext.updater import create_updater
+from vbrief import todo, ItemStatus
+from vbrief.updater import create_updater
 
 # Create initial document
 initial_doc = todo("0.4").add_item("Task 1", ItemStatus.PENDING).build()
@@ -1542,40 +1542,40 @@ else:
 
 ```bash
 # Install
-pip install vcontext
+pip install vbrief
 
 # Create a new TodoList
-vcontext create todo --version 0.4 --output tasks.tron
+vbrief create todo --version 0.4 --output tasks.tron
 
 # Add an item
-vcontext add item tasks.tron "Implement auth" --status pending
+vbrief add item tasks.tron "Implement auth" --status pending
 
 # List items
-vcontext list tasks.tron
+vbrief list tasks.tron
 
 # Filter by status
-vcontext list tasks.tron --status pending
+vbrief list tasks.tron --status pending
 
 # Update item status
-vcontext update tasks.tron 0 --status completed
+vbrief update tasks.tron 0 --status completed
 
 # Convert formats
-vcontext convert tasks.tron tasks.json --format json
+vbrief convert tasks.tron tasks.json --format json
 
 # Validate document
-vcontext validate tasks.tron
+vbrief validate tasks.tron
 
 # Create a plan
-vcontext create plan --title "Auth Implementation" --output plan.tron
+vbrief create plan --title "Auth Implementation" --output plan.tron
 
 # Add narrative
-vcontext add narrative plan.tron proposal "Proposed Changes" "Use JWT tokens..."
+vbrief add narrative plan.tron proposal "Proposed Changes" "Use JWT tokens..."
 
 # Serve web UI
-vcontext serve tasks.tron --port 8000
+vbrief serve tasks.tron --port 8000
 
 # Watch file and validate on change
-vcontext watch tasks.tron --validate
+vbrief watch tasks.tron --validate
 ```
 
 ## Testing Strategy
@@ -1586,7 +1586,7 @@ vcontext watch tasks.tron --validate
 # tests/test_builder.py
 
 import pytest
-from vcontext import todo, ItemStatus
+from vbrief import todo, ItemStatus
 
 def test_todo_builder_creates_valid_document():
     doc = (todo("0.4")
@@ -1594,8 +1594,8 @@ def test_todo_builder_creates_valid_document():
         .add_item("Task 1", ItemStatus.PENDING)
         .build_document())
     
-    assert doc.data.vContextInfo.version == "0.4"
-    assert doc.data.vContextInfo.author == "test-author"
+    assert doc.data.vBRIEFInfo.version == "0.4"
+    assert doc.data.vBRIEFInfo.author == "test-author"
     assert len(doc.todo_list.items) == 1
     assert doc.todo_list.items[0].title == "Task 1"
 
@@ -1624,7 +1624,7 @@ def test_todo_builder_multiple_items():
 # tests/test_round_trip.py
 
 import pytest
-from vcontext import todo, VAgendaDocument, ItemStatus
+from vbrief import todo, VAgendaDocument, ItemStatus
 
 def test_json_round_trip():
     original = (todo("0.4")
@@ -1712,14 +1712,14 @@ def test_json_to_tron_conversion():
 
 ```toml
 [project]
-name = "vcontext"
+name = "vbrief"
 version = "0.1.0"
-description = "Python library for working with vContext documents"
+description = "Python library for working with vBRIEF documents"
 authors = [{name = "Jonathan Taylor", email = "visionik@pobox.com"}]
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
-keywords = ["vcontext", "todo", "plan", "agenda", "task", "memory", "agent"]
+keywords = ["vbrief", "todo", "plan", "agenda", "task", "memory", "agent"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -1740,7 +1740,7 @@ cli = ["typer>=0.9.0", "rich>=13.0.0"]
 fastapi = ["fastapi>=0.100.0"]
 django = ["django>=4.0"]
 langchain = ["langchain>=0.1.0"]
-all = ["vcontext[cli,fastapi,django,langchain]"]
+all = ["vbrief[cli,fastapi,django,langchain]"]
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
@@ -1750,26 +1750,26 @@ dev = [
 ]
 
 [project.scripts]
-vcontext = "vcontext.cli:main"
+vbrief = "vbrief.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/visionik/vContext"
-Documentation = "https://vcontext.readthedocs.io"
-Repository = "https://github.com/visionik/vcontext-python"
-Issues = "https://github.com/visionik/vContext/issues"
+Homepage = "https://github.com/visionik/vBRIEF"
+Documentation = "https://vbrief.readthedocs.io"
+Repository = "https://github.com/visionik/vbrief-python"
+Issues = "https://github.com/visionik/vBRIEF/issues"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/vcontext"]
+packages = ["src/vbrief"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
 python_functions = "test_*"
-addopts = "--cov=vcontext --cov-report=term-missing --cov-report=html"
+addopts = "--cov=vbrief --cov-report=term-missing --cov-report=html"
 
 [tool.black]
 line-length = 88
@@ -1808,47 +1808,47 @@ disallow_untyped_defs = true
 ```yaml
 # Taskfile.yml additions
 tasks:
-  vcontext:py:install:
+  vbrief:py:install:
     desc: Install Python dependencies
     cmds:
       - pip install -e ".[dev]"
 
-  vcontext:py:build:
+  vbrief:py:build:
     desc: Build Python package
     cmds:
       - python -m build
 
-  vcontext:py:test:
+  vbrief:py:test:
     desc: Run Python tests
     cmds:
       - pytest
 
-  vcontext:py:coverage:
+  vbrief:py:coverage:
     desc: Check test coverage
     cmds:
-      - pytest --cov=vcontext --cov-report=term-missing
+      - pytest --cov=vbrief --cov-report=term-missing
 
-  vcontext:py:lint:
+  vbrief:py:lint:
     desc: Lint Python code
     cmds:
       - ruff check src/ tests/
       - black --check src/ tests/
 
-  vcontext:py:format:
+  vbrief:py:format:
     desc: Format Python code
     cmds:
       - black src/ tests/
       - ruff check --fix src/ tests/
 
-  vcontext:py:typecheck:
+  vbrief:py:typecheck:
     desc: Type check
     cmds:
       - mypy src/
 
-  vcontext:cli:run:
+  vbrief:cli:run:
     desc: Run CLI locally
     cmds:
-      - python -m vcontext.cli {{.CLI_ARGS}}
+      - python -m vbrief.cli {{.CLI_ARGS}}
 ```
 
 ## Runtime Support
@@ -1891,12 +1891,12 @@ The library targets:
 
 ## References
 
-- vContext Specification: https://github.com/visionik/vContext
+- vBRIEF Specification: https://github.com/visionik/vBRIEF
 - Pydantic Documentation: https://docs.pydantic.dev/
 - TRON Format: https://tron-format.github.io/
 - FastAPI: https://fastapi.tiangolo.com/
-- vContext Go API: [vContext-extension-api-go.md](./vContext-extension-api-go.md)
-- vContext TypeScript API: [vContext-extension-api-typescript.md](./vContext-extension-api-typescript.md)
+- vBRIEF Go API: [vBRIEF-extension-api-go.md](./vBRIEF-extension-api-go.md)
+- vBRIEF TypeScript API: [vBRIEF-extension-api-typescript.md](./vBRIEF-extension-api-typescript.md)
 
 ## Community Feedback
 
@@ -1908,4 +1908,4 @@ This is a **draft proposal**. Feedback needed:
 4. Should CLI be a separate package?
 5. Are the builder patterns Pythonic enough?
 
-**Discuss**: https://github.com/visionik/vContext/discussions
+**Discuss**: https://github.com/visionik/vBRIEF/discussions

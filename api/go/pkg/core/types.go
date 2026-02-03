@@ -1,4 +1,4 @@
-// Package core provides the core types and interfaces for vContext documents.
+// Package core provides the core types and interfaces for vBRIEF documents.
 package core
 
 import (
@@ -18,10 +18,10 @@ var (
 	ErrNoTodoList = errors.New("document does not contain a todoList")
 )
 
-// Document represents the root vContext document.
+// Document represents the root vBRIEF document.
 // A document contains metadata and either a TodoList or a Plan (but not both).
 type Document struct {
-	Info     Info      `json:"vContextInfo" tron:"vContextInfo"`
+	Info     Info      `json:"vBRIEFInfo" tron:"vBRIEFInfo"`
 	TodoList *TodoList `json:"todoList,omitempty" tron:"todoList,omitempty"`
 	Plan     *Plan     `json:"plan,omitempty" tron:"plan,omitempty"`
 }

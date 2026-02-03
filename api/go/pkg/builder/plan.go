@@ -1,6 +1,6 @@
 package builder
 
-import "github.com/visionik/vContext/api/go/pkg/core"
+import "github.com/visionik/vBRIEF/api/go/pkg/core"
 
 // PlanBuilder provides a fluent API for building Plan documents.
 type PlanBuilder struct {

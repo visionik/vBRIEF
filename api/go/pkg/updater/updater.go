@@ -3,8 +3,8 @@ package updater
 import (
 	"errors"
 
-	"github.com/visionik/vContext/api/go/pkg/core"
-	"github.com/visionik/vContext/api/go/pkg/validator"
+	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/vBRIEF/api/go/pkg/validator"
 )
 
 var (

@@ -1,7 +1,7 @@
 # Go API Performance Analysis
 
 **Date**: 2025-12-28  
-**Purpose**: Analyze potential bottlenecks in the vContext Go API implementation and identify opportunities for optimization.
+**Purpose**: Analyze potential bottlenecks in the vBRIEF Go API implementation and identify opportunities for optimization.
 
 ## Executive Summary
 

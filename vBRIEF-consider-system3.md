@@ -1,4 +1,4 @@
-# vContext Extension: System 3 Meta-Cognitive Layer
+# vBRIEF Extension: System 3 Meta-Cognitive Layer
 
 **Extension Name**: System 3 Meta-Cognitive Layer
 
@@ -14,7 +14,7 @@
 
 ## Overview
 
-This extension introduces a **System 3 meta-cognitive layer** to vContext, enabling AI agents to maintain persistent identity, self-awareness, and autonomous learning across extended operation periods. Inspired by the Sophia framework, it adds user modeling (Theory of Mind), self-modeling (meta-cognition), and intrinsic motivation to vContext's existing TodoList/Plan/Playbook memory hierarchy.
+This extension introduces a **System 3 meta-cognitive layer** to vBRIEF, enabling AI agents to maintain persistent identity, self-awareness, and autonomous learning across extended operation periods. Inspired by the Sophia framework, it adds user modeling (Theory of Mind), self-modeling (meta-cognition), and intrinsic motivation to vBRIEF's existing TodoList/Plan/Playbook memory hierarchy.
 
 ### Motivation
 
@@ -26,7 +26,7 @@ Modern AI agents excel at perception (System 1) and deliberation (System 2) but 
 4. **Intrinsic motivation** - Balancing external tasks with curiosity-driven exploration
 5. **Meta-cognitive monitoring** - Real-time coherence checking and self-assessment
 
-vContext's three-tier memory system (TodoList/Plan/Playbook) provides the foundation for System 3:
+vBRIEF's three-tier memory system (TodoList/Plan/Playbook) provides the foundation for System 3:
 - **TodoList** → Short-term/working memory (System 1 reactive tasks)
 - **Plan** → Medium-term episodic memory (System 2 deliberate reasoning)
 - **Playbook** → Long-term autobiographical memory (System 3 narrative identity)
@@ -65,7 +65,7 @@ Based on decades of cognitive psychology research, System 3 integrates:
    - Narrative identity construction
    - Long-horizon credit assignment
 
-**Note**: vContext's existing Plan narratives and Playbook evidence already provide episodic memory. This extension adds the other three pillars.
+**Note**: vBRIEF's existing Plan narratives and Playbook evidence already provide episodic memory. This extension adds the other three pillars.
 
 ### The Autonomous Cognitive Cycle
 
@@ -109,7 +109,7 @@ The System 3 layer:
 
 ## Design Principle: Extending Existing Containers
 
-Following vContext's philosophy of extending existing types rather than creating new ones, System 3 fields are added directly to Plan, TodoList, and Playbook:
+Following vBRIEF's philosophy of extending existing types rather than creating new ones, System 3 fields are added directly to Plan, TodoList, and Playbook:
 
 - **Plan.system3** - Meta-cognitive state for a specific project/goal
 - **TodoList.system3** - Active working memory and immediate context
@@ -873,7 +873,7 @@ The original Sophia framework demonstrated:
 3. **Autonomous goal generation** - agent independently initiated 100+ intrinsic learning tasks during 24-hour deployment
 4. **Identity coherence** - maintained consistent narrative across extended operation
 
-vContext + System 3 enables similar capabilities:
+vBRIEF + System 3 enables similar capabilities:
 - **Forward learning**: `PlaybookItem.system3.reuseCount` and `forwardLearningMetrics` track efficiency gains
 - **Meta-cognitive monitoring**: `coherenceScore` and `coherenceIssues` enable real-time self-correction
 - **Autonomous learning**: `KnowledgeGap` detection → `intrinsicGoals` → auto-generated Plans
@@ -902,7 +902,7 @@ For persistent, autonomous agents:
 
 ### Integration with Existing Tools
 
-System 3 fields are optional metadata - existing vContext tools can:
+System 3 fields are optional metadata - existing vBRIEF tools can:
 - **Ignore System 3 fields** - Documents remain valid without them
 - **Read for display** - Show agent confidence, learning goals, etc.
 - **Preserve on rewrite** - Keep unknown fields per spec
@@ -922,7 +922,7 @@ System 3 fields are optional metadata - existing vContext tools can:
 
 ## Compatibility
 
-This extension is fully backward compatible with vContext v0.3. All System 3 fields are optional.
+This extension is fully backward compatible with vBRIEF v0.3. All System 3 fields are optional.
 
 Tools that don't understand this extension should:
 - Ignore `system3` fields on all types
@@ -947,15 +947,15 @@ Tools that don't understand this extension should:
 - **Tulving, E.** (2002). Episodic memory: From mind to brain. *Annual Review of Psychology*, 53(1), 1-25. https://doi.org/10.1146/annurev.psych.53.100901.135114
 - **Wellman, H. M.** (2018). Theory of mind: The state of the art. *European Journal of Developmental Psychology*, 15(6), 728-755. https://doi.org/10.1146/annurev-psych-010416-044139
 
-### Related vContext Extensions
+### Related vBRIEF Extensions
 
-- **vContext Core Specification v0.3**: README.md
+- **vBRIEF Core Specification v0.3**: README.md
 - **Extension 2 (Identifiers)**: README.md#extension-2-identifiers
 - **Extension 3 (Rich Metadata)**: README.md#extension-3-rich-metadata
-- **Extension 12 (Playbooks)**: vContext-extension-playbooks.md
-- **Agentic Patterns Extension**: vContext-extension-agentic-patterns.md
-- **Model-First Reasoning Extension**: vContext-extension-model-first-reasoning.md
-- **Experimental Workflows Extension**: vContext-extension-experimental-workflows.md
+- **Extension 12 (Playbooks)**: vBRIEF-extension-playbooks.md
+- **Agentic Patterns Extension**: vBRIEF-extension-agentic-patterns.md
+- **Model-First Reasoning Extension**: vBRIEF-extension-model-first-reasoning.md
+- **Experimental Workflows Extension**: vBRIEF-extension-experimental-workflows.md
 
 ---
 

@@ -1,37 +1,37 @@
 {
-  "vContextInfo": {
+  "vBRIEFInfo": {
     "version": "0.4"
   },
   "todoList": {
     "items": [
       {
         "id": "t1",
-        "title": "Update core spec to use narrative map/object",
+        "title": "Update core spec: change narrative from single object to array",
         "status": "completed"
       },
       {
         "id": "t2",
-        "title": "Update Extension 3 to use narrative map",
+        "title": "Update Extension 3 to use narrative arrays",
         "status": "completed"
       },
       {
         "id": "t3",
-        "title": "Update all examples to use narrative map",
+        "title": "Update all examples to use narrative arrays",
         "status": "completed"
       },
       {
         "id": "t4",
-        "title": "Update JSON schema for narrative map",
+        "title": "Update JSON schema for narrative arrays",
         "status": "completed"
       },
       {
         "id": "t5",
-        "title": "Update Narrative type documentation",
+        "title": "Keep Narrative type definition",
         "status": "completed"
       },
       {
         "id": "t6",
-        "title": "Update note about Plan vs item narratives",
+        "title": "Update vBRIEF todo rule",
         "status": "completed"
       }
     ]

@@ -1,15 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://vcontext.dev/schemas/vcontext-core.schema.json",
-  "title": "vContext Core Schema",
-  "description": "JSON Schema for vContext core document structure (v0.4). Extensions may add fields; unknown fields are allowed unless otherwise stated.",
+  "$id": "https://vbrief.dev/schemas/vbrief-core.schema.json",
+  "title": "vBRIEF Core Schema",
+  "description": "JSON Schema for vBRIEF core document structure (v0.4). Extensions may add fields; unknown fields are allowed unless otherwise stated.",
   "type": "object",
-  "required": ["vContextInfo"],
+  "required": ["vBRIEFInfo"],
   "properties": {
-    "vContextInfo": {"$ref": "#/$defs/vContextInfo"},
+    "vBRIEFInfo": {"$ref": "#/$defs/vBRIEFInfo"},
     "todoList": {"$ref": "#/$defs/TodoList"},
     "plan": {"$ref": "#/$defs/Plan"},
-    "playbook": {"$ref": "./vcontext-extension-playbooks.schema.json#/$defs/Playbook"}
+    "playbook": {"$ref": "./vbrief-extension-playbooks.schema.json#/$defs/Playbook"}
   },
   "oneOf": [
     {
@@ -27,7 +27,7 @@
   ],
   "additionalProperties": true,
   "$defs": {
-    "vContextInfo": {
+    "vBRIEFInfo": {
       "type": "object",
       "required": ["version"],
       "properties": {
@@ -218,7 +218,7 @@
           "type": "object",
           "required": ["uri", "type"],
           "properties": {
-            "type": {"enum": ["x-vcontext/todoList", "x-vcontext/plan", "x-vcontext/playbook"]}
+            "type": {"enum": ["x-vbrief/todoList", "x-vbrief/plan", "x-vbrief/playbook"]}
           }
         }
       ]
