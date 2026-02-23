@@ -2,7 +2,7 @@
   "vBRIEFInfo": {
     "version": "0.5"
   },
-  "vSpec": {
+  "plan": {
     "title": "RFC 854: TELNET Protocol Specification",
     "status": "approved",
     "type": "rfc",

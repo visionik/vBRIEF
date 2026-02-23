@@ -2,7 +2,7 @@
   "vBRIEFInfo": {
     "version": "0.5"
   },
-  "vSpec": {
+  "plan": {
     "title": "SQLite UI PRD",
     "status": "draft",
     "type": "prd",

@@ -10,6 +10,12 @@
     "plan": {"$ref": "#/$defs/Plan"}
   },
   "additionalProperties": true,
+  "not": {
+    "anyOf": [
+      {"required": ["todoList"]},
+      {"required": ["playbook"]}
+    ]
+  },
   "$defs": {
     "vBRIEFInfo": {
       "type": "object",
@@ -96,7 +102,7 @@
         "subItems": {"type": "array", "items": {"$ref": "#/$defs/PlanItem"}},
         "planRef": {
           "type": "string",
-          "pattern": "^(#[a-zA-Z0-9_.-]+|file://.*|https?://.*)$"
+          "pattern": "^(#[a-zA-Z0-9_.-]+|file://.*|https://.*)$"
         },
         "tags": {"type": "array", "items": {"type": "string"}},
         "metadata": {"type": "object"},

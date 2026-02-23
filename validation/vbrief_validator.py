@@ -37,7 +37,7 @@ class ConformanceValidator:
     
     HIERARCHICAL_ID_PATTERN = re.compile(r'^[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)*$')
     
-    URI_PATTERN = re.compile(r'^(#[a-zA-Z0-9_.-]+|file://.*|https?://.*)$')
+    URI_PATTERN = re.compile(r'^(#[a-zA-Z0-9_.-]+|file://.*|https://.*)$')
     
     def __init__(self, doc: Dict):
         self.doc = doc

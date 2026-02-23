@@ -1,6 +1,6 @@
-# vSpec Conversion Guidelines
+# vSpec Conversion Guidelines (Plan-Compatible)
 
-Systematic approach to converting specifications (RFCs, PRDs, technical docs) into vBRIEF vSpec format while preserving all normative content and context.
+Systematic approach to converting specifications (RFCs, PRDs, technical docs) into a Plan-compatible vBRIEF format while preserving all normative content and context.
 
 ## Core Principle
 
@@ -20,15 +20,15 @@ Before converting, identify:
 - **Cross-references**: Links to other specs, standards, related work
 - **Implicit context**: Background knowledge assumed by the original document
 
-### 2. Container-Level Mapping (vSpec)
+### 2. Container-Level Mapping (Plan)
 
-Map document-level content to `vSpec` fields:
+Map document-level content to `plan` fields (spec profile):
 
 #### Required Fields
 ```json
 {
   "title": "Extract from document title or heading",
-  "status": "draft | proposed | approved | in-progress | completed | cancelled",
+  "status": "draft | proposed | approved | running | completed | cancelled",
   "type": "prd | rfc | technical-design | architecture | api-spec"
 }
 ```
@@ -70,9 +70,9 @@ Add metadata that provides traceability:
 }
 ```
 
-### 3. Item-Level Mapping (vSpecItem)
+### 3. Item-Level Mapping (PlanItem)
 
-Each discrete normative statement becomes a `vSpecItem`.
+Each discrete normative statement becomes a `PlanItem` (with `kind` in metadata or as an extension field).
 
 #### Required Fields
 ```json
@@ -80,7 +80,7 @@ Each discrete normative statement becomes a `vSpecItem`.
   "id": "Hierarchical ID (e.g., FR-1, NVT-3, OPT-2a)",
   "kind": "requirement | risk | metric | question | decision | constraint | dependency",
   "title": "Short descriptive title (1 line)",
-  "status": "pending | in-progress | completed | blocked | cancelled"
+  "status": "pending | running | completed | blocked | cancelled"
 }
 ```
 

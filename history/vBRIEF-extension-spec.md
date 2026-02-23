@@ -1,5 +1,7 @@
 # vBRIEF Extension: Specifications (vSpec)
 
+> Historical draft extension. Not part of core v0.5 conformance.
+
 **Version**: 0.5
 
 **Last Updated**: 2026-01-11
@@ -19,7 +21,7 @@ vSpec enables specifications to be:
 
 ## Relationship to Core Specification
 
-This extension builds upon vBRIEF Core v0.4 (see [README.md](./README.md)) and follows the established container patterns:
+This extension builds upon vBRIEF Core v0.4 (see [README.md](../README.md)) and follows the established container patterns:
 - Container: `vSpec` (analogous to TodoList, Plan, Playbook)
 - Item: `vSpecItem` (analogous to TodoItem, PlanItem, PlaybookItem)
 - Container-level narratives use **lowercase keys** (like Plan)
