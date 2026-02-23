@@ -1,0 +1,496 @@
+{
+  "vBRIEFInfo": {
+    "version": "0.5",
+    "created": "2026-02-07T04:48:00Z"
+  },
+  "plan": {
+    "id": "software-dev-project",
+    "title": "E-Commerce Platform Development",
+    "status": "running",
+    "narratives": {
+      "Proposal": "Build a full-featured e-commerce platform with user authentication, product catalog, shopping cart, payment processing, and order management.",
+      "Background": "The company needs a modern e-commerce solution to replace the legacy system. Current system cannot scale and lacks mobile support.",
+      "Problem": "Legacy monolithic architecture, poor mobile UX, limited payment options, no real-time inventory tracking.",
+      "Constraint": "Must launch MVP within 6 months. Budget limited to $500K. Team of 8 developers available.",
+      "Risk": "Third-party payment integration complexity. Performance under load during sales events. Data migration from legacy system.",
+      "Milestone": "MVP launch targeted for Sprint 8 completion. Full feature parity by Sprint 12."
+    },
+    "items": [
+      {
+        "id": "phase1",
+        "title": "Phase 1: Planning & Architecture",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-06",
+        "endDate": "2026-01-24"
+      },
+      {
+        "id": "phase1.requirements",
+        "title": "Gather Business Requirements",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-06",
+        "endDate": "2026-01-10"
+      },
+      {
+        "id": "phase1.stakeholder-interviews",
+        "title": "Conduct Stakeholder Interviews",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-06",
+        "endDate": "2026-01-08"
+      },
+      {
+        "id": "phase1.tech-stack",
+        "title": "Select Technology Stack",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-09",
+        "endDate": "2026-01-13"
+      },
+      {
+        "id": "phase1.architecture",
+        "title": "Design System Architecture",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-13",
+        "endDate": "2026-01-20"
+      },
+      {
+        "id": "phase1.api-design",
+        "title": "Design API Contracts",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-15",
+        "endDate": "2026-01-22"
+      },
+      {
+        "id": "phase1.db-schema",
+        "title": "Design Database Schema",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-17",
+        "endDate": "2026-01-24"
+      },
+      {
+        "id": "phase2",
+        "title": "Phase 2: Core Infrastructure",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-27",
+        "endDate": "2026-02-14"
+      },
+      {
+        "id": "phase2.devops-setup",
+        "title": "Setup CI/CD Pipeline",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-27",
+        "endDate": "2026-01-31"
+      },
+      {
+        "id": "phase2.cloud-infra",
+        "title": "Provision Cloud Infrastructure",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-27",
+        "endDate": "2026-02-03"
+      },
+      {
+        "id": "phase2.auth-service",
+        "title": "Implement Authentication Service",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-02-03",
+        "endDate": "2026-02-10"
+      },
+      {
+        "id": "phase2.user-management",
+        "title": "Build User Management Module",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-02-05",
+        "endDate": "2026-02-12"
+      },
+      {
+        "id": "phase2.logging",
+        "title": "Setup Logging & Monitoring",
+        "status": "completed",
+        "priority": "medium",
+        "startDate": "2026-02-10",
+        "endDate": "2026-02-14"
+      },
+      {
+        "id": "phase3",
+        "title": "Phase 3: Product Catalog",
+        "status": "running",
+        "priority": "high",
+        "startDate": "2026-02-03",
+        "endDate": "2026-02-28"
+      },
+      {
+        "id": "phase3.product-service",
+        "title": "Build Product Service API",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-02-03",
+        "endDate": "2026-02-12"
+      },
+      {
+        "id": "phase3.category-mgmt",
+        "title": "Implement Category Management",
+        "status": "completed",
+        "priority": "medium",
+        "startDate": "2026-02-10",
+        "endDate": "2026-02-14"
+      },
+      {
+        "id": "phase3.search",
+        "title": "Implement Product Search (Elasticsearch)",
+        "status": "running",
+        "priority": "high",
+        "startDate": "2026-02-12",
+        "endDate": "2026-02-21"
+      },
+      {
+        "id": "phase3.image-service",
+        "title": "Build Image Upload Service",
+        "status": "running",
+        "priority": "medium",
+        "startDate": "2026-02-14",
+        "endDate": "2026-02-21"
+      },
+      {
+        "id": "phase3.inventory",
+        "title": "Implement Inventory Tracking",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-02-19",
+        "endDate": "2026-02-28"
+      },
+      {
+        "id": "phase4",
+        "title": "Phase 4: Shopping Experience",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-02-24",
+        "endDate": "2026-03-21"
+      },
+      {
+        "id": "phase4.cart-service",
+        "title": "Build Shopping Cart Service",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-02-24",
+        "endDate": "2026-03-05"
+      },
+      {
+        "id": "phase4.wishlist",
+        "title": "Implement Wishlist Feature",
+        "status": "pending",
+        "priority": "low",
+        "startDate": "2026-03-03",
+        "endDate": "2026-03-07"
+      },
+      {
+        "id": "phase4.recommendations",
+        "title": "Build Product Recommendations Engine",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-03-05",
+        "endDate": "2026-03-14"
+      },
+      {
+        "id": "phase4.checkout-flow",
+        "title": "Implement Checkout Flow",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-05",
+        "endDate": "2026-03-14"
+      },
+      {
+        "id": "phase4.address-mgmt",
+        "title": "Build Address Management",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-03-10",
+        "endDate": "2026-03-14"
+      },
+      {
+        "id": "phase4.shipping-calc",
+        "title": "Integrate Shipping Calculator",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-14",
+        "endDate": "2026-03-21"
+      },
+      {
+        "id": "phase5",
+        "title": "Phase 5: Payment & Orders",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-17",
+        "endDate": "2026-04-11"
+      },
+      {
+        "id": "phase5.payment-gateway",
+        "title": "Integrate Stripe Payment Gateway",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-17",
+        "endDate": "2026-03-28"
+      },
+      {
+        "id": "phase5.paypal",
+        "title": "Integrate PayPal",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-03-24",
+        "endDate": "2026-04-01"
+      },
+      {
+        "id": "phase5.order-service",
+        "title": "Build Order Management Service",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-28",
+        "endDate": "2026-04-07"
+      },
+      {
+        "id": "phase5.invoicing",
+        "title": "Implement Invoice Generation",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-04-04",
+        "endDate": "2026-04-11"
+      },
+      {
+        "id": "phase5.refunds",
+        "title": "Build Refund Processing",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-04-07",
+        "endDate": "2026-04-11"
+      },
+      {
+        "id": "phase6",
+        "title": "Phase 6: Frontend Development",
+        "status": "running",
+        "priority": "high",
+        "startDate": "2026-02-10",
+        "endDate": "2026-04-18"
+      },
+      {
+        "id": "phase6.design-system",
+        "title": "Build UI Component Library",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-02-10",
+        "endDate": "2026-02-21"
+      },
+      {
+        "id": "phase6.homepage",
+        "title": "Develop Homepage & Navigation",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-02-17",
+        "endDate": "2026-02-24"
+      },
+      {
+        "id": "phase6.product-pages",
+        "title": "Build Product Listing & Detail Pages",
+        "status": "running",
+        "priority": "high",
+        "startDate": "2026-02-21",
+        "endDate": "2026-03-07"
+      },
+      {
+        "id": "phase6.cart-ui",
+        "title": "Develop Cart & Checkout UI",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-07",
+        "endDate": "2026-03-21"
+      },
+      {
+        "id": "phase6.account-pages",
+        "title": "Build User Account Pages",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-03-17",
+        "endDate": "2026-03-28"
+      },
+      {
+        "id": "phase6.mobile-responsive",
+        "title": "Mobile Responsive Optimization",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-28",
+        "endDate": "2026-04-11"
+      },
+      {
+        "id": "phase6.accessibility",
+        "title": "Accessibility Audit & Fixes",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-04-11",
+        "endDate": "2026-04-18"
+      },
+      {
+        "id": "phase7",
+        "title": "Phase 7: Testing & QA",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-04-14",
+        "endDate": "2026-05-09"
+      },
+      {
+        "id": "phase7.unit-tests",
+        "title": "Complete Unit Test Coverage",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-04-14",
+        "endDate": "2026-04-21"
+      },
+      {
+        "id": "phase7.integration-tests",
+        "title": "Integration Testing",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-04-21",
+        "endDate": "2026-04-28"
+      },
+      {
+        "id": "phase7.e2e-tests",
+        "title": "End-to-End Testing",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-04-28",
+        "endDate": "2026-05-05"
+      },
+      {
+        "id": "phase7.load-testing",
+        "title": "Performance & Load Testing",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-02",
+        "endDate": "2026-05-09"
+      },
+      {
+        "id": "phase7.security-audit",
+        "title": "Security Audit",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-05",
+        "endDate": "2026-05-09"
+      },
+      {
+        "id": "phase8",
+        "title": "Phase 8: Deployment & Launch",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-11",
+        "endDate": "2026-05-23"
+      },
+      {
+        "id": "phase8.staging-deploy",
+        "title": "Deploy to Staging Environment",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-11",
+        "endDate": "2026-05-13"
+      },
+      {
+        "id": "phase8.uat",
+        "title": "User Acceptance Testing",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-13",
+        "endDate": "2026-05-18"
+      },
+      {
+        "id": "phase8.data-migration",
+        "title": "Production Data Migration",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-18",
+        "endDate": "2026-05-20"
+      },
+      {
+        "id": "phase8.prod-deploy",
+        "title": "Production Deployment",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-20",
+        "endDate": "2026-05-21"
+      },
+      {
+        "id": "phase8.go-live",
+        "title": "Go-Live & Monitoring",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-21",
+        "endDate": "2026-05-23"
+      }
+    ],
+    "edges": [
+      { "from": "phase1.stakeholder-interviews", "to": "phase1.requirements", "type": "blocks" },
+      { "from": "phase1.requirements", "to": "phase1.tech-stack", "type": "blocks" },
+      { "from": "phase1.tech-stack", "to": "phase1.architecture", "type": "blocks" },
+      { "from": "phase1.architecture", "to": "phase1.api-design", "type": "blocks" },
+      { "from": "phase1.architecture", "to": "phase1.db-schema", "type": "blocks" },
+      { "from": "phase1.api-design", "to": "phase2.devops-setup", "type": "informs" },
+      { "from": "phase1.db-schema", "to": "phase2.cloud-infra", "type": "blocks" },
+      { "from": "phase2.devops-setup", "to": "phase2.cloud-infra", "type": "informs" },
+      { "from": "phase2.cloud-infra", "to": "phase2.auth-service", "type": "blocks" },
+      { "from": "phase2.auth-service", "to": "phase2.user-management", "type": "blocks" },
+      { "from": "phase2.cloud-infra", "to": "phase2.logging", "type": "blocks" },
+      { "from": "phase1.api-design", "to": "phase3.product-service", "type": "blocks" },
+      { "from": "phase2.cloud-infra", "to": "phase3.product-service", "type": "blocks" },
+      { "from": "phase3.product-service", "to": "phase3.category-mgmt", "type": "blocks" },
+      { "from": "phase3.product-service", "to": "phase3.search", "type": "blocks" },
+      { "from": "phase3.product-service", "to": "phase3.image-service", "type": "blocks" },
+      { "from": "phase3.category-mgmt", "to": "phase3.inventory", "type": "informs" },
+      { "from": "phase3.search", "to": "phase3.inventory", "type": "blocks" },
+      { "from": "phase2.user-management", "to": "phase4.cart-service", "type": "blocks" },
+      { "from": "phase3.product-service", "to": "phase4.cart-service", "type": "blocks" },
+      { "from": "phase4.cart-service", "to": "phase4.wishlist", "type": "informs" },
+      { "from": "phase3.search", "to": "phase4.recommendations", "type": "blocks" },
+      { "from": "phase4.cart-service", "to": "phase4.checkout-flow", "type": "blocks" },
+      { "from": "phase2.user-management", "to": "phase4.address-mgmt", "type": "blocks" },
+      { "from": "phase4.checkout-flow", "to": "phase4.shipping-calc", "type": "blocks" },
+      { "from": "phase4.address-mgmt", "to": "phase4.shipping-calc", "type": "blocks" },
+      { "from": "phase4.checkout-flow", "to": "phase5.payment-gateway", "type": "blocks" },
+      { "from": "phase5.payment-gateway", "to": "phase5.paypal", "type": "informs" },
+      { "from": "phase5.payment-gateway", "to": "phase5.order-service", "type": "blocks" },
+      { "from": "phase5.order-service", "to": "phase5.invoicing", "type": "blocks" },
+      { "from": "phase5.order-service", "to": "phase5.refunds", "type": "blocks" },
+      { "from": "phase2.auth-service", "to": "phase6.design-system", "type": "informs" },
+      { "from": "phase6.design-system", "to": "phase6.homepage", "type": "blocks" },
+      { "from": "phase6.homepage", "to": "phase6.product-pages", "type": "blocks" },
+      { "from": "phase3.product-service", "to": "phase6.product-pages", "type": "blocks" },
+      { "from": "phase6.product-pages", "to": "phase6.cart-ui", "type": "blocks" },
+      { "from": "phase4.cart-service", "to": "phase6.cart-ui", "type": "blocks" },
+      { "from": "phase2.user-management", "to": "phase6.account-pages", "type": "blocks" },
+      { "from": "phase6.cart-ui", "to": "phase6.account-pages", "type": "informs" },
+      { "from": "phase6.account-pages", "to": "phase6.mobile-responsive", "type": "blocks" },
+      { "from": "phase6.mobile-responsive", "to": "phase6.accessibility", "type": "blocks" },
+      { "from": "phase5.order-service", "to": "phase7.unit-tests", "type": "blocks" },
+      { "from": "phase6.accessibility", "to": "phase7.unit-tests", "type": "blocks" },
+      { "from": "phase7.unit-tests", "to": "phase7.integration-tests", "type": "blocks" },
+      { "from": "phase7.integration-tests", "to": "phase7.e2e-tests", "type": "blocks" },
+      { "from": "phase7.e2e-tests", "to": "phase7.load-testing", "type": "blocks" },
+      { "from": "phase7.e2e-tests", "to": "phase7.security-audit", "type": "blocks" },
+      { "from": "phase7.load-testing", "to": "phase8.staging-deploy", "type": "blocks" },
+      { "from": "phase7.security-audit", "to": "phase8.staging-deploy", "type": "blocks" },
+      { "from": "phase8.staging-deploy", "to": "phase8.uat", "type": "blocks" },
+      { "from": "phase8.uat", "to": "phase8.data-migration", "type": "blocks" },
+      { "from": "phase8.data-migration", "to": "phase8.prod-deploy", "type": "blocks" },
+      { "from": "phase8.prod-deploy", "to": "phase8.go-live", "type": "blocks" },
+      { "from": "phase3.inventory", "to": "phase5.order-service", "type": "blocks" }
+    ],
+    "tags": ["software-development", "e-commerce", "agile", "gantt-chart", "complex-project"],
+    "created": "2026-02-07T04:48:00Z",
+    "updated": "2026-02-07T04:48:00Z"
+  }
+}

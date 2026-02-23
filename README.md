@@ -6,7 +6,7 @@ vBRIEF (Basic Relational Intent Exchange Format) is an **open, standardized form
 
 ```mermaid
 graph LR
-    A[Simple Tasks] --> B[Plan Container]
+    A[Simple Tasks] --> B[Plan Containerz]
     C[Strategic Plans] --> B
     D[Knowledge/Playbooks] --> B
     E[Prompt Graphs] --> B
@@ -14,9 +14,9 @@ graph LR
     F --> G[Token Efficient]
     F --> H[DAG Support]
     F --> I[Interoperable]
-    
-    style B fill:#4CAF50,color:#fff
-    style F fill:#2196F3,color:#fff
+
+    style B fill:#4CAF50
+    style F fill:#2196F3
 ```
 
 ## Quick Start
@@ -25,13 +25,13 @@ graph LR
 
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "vBRIEF": { "version": "0.5" },
   "plan": {
     "title": "Daily Tasks",
     "status": "running",
     "items": [
-      {"title": "Fix auth bug", "status": "pending"},
-      {"title": "Review PR #123", "status": "running"}
+      { "title": "Fix auth bug", "status": "pending" },
+      { "title": "Review PR #123", "status": "running" }
     ]
   }
 }
@@ -48,7 +48,7 @@ graph LR
 🔗 **Hierarchical IDs** - Dot notation for nested organization  
 ⚡ **35-40% Token Savings** - TRON encoding for LLMs  
 ✅ **Comprehensive Validation** - Schema + conformance + cycle detection  
-🛠️ **Developer Tools** - DAG visualizer and validators included  
+🛠️ **Developer Tools** - DAG visualizer and validators included
 
 ### Graduated Complexity Model
 
@@ -60,7 +60,7 @@ graph TD
     C --> D
     D --> E[+ Hierarchical IDs<br/>nested structure]
     D --> F[+ Plan References<br/>modular composition]
-    
+
     style A fill:#e8f5e9
     style B fill:#fff3e0
     style C fill:#e3f2fd
@@ -87,7 +87,7 @@ classDiagram
         +datetime created
         +datetime updated
     }
-    
+
     class PlanItem {
         +string id
         +string title*
@@ -97,17 +97,17 @@ classDiagram
         +string planRef
         +string priority
     }
-    
+
     class Edge {
         +string from*
         +string to*
         +EdgeType type*
     }
-    
+
     Plan "1" --> "*" PlanItem : contains
     Plan "1" --> "*" Edge : defines
     PlanItem "1" --> "*" PlanItem : nests
-    
+
     note for Plan "*Required fields"
 ```
 
@@ -138,7 +138,7 @@ graph TD
     A -.->|informs| C[Task C]
     D[Task D] ==>|invalidates| E[Task E]
     F[Task F] -.->|suggests| G[Task G]
-    
+
     style A fill:#4CAF50,color:#fff
     style B fill:#2196F3,color:#fff
     style C fill:#FF9800,color:#fff
@@ -192,14 +192,14 @@ Use Plan as a simple todo list:
 
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "vBRIEFInfo": { "version": "0.5" },
   "plan": {
     "title": "Sprint 1 Tasks",
     "status": "running",
     "items": [
-      {"title": "Implement login", "status": "completed"},
-      {"title": "Write tests", "status": "running"},
-      {"title": "Update docs", "status": "pending"}
+      { "title": "Implement login", "status": "completed" },
+      { "title": "Write tests", "status": "running" },
+      { "title": "Update docs", "status": "pending" }
     ]
   }
 }
@@ -211,7 +211,7 @@ Add narratives for context and design rationale:
 
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "vBRIEFInfo": { "version": "0.5" },
   "plan": {
     "id": "api-migration",
     "title": "Migrate to GraphQL",
@@ -222,8 +222,8 @@ Add narratives for context and design rationale:
       "Risk": "Team learning curve, N+1 optimization"
     },
     "items": [
-      {"id": "research", "title": "Research & POC", "status": "completed"},
-      {"id": "schema", "title": "Define Schema", "status": "running"}
+      { "id": "research", "title": "Research & POC", "status": "completed" },
+      { "id": "schema", "title": "Define Schema", "status": "running" }
     ]
   }
 }
@@ -235,20 +235,20 @@ Define dependencies and parallel execution:
 
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "vBRIEFInfo": { "version": "0.5" },
   "plan": {
     "title": "CI/CD Pipeline",
     "status": "running",
     "items": [
-      {"id": "lint", "title": "Lint", "status": "completed"},
-      {"id": "test", "title": "Test", "status": "running"},
-      {"id": "build", "title": "Build", "status": "pending"},
-      {"id": "deploy", "title": "Deploy", "status": "pending"}
+      { "id": "lint", "title": "Lint", "status": "completed" },
+      { "id": "test", "title": "Test", "status": "running" },
+      { "id": "build", "title": "Build", "status": "pending" },
+      { "id": "deploy", "title": "Deploy", "status": "pending" }
     ],
     "edges": [
-      {"from": "lint", "to": "build", "type": "blocks"},
-      {"from": "test", "to": "build", "type": "blocks"},
-      {"from": "build", "to": "deploy", "type": "blocks"}
+      { "from": "lint", "to": "build", "type": "blocks" },
+      { "from": "test", "to": "build", "type": "blocks" },
+      { "from": "build", "to": "deploy", "type": "blocks" }
     ]
   }
 }
@@ -261,7 +261,7 @@ graph TD
     lint[Lint<br/>completed] --> build[Build<br/>pending]
     test[Test<br/>running] --> build
     build --> deploy[Deploy<br/>pending]
-    
+
     style lint fill:#4CAF50,color:#fff
     style test fill:#2196F3,color:#fff
 ```
@@ -272,7 +272,7 @@ Use retrospective narratives for lessons learned:
 
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "vBRIEFInfo": { "version": "0.5" },
   "plan": {
     "title": "Q4 2025 Retrospective",
     "status": "completed",
@@ -293,6 +293,7 @@ Use retrospective narratives for lessons learned:
 ### v0.4 → v0.5-beta (2026-02-03)
 
 **Breaking Changes:**
+
 - ❌ TodoList removed - use Plan with minimal fields
 - ❌ Playbook removed - use Plan with retrospective narratives
 - ❌ `dependencies` field - use `edges` with `type: "blocks"`
@@ -300,6 +301,7 @@ Use retrospective narratives for lessons learned:
 - 🔄 Plan.narratives now optional
 
 **New Features:**
+
 - ✨ Unified Plan model with graduated complexity
 - ✨ DAG support: edges, cycle detection, hierarchical IDs
 - ✨ Universal 8-value Status enum
@@ -310,6 +312,7 @@ Use retrospective narratives for lessons learned:
 **Migration:** See [MIGRATION.md](MIGRATION.md) for complete guide.
 
 **Known Limitations (Beta):**
+
 - ⏳ API implementations pending (Go, Python, TypeScript)
 - ⏳ TRON parser libraries - use JSON for now
 
@@ -324,13 +327,14 @@ python validation/vbrief_validator.py examples/minimal-plan.vbrief.json
 ```
 
 Validates:
+
 - ✅ JSON Schema conformance
 - ✅ Required fields present
 - ✅ Status enum values
 - ✅ DAG cycle detection
 - ✅ Edge reference integrity
 - ✅ Hierarchical ID syntax
-- ⚠️  TitleCase narrative keys (warning)
+- ⚠️ TitleCase narrative keys (warning)
 
 ### DAG Visualization
 
@@ -339,6 +343,7 @@ python tools/dag-visualizer.py examples/dag-plan.vbrief.json
 ```
 
 Outputs:
+
 - Mermaid diagram (markdown, HTML, or raw)
 - Status-based node coloring
 - Edge type visualization
@@ -358,6 +363,7 @@ Start simple. Add complexity only when it provides value.
 ## Conformance
 
 **vBRIEF v0.5 conformant** document:
+
 - Contains `vBRIEFInfo` with `version: "0.5"`
 - Contains exactly one `plan` object
 - Plan has required fields: `title`, `status`, `items`
@@ -374,17 +380,19 @@ vBRIEF supports both formats. **TRON is preferred** for LLM workflows; JSON for 
 Same data in both formats:
 
 **JSON** (98 tokens):
+
 ```json
 {
   "items": [
-    {"id": "1", "title": "Auth", "status": "completed"},
-    {"id": "2", "title": "API", "status": "running"},
-    {"id": "3", "title": "Tests", "status": "pending"}
+    { "id": "1", "title": "Auth", "status": "completed" },
+    { "id": "2", "title": "API", "status": "running" },
+    { "id": "3", "title": "Tests", "status": "pending" }
   ]
 }
 ```
 
 **TRON** (62 tokens, 37% reduction):
+
 ```tron
 class Item: id, title, status
 
@@ -396,12 +404,14 @@ items: [
 ```
 
 **Benefits:**
+
 - ⚡ 35-40% fewer tokens = lower LLM costs
 - 📄 More data fits in context windows
 - 👁️ Class-based schemas reduce noise
 - 🔄 Lossless with JSON (superset)
 
 **Resources:**
+
 - [TRON Specification](https://tron-format.github.io/)
 - [Format Comparison](https://www.piotr-sikora.com/blog/2025-12-05-toon-tron-csv-yaml-json-format-comparison)
 
@@ -430,7 +440,7 @@ Feedback and contributions welcome!
 ```
 vBRIEF/
 ├── schemas/              # JSON Schema definitions
-├── examples/             # Sample vBRIEF documents  
+├── examples/             # Sample vBRIEF documents
 ├── validation/           # Schema and DAG validators
 ├── tools/                # DAG visualizer
 ├── docs/                 # Additional documentation

@@ -1,0 +1,820 @@
+{
+  "vBRIEFInfo": {
+    "version": "0.5",
+    "created": "2026-02-07T04:48:00Z"
+  },
+  "plan": {
+    "id": "commercial-building-construction",
+    "title": "Downtown Office Building Construction",
+    "status": "running",
+    "narratives": {
+      "Proposal": "Construct a 12-story commercial office building with underground parking, modern HVAC systems, and LEED Gold certification target.",
+      "Background": "City downtown revitalization project requiring a mixed-use commercial space. Building will house 500+ employees across multiple tenants.",
+      "Problem": "Tight urban lot with limited staging area. Adjacent historic building requires vibration monitoring. Aggressive 18-month timeline.",
+      "Constraint": "No night construction allowed per city ordinance. Must maintain pedestrian access on adjacent sidewalk. Winter weather may impact schedule.",
+      "Risk": "Foundation excavation near water table. Supply chain delays for specialized HVAC equipment. Skilled labor shortage in region.",
+      "Milestone": "Foundation completion by Month 4. Structural topping out by Month 10. Substantial completion by Month 16."
+    },
+    "items": [
+      {
+        "id": "preconstruction",
+        "title": "Pre-Construction Phase",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-09-01",
+        "endDate": "2025-11-15"
+      },
+      {
+        "id": "preconstruction.permits",
+        "title": "Obtain Building Permits",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-09-01",
+        "endDate": "2025-10-15"
+      },
+      {
+        "id": "preconstruction.utility-coordination",
+        "title": "Utility Coordination & Relocations",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-09-15",
+        "endDate": "2025-10-30"
+      },
+      {
+        "id": "preconstruction.site-survey",
+        "title": "Final Site Survey & Geotechnical",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-09-01",
+        "endDate": "2025-09-20"
+      },
+      {
+        "id": "preconstruction.shop-drawings",
+        "title": "Structural Shop Drawings",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-09-20",
+        "endDate": "2025-11-01"
+      },
+      {
+        "id": "preconstruction.material-procurement",
+        "title": "Long-Lead Material Procurement",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-10-01",
+        "endDate": "2025-11-15"
+      },
+      {
+        "id": "sitework",
+        "title": "Site Work Phase",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-11-01",
+        "endDate": "2025-12-20"
+      },
+      {
+        "id": "sitework.demolition",
+        "title": "Existing Structure Demolition",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-11-01",
+        "endDate": "2025-11-15"
+      },
+      {
+        "id": "sitework.excavation",
+        "title": "Excavation & Shoring",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-11-15",
+        "endDate": "2025-12-10"
+      },
+      {
+        "id": "sitework.dewatering",
+        "title": "Dewatering System Installation",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-11-20",
+        "endDate": "2025-12-05"
+      },
+      {
+        "id": "sitework.soil-export",
+        "title": "Soil Export & Disposal",
+        "status": "completed",
+        "priority": "medium",
+        "startDate": "2025-11-18",
+        "endDate": "2025-12-15"
+      },
+      {
+        "id": "sitework.temp-utilities",
+        "title": "Temporary Utilities Setup",
+        "status": "completed",
+        "priority": "medium",
+        "startDate": "2025-12-01",
+        "endDate": "2025-12-20"
+      },
+      {
+        "id": "foundation",
+        "title": "Foundation Phase",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-12-10",
+        "endDate": "2026-02-15"
+      },
+      {
+        "id": "foundation.piles",
+        "title": "Pile Driving",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2025-12-10",
+        "endDate": "2026-01-10"
+      },
+      {
+        "id": "foundation.pile-caps",
+        "title": "Pile Caps & Grade Beams",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-05",
+        "endDate": "2026-01-25"
+      },
+      {
+        "id": "foundation.mat-slab",
+        "title": "Mat Foundation Pour",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-20",
+        "endDate": "2026-02-01"
+      },
+      {
+        "id": "foundation.waterproofing",
+        "title": "Below-Grade Waterproofing",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-02-01",
+        "endDate": "2026-02-15"
+      },
+      {
+        "id": "foundation.underslab-mep",
+        "title": "Underslab MEP Rough-In",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-01-25",
+        "endDate": "2026-02-10"
+      },
+      {
+        "id": "parking",
+        "title": "Underground Parking Structure",
+        "status": "running",
+        "priority": "high",
+        "startDate": "2026-02-01",
+        "endDate": "2026-04-15"
+      },
+      {
+        "id": "parking.p2-walls",
+        "title": "P2 Level Walls & Columns",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-02-01",
+        "endDate": "2026-02-20"
+      },
+      {
+        "id": "parking.p2-deck",
+        "title": "P2 Level Deck Pour",
+        "status": "completed",
+        "priority": "high",
+        "startDate": "2026-02-18",
+        "endDate": "2026-02-28"
+      },
+      {
+        "id": "parking.p1-walls",
+        "title": "P1 Level Walls & Columns",
+        "status": "running",
+        "priority": "high",
+        "startDate": "2026-02-25",
+        "endDate": "2026-03-15"
+      },
+      {
+        "id": "parking.p1-deck",
+        "title": "P1 Level Deck Pour",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-12",
+        "endDate": "2026-03-25"
+      },
+      {
+        "id": "parking.ramps",
+        "title": "Parking Ramps & Access",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-03-20",
+        "endDate": "2026-04-05"
+      },
+      {
+        "id": "parking.mep-rough",
+        "title": "Parking MEP Rough-In",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-25",
+        "endDate": "2026-04-15"
+      },
+      {
+        "id": "structure",
+        "title": "Superstructure Phase",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-20",
+        "endDate": "2026-08-30"
+      },
+      {
+        "id": "structure.steel-erection-1-4",
+        "title": "Steel Erection Floors 1-4",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-03-20",
+        "endDate": "2026-04-25"
+      },
+      {
+        "id": "structure.deck-pour-1-4",
+        "title": "Metal Deck & Concrete Floors 1-4",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-04-15",
+        "endDate": "2026-05-15"
+      },
+      {
+        "id": "structure.steel-erection-5-8",
+        "title": "Steel Erection Floors 5-8",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-01",
+        "endDate": "2026-06-05"
+      },
+      {
+        "id": "structure.deck-pour-5-8",
+        "title": "Metal Deck & Concrete Floors 5-8",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-25",
+        "endDate": "2026-06-25"
+      },
+      {
+        "id": "structure.steel-erection-9-12",
+        "title": "Steel Erection Floors 9-12",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-06-10",
+        "endDate": "2026-07-15"
+      },
+      {
+        "id": "structure.deck-pour-9-12",
+        "title": "Metal Deck & Concrete Floors 9-12",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-07-05",
+        "endDate": "2026-08-05"
+      },
+      {
+        "id": "structure.roof-structure",
+        "title": "Roof Structure & Penthouse",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-07-25",
+        "endDate": "2026-08-30"
+      },
+      {
+        "id": "envelope",
+        "title": "Building Envelope Phase",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-15",
+        "endDate": "2026-10-30"
+      },
+      {
+        "id": "envelope.curtainwall-1-4",
+        "title": "Curtain Wall Installation Floors 1-4",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-05-15",
+        "endDate": "2026-06-20"
+      },
+      {
+        "id": "envelope.curtainwall-5-8",
+        "title": "Curtain Wall Installation Floors 5-8",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-06-25",
+        "endDate": "2026-08-01"
+      },
+      {
+        "id": "envelope.curtainwall-9-12",
+        "title": "Curtain Wall Installation Floors 9-12",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-08-05",
+        "endDate": "2026-09-15"
+      },
+      {
+        "id": "envelope.roofing",
+        "title": "Roofing & Waterproofing",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-08-30",
+        "endDate": "2026-09-30"
+      },
+      {
+        "id": "envelope.sealants",
+        "title": "Exterior Sealants & Caulking",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-09-15",
+        "endDate": "2026-10-30"
+      },
+      {
+        "id": "mechanical",
+        "title": "Mechanical Systems Phase",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-06-01",
+        "endDate": "2026-12-15"
+      },
+      {
+        "id": "mechanical.main-equipment",
+        "title": "Main Mechanical Equipment Installation",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-06-01",
+        "endDate": "2026-07-15"
+      },
+      {
+        "id": "mechanical.ductwork-1-4",
+        "title": "HVAC Ductwork Floors 1-4",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-06-20",
+        "endDate": "2026-08-01"
+      },
+      {
+        "id": "mechanical.ductwork-5-8",
+        "title": "HVAC Ductwork Floors 5-8",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-08-01",
+        "endDate": "2026-09-15"
+      },
+      {
+        "id": "mechanical.ductwork-9-12",
+        "title": "HVAC Ductwork Floors 9-12",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-09-15",
+        "endDate": "2026-10-30"
+      },
+      {
+        "id": "mechanical.piping",
+        "title": "Hydronic Piping System",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-07-01",
+        "endDate": "2026-10-01"
+      },
+      {
+        "id": "mechanical.controls",
+        "title": "Building Automation System",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-10-15",
+        "endDate": "2026-12-01"
+      },
+      {
+        "id": "mechanical.commissioning",
+        "title": "HVAC Commissioning",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-11-15",
+        "endDate": "2026-12-15"
+      },
+      {
+        "id": "electrical",
+        "title": "Electrical Systems Phase",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-06-01",
+        "endDate": "2026-12-15"
+      },
+      {
+        "id": "electrical.main-service",
+        "title": "Main Electrical Service & Switchgear",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-06-01",
+        "endDate": "2026-07-15"
+      },
+      {
+        "id": "electrical.risers",
+        "title": "Electrical Risers & Distribution",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-07-01",
+        "endDate": "2026-09-01"
+      },
+      {
+        "id": "electrical.rough-1-4",
+        "title": "Electrical Rough-In Floors 1-4",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-07-15",
+        "endDate": "2026-09-01"
+      },
+      {
+        "id": "electrical.rough-5-8",
+        "title": "Electrical Rough-In Floors 5-8",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-09-01",
+        "endDate": "2026-10-15"
+      },
+      {
+        "id": "electrical.rough-9-12",
+        "title": "Electrical Rough-In Floors 9-12",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-10-15",
+        "endDate": "2026-11-30"
+      },
+      {
+        "id": "electrical.low-voltage",
+        "title": "Low Voltage & Data Cabling",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-10-01",
+        "endDate": "2026-12-01"
+      },
+      {
+        "id": "electrical.testing",
+        "title": "Electrical Testing & Commissioning",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-12-01",
+        "endDate": "2026-12-15"
+      },
+      {
+        "id": "plumbing",
+        "title": "Plumbing Systems Phase",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-06-15",
+        "endDate": "2026-11-30"
+      },
+      {
+        "id": "plumbing.risers",
+        "title": "Plumbing Risers & Main Lines",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-06-15",
+        "endDate": "2026-08-15"
+      },
+      {
+        "id": "plumbing.rough-1-4",
+        "title": "Plumbing Rough-In Floors 1-4",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-07-15",
+        "endDate": "2026-09-01"
+      },
+      {
+        "id": "plumbing.rough-5-8",
+        "title": "Plumbing Rough-In Floors 5-8",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-09-01",
+        "endDate": "2026-10-15"
+      },
+      {
+        "id": "plumbing.rough-9-12",
+        "title": "Plumbing Rough-In Floors 9-12",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-10-15",
+        "endDate": "2026-11-30"
+      },
+      {
+        "id": "plumbing.fixtures",
+        "title": "Plumbing Fixtures Installation",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-11-01",
+        "endDate": "2026-12-15"
+      },
+      {
+        "id": "interiors",
+        "title": "Interior Finishes Phase",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-08-01",
+        "endDate": "2027-01-30"
+      },
+      {
+        "id": "interiors.framing-1-4",
+        "title": "Interior Framing Floors 1-4",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-08-01",
+        "endDate": "2026-09-15"
+      },
+      {
+        "id": "interiors.framing-5-8",
+        "title": "Interior Framing Floors 5-8",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-09-15",
+        "endDate": "2026-10-30"
+      },
+      {
+        "id": "interiors.framing-9-12",
+        "title": "Interior Framing Floors 9-12",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-10-30",
+        "endDate": "2026-12-15"
+      },
+      {
+        "id": "interiors.drywall-1-4",
+        "title": "Drywall & Taping Floors 1-4",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-09-15",
+        "endDate": "2026-10-30"
+      },
+      {
+        "id": "interiors.drywall-5-8",
+        "title": "Drywall & Taping Floors 5-8",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-10-30",
+        "endDate": "2026-12-15"
+      },
+      {
+        "id": "interiors.drywall-9-12",
+        "title": "Drywall & Taping Floors 9-12",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-12-15",
+        "endDate": "2027-01-30"
+      },
+      {
+        "id": "interiors.ceilings",
+        "title": "Acoustical Ceilings",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-11-01",
+        "endDate": "2027-01-15"
+      },
+      {
+        "id": "interiors.flooring",
+        "title": "Flooring Installation",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-12-01",
+        "endDate": "2027-01-30"
+      },
+      {
+        "id": "interiors.paint",
+        "title": "Painting & Wall Coverings",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-11-15",
+        "endDate": "2027-01-30"
+      },
+      {
+        "id": "specialties",
+        "title": "Building Specialties Phase",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-10-01",
+        "endDate": "2027-01-30"
+      },
+      {
+        "id": "specialties.elevators",
+        "title": "Elevator Installation",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-10-01",
+        "endDate": "2026-12-30"
+      },
+      {
+        "id": "specialties.fire-protection",
+        "title": "Fire Protection Systems",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2026-07-01",
+        "endDate": "2026-11-30"
+      },
+      {
+        "id": "specialties.security",
+        "title": "Security & Access Control",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-11-15",
+        "endDate": "2027-01-15"
+      },
+      {
+        "id": "specialties.signage",
+        "title": "Signage & Wayfinding",
+        "status": "pending",
+        "priority": "low",
+        "startDate": "2027-01-01",
+        "endDate": "2027-01-30"
+      },
+      {
+        "id": "sitefinish",
+        "title": "Site Finishes Phase",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-11-01",
+        "endDate": "2027-02-15"
+      },
+      {
+        "id": "sitefinish.hardscape",
+        "title": "Hardscape & Paving",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-11-01",
+        "endDate": "2026-12-15"
+      },
+      {
+        "id": "sitefinish.landscape",
+        "title": "Landscaping & Irrigation",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2026-12-01",
+        "endDate": "2027-01-30"
+      },
+      {
+        "id": "sitefinish.exterior-lighting",
+        "title": "Site Lighting",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2027-01-01",
+        "endDate": "2027-02-01"
+      },
+      {
+        "id": "sitefinish.final-grading",
+        "title": "Final Grading & Cleanup",
+        "status": "pending",
+        "priority": "medium",
+        "startDate": "2027-02-01",
+        "endDate": "2027-02-15"
+      },
+      {
+        "id": "closeout",
+        "title": "Closeout Phase",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2027-01-15",
+        "endDate": "2027-03-01"
+      },
+      {
+        "id": "closeout.punchlist",
+        "title": "Punchlist & Corrections",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2027-01-15",
+        "endDate": "2027-02-15"
+      },
+      {
+        "id": "closeout.final-inspections",
+        "title": "Final Inspections",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2027-02-01",
+        "endDate": "2027-02-20"
+      },
+      {
+        "id": "closeout.co",
+        "title": "Certificate of Occupancy",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2027-02-20",
+        "endDate": "2027-02-28"
+      },
+      {
+        "id": "closeout.turnover",
+        "title": "Building Turnover & Training",
+        "status": "pending",
+        "priority": "high",
+        "startDate": "2027-02-25",
+        "endDate": "2027-03-01"
+      }
+    ],
+    "edges": [
+      { "from": "preconstruction.permits", "to": "sitework.demolition", "type": "blocks" },
+      { "from": "preconstruction.site-survey", "to": "preconstruction.shop-drawings", "type": "blocks" },
+      { "from": "preconstruction.utility-coordination", "to": "sitework.temp-utilities", "type": "blocks" },
+      { "from": "preconstruction.shop-drawings", "to": "preconstruction.material-procurement", "type": "blocks" },
+      { "from": "preconstruction.material-procurement", "to": "foundation.piles", "type": "blocks" },
+      { "from": "sitework.demolition", "to": "sitework.excavation", "type": "blocks" },
+      { "from": "sitework.excavation", "to": "sitework.dewatering", "type": "blocks" },
+      { "from": "sitework.excavation", "to": "sitework.soil-export", "type": "blocks" },
+      { "from": "sitework.dewatering", "to": "foundation.piles", "type": "blocks" },
+      { "from": "sitework.temp-utilities", "to": "foundation.piles", "type": "informs" },
+      { "from": "foundation.piles", "to": "foundation.pile-caps", "type": "blocks" },
+      { "from": "foundation.pile-caps", "to": "foundation.mat-slab", "type": "blocks" },
+      { "from": "foundation.pile-caps", "to": "foundation.underslab-mep", "type": "blocks" },
+      { "from": "foundation.underslab-mep", "to": "foundation.mat-slab", "type": "blocks" },
+      { "from": "foundation.mat-slab", "to": "foundation.waterproofing", "type": "blocks" },
+      { "from": "foundation.waterproofing", "to": "parking.p2-walls", "type": "blocks" },
+      { "from": "parking.p2-walls", "to": "parking.p2-deck", "type": "blocks" },
+      { "from": "parking.p2-deck", "to": "parking.p1-walls", "type": "blocks" },
+      { "from": "parking.p1-walls", "to": "parking.p1-deck", "type": "blocks" },
+      { "from": "parking.p1-deck", "to": "parking.ramps", "type": "blocks" },
+      { "from": "parking.p1-deck", "to": "parking.mep-rough", "type": "blocks" },
+      { "from": "parking.p1-deck", "to": "structure.steel-erection-1-4", "type": "blocks" },
+      { "from": "structure.steel-erection-1-4", "to": "structure.deck-pour-1-4", "type": "blocks" },
+      { "from": "structure.deck-pour-1-4", "to": "structure.steel-erection-5-8", "type": "blocks" },
+      { "from": "structure.deck-pour-1-4", "to": "envelope.curtainwall-1-4", "type": "blocks" },
+      { "from": "structure.steel-erection-5-8", "to": "structure.deck-pour-5-8", "type": "blocks" },
+      { "from": "structure.deck-pour-5-8", "to": "structure.steel-erection-9-12", "type": "blocks" },
+      { "from": "structure.deck-pour-5-8", "to": "envelope.curtainwall-5-8", "type": "blocks" },
+      { "from": "structure.steel-erection-9-12", "to": "structure.deck-pour-9-12", "type": "blocks" },
+      { "from": "structure.deck-pour-9-12", "to": "structure.roof-structure", "type": "blocks" },
+      { "from": "structure.deck-pour-9-12", "to": "envelope.curtainwall-9-12", "type": "blocks" },
+      { "from": "structure.roof-structure", "to": "envelope.roofing", "type": "blocks" },
+      { "from": "envelope.curtainwall-1-4", "to": "envelope.curtainwall-5-8", "type": "informs" },
+      { "from": "envelope.curtainwall-5-8", "to": "envelope.curtainwall-9-12", "type": "informs" },
+      { "from": "envelope.curtainwall-9-12", "to": "envelope.sealants", "type": "blocks" },
+      { "from": "envelope.roofing", "to": "envelope.sealants", "type": "blocks" },
+      { "from": "structure.deck-pour-1-4", "to": "mechanical.main-equipment", "type": "blocks" },
+      { "from": "structure.roof-structure", "to": "mechanical.main-equipment", "type": "informs" },
+      { "from": "structure.deck-pour-1-4", "to": "mechanical.ductwork-1-4", "type": "blocks" },
+      { "from": "mechanical.main-equipment", "to": "mechanical.ductwork-1-4", "type": "blocks" },
+      { "from": "structure.deck-pour-5-8", "to": "mechanical.ductwork-5-8", "type": "blocks" },
+      { "from": "mechanical.ductwork-1-4", "to": "mechanical.ductwork-5-8", "type": "informs" },
+      { "from": "structure.deck-pour-9-12", "to": "mechanical.ductwork-9-12", "type": "blocks" },
+      { "from": "mechanical.ductwork-5-8", "to": "mechanical.ductwork-9-12", "type": "informs" },
+      { "from": "mechanical.main-equipment", "to": "mechanical.piping", "type": "blocks" },
+      { "from": "mechanical.ductwork-9-12", "to": "mechanical.controls", "type": "blocks" },
+      { "from": "mechanical.piping", "to": "mechanical.controls", "type": "blocks" },
+      { "from": "mechanical.controls", "to": "mechanical.commissioning", "type": "blocks" },
+      { "from": "structure.deck-pour-1-4", "to": "electrical.main-service", "type": "blocks" },
+      { "from": "electrical.main-service", "to": "electrical.risers", "type": "blocks" },
+      { "from": "electrical.risers", "to": "electrical.rough-1-4", "type": "blocks" },
+      { "from": "mechanical.ductwork-1-4", "to": "electrical.rough-1-4", "type": "informs" },
+      { "from": "electrical.rough-1-4", "to": "electrical.rough-5-8", "type": "blocks" },
+      { "from": "mechanical.ductwork-5-8", "to": "electrical.rough-5-8", "type": "informs" },
+      { "from": "electrical.rough-5-8", "to": "electrical.rough-9-12", "type": "blocks" },
+      { "from": "mechanical.ductwork-9-12", "to": "electrical.rough-9-12", "type": "informs" },
+      { "from": "electrical.rough-5-8", "to": "electrical.low-voltage", "type": "blocks" },
+      { "from": "electrical.rough-9-12", "to": "electrical.testing", "type": "blocks" },
+      { "from": "electrical.low-voltage", "to": "electrical.testing", "type": "blocks" },
+      { "from": "structure.deck-pour-1-4", "to": "plumbing.risers", "type": "blocks" },
+      { "from": "plumbing.risers", "to": "plumbing.rough-1-4", "type": "blocks" },
+      { "from": "plumbing.rough-1-4", "to": "plumbing.rough-5-8", "type": "blocks" },
+      { "from": "plumbing.rough-5-8", "to": "plumbing.rough-9-12", "type": "blocks" },
+      { "from": "plumbing.rough-9-12", "to": "plumbing.fixtures", "type": "blocks" },
+      { "from": "interiors.drywall-9-12", "to": "plumbing.fixtures", "type": "blocks" },
+      { "from": "envelope.curtainwall-1-4", "to": "interiors.framing-1-4", "type": "blocks" },
+      { "from": "electrical.rough-1-4", "to": "interiors.framing-1-4", "type": "informs" },
+      { "from": "interiors.framing-1-4", "to": "interiors.framing-5-8", "type": "informs" },
+      { "from": "envelope.curtainwall-5-8", "to": "interiors.framing-5-8", "type": "blocks" },
+      { "from": "interiors.framing-5-8", "to": "interiors.framing-9-12", "type": "informs" },
+      { "from": "envelope.curtainwall-9-12", "to": "interiors.framing-9-12", "type": "blocks" },
+      { "from": "interiors.framing-1-4", "to": "interiors.drywall-1-4", "type": "blocks" },
+      { "from": "electrical.rough-1-4", "to": "interiors.drywall-1-4", "type": "blocks" },
+      { "from": "plumbing.rough-1-4", "to": "interiors.drywall-1-4", "type": "blocks" },
+      { "from": "interiors.framing-5-8", "to": "interiors.drywall-5-8", "type": "blocks" },
+      { "from": "electrical.rough-5-8", "to": "interiors.drywall-5-8", "type": "blocks" },
+      { "from": "plumbing.rough-5-8", "to": "interiors.drywall-5-8", "type": "blocks" },
+      { "from": "interiors.framing-9-12", "to": "interiors.drywall-9-12", "type": "blocks" },
+      { "from": "electrical.rough-9-12", "to": "interiors.drywall-9-12", "type": "blocks" },
+      { "from": "plumbing.rough-9-12", "to": "interiors.drywall-9-12", "type": "blocks" },
+      { "from": "interiors.drywall-1-4", "to": "interiors.ceilings", "type": "blocks" },
+      { "from": "interiors.drywall-5-8", "to": "interiors.ceilings", "type": "informs" },
+      { "from": "interiors.drywall-1-4", "to": "interiors.paint", "type": "blocks" },
+      { "from": "interiors.paint", "to": "interiors.flooring", "type": "blocks" },
+      { "from": "interiors.ceilings", "to": "interiors.flooring", "type": "informs" },
+      { "from": "structure.steel-erection-1-4", "to": "specialties.elevators", "type": "blocks" },
+      { "from": "structure.roof-structure", "to": "specialties.elevators", "type": "blocks" },
+      { "from": "structure.deck-pour-1-4", "to": "specialties.fire-protection", "type": "blocks" },
+      { "from": "mechanical.ductwork-9-12", "to": "specialties.fire-protection", "type": "informs" },
+      { "from": "electrical.low-voltage", "to": "specialties.security", "type": "blocks" },
+      { "from": "interiors.drywall-9-12", "to": "specialties.signage", "type": "blocks" },
+      { "from": "foundation.waterproofing", "to": "sitefinish.hardscape", "type": "informs" },
+      { "from": "envelope.sealants", "to": "sitefinish.hardscape", "type": "blocks" },
+      { "from": "sitefinish.hardscape", "to": "sitefinish.landscape", "type": "blocks" },
+      { "from": "sitefinish.hardscape", "to": "sitefinish.exterior-lighting", "type": "blocks" },
+      { "from": "sitefinish.landscape", "to": "sitefinish.final-grading", "type": "blocks" },
+      { "from": "sitefinish.exterior-lighting", "to": "sitefinish.final-grading", "type": "blocks" },
+      { "from": "interiors.flooring", "to": "closeout.punchlist", "type": "blocks" },
+      { "from": "mechanical.commissioning", "to": "closeout.punchlist", "type": "blocks" },
+      { "from": "electrical.testing", "to": "closeout.punchlist", "type": "blocks" },
+      { "from": "specialties.elevators", "to": "closeout.punchlist", "type": "blocks" },
+      { "from": "closeout.punchlist", "to": "closeout.final-inspections", "type": "blocks" },
+      { "from": "sitefinish.final-grading", "to": "closeout.final-inspections", "type": "blocks" },
+      { "from": "closeout.final-inspections", "to": "closeout.co", "type": "blocks" },
+      { "from": "closeout.co", "to": "closeout.turnover", "type": "blocks" },
+      { "from": "mechanical.commissioning", "to": "closeout.turnover", "type": "informs" }
+    ],
+    "tags": ["construction", "commercial-building", "gantt-chart", "complex-project", "office-tower"],
+    "created": "2026-02-07T04:48:00Z",
+    "updated": "2026-02-07T04:48:00Z"
+  }
+}
