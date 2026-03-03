@@ -1,10 +1,5 @@
 version: '3'
 
-includes:
-  api:go:
-    taskfile: ./api/go/Taskfile.yml
-    dir: ./api/go
-
 tasks:
   default:
     desc: List all available tasks
@@ -12,30 +7,25 @@ tasks:
       - task --list
     silent: true
 
-  install:
-    desc: Install all dependencies
-    deps:
-      - api:go:install
-
-  fmt:
-    desc: Format all code
-    deps:
-      - api:go:fmt
-
   test:
     desc: Run all tests
-    deps:
-      - api:go:test
+    cmds:
+      - pytest tests/
 
-  check:
-    desc: Run all quality checks (fast)
-    deps:
-      - api:go:check
+  fmt:
+    desc: Format all Python code
+    cmds:
+      - ruff format .
 
-  quality:
-    desc: Run all quality checks including coverage gates
-    deps:
-      - api:go:quality
+  lint:
+    desc: Lint all Python code
+    cmds:
+      - ruff check .
+
+  validate:
+    desc: Validate all example documents
+    cmds:
+      - python validation/vbrief_validator.py examples/*.vbrief.json
 
   git:hooks:install:
     desc: Install local git hooks (pre-commit + commit-msg)
