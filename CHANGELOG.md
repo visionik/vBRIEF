@@ -10,6 +10,16 @@ Commit messages follow [Conventional Commits](https://www.conventionalcommits.or
 
 ## [Unreleased]
 
+### Proposed (deftai/xBRIEF#40 — agentic dispatch fields)
+- Draft schema `schemas/xbrief-core-0.9.schema.json` adding OPTIONAL PlanItem fields
+  for multi-agent dispatch: `difficulty` (trivial–expert tier/model routing),
+  `filesScope` + `filesScopeConfidence` (parallel-execution overlap safety),
+  `verifyCommands` / `expectedOutputs` (mechanical completion verification), and
+  `criterion` in the `type` enum (leaf item asserting a testable property of its
+  parent — acceptance criterion).
+- Spec prose, validator support (Python + TypeScript), and examples to follow once
+  the field shape is agreed.
+
 ---
 
 ## [0.8.0] — 2026-06-30
