@@ -1,5 +1,5 @@
 """
-vBRIEF v0.5 DAG Validator
+xBRIEF v0.8 DAG Validator
 
 Validates directed acyclic graph (DAG) constraints for Plan edges:
 - Detects cycles using DFS-based algorithm (O(V+E) complexity)
@@ -17,7 +17,7 @@ class ValidationError(Exception):
 
 
 class EdgeType(str, Enum):
-    """Core edge types defined in vBRIEF v0.5 specification."""
+    """Core edge types defined in xBRIEF v0.8 specification."""
     BLOCKS = "blocks"
     INFORMS = "informs"
     INVALIDATES = "invalidates"
@@ -25,7 +25,7 @@ class EdgeType(str, Enum):
 
 
 class DAGValidator:
-    """Validates DAG constraints for vBRIEF Plans."""
+    """Validates DAG constraints for xBRIEF Plans."""
     
     def __init__(self, items: List[Dict], edges: List[Dict]):
         """
@@ -42,12 +42,16 @@ class DAGValidator:
     
     def _collect_item_ids(self, items: List[Dict], prefix: str = "") -> Set[str]:
         """
-        Recursively collect all item IDs including nested subItems.
-        
+        Recursively collect all item IDs including nested items/subItems.
+
+        In v0.8, nested items (and legacy subItems) typically store their *full* hierarchical
+        id (e.g. "phase.subtask"). We trust the stored "id" value directly rather than
+        rebuilding it from a prefix, while still traversing all children.
+
         Args:
             items: List of PlanItem dictionaries
-            prefix: Hierarchical prefix for nested items
-            
+            prefix: (unused for id construction; kept for compatibility)
+
         Returns:
             Set of all item IDs in the plan
         """
@@ -55,15 +59,15 @@ class DAGValidator:
         for item in items:
             item_id = item.get("id")
             if item_id:
-                # Support hierarchical IDs
-                full_id = f"{prefix}.{item_id}" if prefix else item_id
-                ids.add(full_id)
-                
-                # Recursively process subItems
-                sub_items = item.get("subItems", [])
-                if sub_items:
-                    ids.update(self._collect_item_ids(sub_items, full_id))
-        
+                # Trust the id as declared (already full for hierarchical cases)
+                ids.add(item_id)
+
+                # Recursively process nested items (v0.8 preferred) and legacy subItems
+                for nested_field in ("items", "subItems"):
+                    nested = item.get(nested_field, [])
+                    if nested:
+                        ids.update(self._collect_item_ids(nested, item_id))
+
         return ids
     
     def _build_adjacency_list(self) -> Dict[str, List[str]]:
@@ -225,7 +229,7 @@ if __name__ == "__main__":
     import sys
     
     if len(sys.argv) < 2:
-        print("Usage: python dag_validator.py <plan.vbrief.json>")
+        print("Usage: python dag_validator.py <plan.xbrief.json>")
         sys.exit(1)
     
     with open(sys.argv[1], 'r') as f:

@@ -4,7 +4,7 @@ import (
 	"io"
 
 	"github.com/tron-format/trongo/pkg/tron"
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
 )
 
 // TRONParser parses documents in TRON format.

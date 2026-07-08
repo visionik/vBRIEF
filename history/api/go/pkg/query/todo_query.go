@@ -1,10 +1,10 @@
-// Package query provides filtering and querying capabilities for vBRIEF documents.
+// Package query provides filtering and querying capabilities for xBRIEF documents.
 package query
 
 import (
 	"strings"
 
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
 )
 
 // TodoQuery provides filtering for TodoItems.

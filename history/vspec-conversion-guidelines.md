@@ -1,6 +1,6 @@
 # vSpec Conversion Guidelines (Plan-Compatible)
 
-Systematic approach to converting specifications (RFCs, PRDs, technical docs) into a Plan-compatible vBRIEF format while preserving all normative content and context.
+Systematic approach to converting specifications (RFCs, PRDs, technical docs) into a Plan-compatible xBRIEF format while preserving all normative content and context.
 
 ## Core Principle
 

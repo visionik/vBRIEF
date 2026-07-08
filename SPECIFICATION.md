@@ -1,18 +1,18 @@
-# libvbrief Phase 2 — Builder & Helpers SPECIFICATION
+# libxbrief Phase 2 — Builder & Helpers SPECIFICATION
 
-> **Source**: [`vbrief/specification.vbrief.json`](vbrief/specification.vbrief.json) — `status: approved`
+> **Source**: [`xbrief/specification.xbrief.json`](xbrief/specification.xbrief.json) — `status: approved`
 
 ## Overview
 
-Additive `PlanBuilder` API and convenience helpers for libvbrief. Zero new dependencies,
-full backward compatibility with existing `VBriefDocument` / `Plan` / `PlanItem` constructors.
+Additive `PlanBuilder` API and convenience helpers for libxbrief. Zero new dependencies,
+full backward compatibility with existing `XBriefDocument` / `Plan` / `PlanItem` constructors.
 
 ## Requirements
 
 ### Functional Requirements
 
 - **FR-1**: `PlanBuilder` class MUST accept plan-level fields (`title`, `status`, any optional
-  `Plan` field) as constructor kwargs and produce a `VBriefDocument` via `to_document()`.
+  `Plan` field) as constructor kwargs and produce a `XBriefDocument` via `to_document()`.
 - **FR-2**: `PlanBuilder` MUST support optional use as a context manager. `__exit__` is a
   no-op. Plain object usage (without `with`) MUST also work.
 - **FR-3**: `PlanBuilder.add_item(title, *, id=None, status='pending', **kwargs)` MUST add a
@@ -29,18 +29,18 @@ full backward compatibility with existing `VBriefDocument` / `Plan` / `PlanItem`
 - **FR-10**: `PlanBuilder` MUST accept a `strict` parameter (default `True`). `strict=True`
   raises `ValueError` immediately on invalid calls; `strict=False` defers to `validate()`.
 - **FR-11**: `quick_todo(title, items, *, status='running', **kwargs)` MUST accept strings or
-  `PlanItem` objects and return a `VBriefDocument`. Strings are coerced to
+  `PlanItem` objects and return a `XBriefDocument`. Strings are coerced to
   `PlanItem(title=s, status='pending')`.
 - **FR-12**: `from_items(title, items, *, status='running', **kwargs)` MUST accept a list of
-  `PlanItem` objects (no coercion) and return a `VBriefDocument`.
+  `PlanItem` objects (no coercion) and return a `XBriefDocument`.
 - **FR-13**: `PlanItem` MUST gain class method factories: `pending`, `running`, `completed`,
   `blocked`, `cancelled`, `draft`. Each accepts `title` + same kwargs as `PlanItem.__init__`.
 - **FR-14**: `PlanBuilder`, `quick_todo`, `from_items` MUST be exported from
-  `libvbrief.__init__` and added to `__all__`.
+  `libxbrief.__init__` and added to `__all__`.
 
 ### Non-Functional Requirements
 
-- **NFR-1**: No new runtime dependencies. Standard library and existing libvbrief internals only.
+- **NFR-1**: No new runtime dependencies. Standard library and existing libxbrief internals only.
 - **NFR-2**: Full backward compatibility. All existing public API unchanged.
 - **NFR-3**: Python 3.10+ only. No syntax or stdlib features above 3.10.
 - **NFR-4**: All new code MUST have pytest coverage matching the existing suite standard.
@@ -48,14 +48,14 @@ full backward compatibility with existing `VBriefDocument` / `Plan` / `PlanItem`
 
 ## Architecture
 
-### New file: `libvbrief/builder.py`
+### New file: `libxbrief/builder.py`
 Contains `PlanBuilder`, `ItemBuilder`, `quick_todo()`, and `from_items()`. All builder
 logic isolated from the core model.
 
-### Modified: `libvbrief/models.py`
+### Modified: `libxbrief/models.py`
 Add `PlanItem` class method factories (FR-13). No other changes to existing model logic.
 
-### Modified: `libvbrief/__init__.py`
+### Modified: `libxbrief/__init__.py`
 Export `PlanBuilder`, `quick_todo`, `from_items` (FR-14).
 
 ### Key design notes
@@ -66,7 +66,7 @@ Export `PlanBuilder`, `quick_todo`, `from_items` (FR-14).
   for duplicate-ID detection when `strict=True`.
 - Slug generation: `_slugify(text)` — lowercase, non-alphanumeric → hyphens, collapse
   consecutive hyphens.
-- `to_document()` assembles all `ItemBuilder` instances depth-first into a `VBriefDocument`.
+- `to_document()` assembles all `ItemBuilder` instances depth-first into a `XBriefDocument`.
 - `__enter__` returns `self`; `__exit__` is a no-op.
 
 ## Implementation Plan
@@ -77,7 +77,7 @@ Export `PlanBuilder`, `quick_todo`, `from_items` (FR-14).
 #### Subphase 1.1: ItemBuilder
 
 - **Task 1.1.1** — Implement `_slugify()` and `ItemBuilder` class
-  `libvbrief/builder.py`
+  `libxbrief/builder.py`
   - `ItemBuilder.__init__(title, *, id, status, strict, id_registry, parent_id, **kwargs)`
   - Auto-slugify `id` when `None`; prefix with `parent_id.` for nested items
   - Register `id` in shared `id_registry`; raise `ValueError` on duplicate when `strict=True`
@@ -96,7 +96,7 @@ Export `PlanBuilder`, `quick_todo`, `from_items` (FR-14).
 #### Subphase 1.2: PlanBuilder *(depends on: 1.1)*
 
 - **Task 1.2.1** — Implement `PlanBuilder` class
-  `libvbrief/builder.py`
+  `libxbrief/builder.py`
   - `PlanBuilder(title, *, status='draft', strict=True, **kwargs)`
   - Implement `add_item()`, `add_narrative()`, `add_edges_from()` (validates IDs when
     `strict=True`), `to_document()`, `__enter__()`, `__exit__()` (no-op)
@@ -118,7 +118,7 @@ Export `PlanBuilder`, `quick_todo`, `from_items` (FR-14).
 
 #### Subphase 2.1: PlanItem Status Factories *(no dependencies)*
 
-- **Task 2.1.1** — Add `PlanItem` class method factories to `libvbrief/models.py`
+- **Task 2.1.1** — Add `PlanItem` class method factories to `libxbrief/models.py`
   - `pending`, `running`, `completed`, `blocked`, `cancelled`, `draft`
   - Each delegates to `cls(title=title, status='<value>', **kwargs)`
   - Dependencies: none
@@ -133,14 +133,14 @@ Export `PlanBuilder`, `quick_todo`, `from_items` (FR-14).
 
 #### Subphase 2.2: Standalone Helper Functions *(depends on: Phase 1)*
 
-- **Task 2.2.1** — Implement `quick_todo()` in `libvbrief/builder.py`
+- **Task 2.2.1** — Implement `quick_todo()` in `libxbrief/builder.py`
   - Dependencies: 1.2.1
-  - Acceptance: returns valid `VBriefDocument`; strings coerced to pending `PlanItem`s
+  - Acceptance: returns valid `XBriefDocument`; strings coerced to pending `PlanItem`s
   - Traces: FR-11
 
-- **Task 2.2.2** — Implement `from_items()` in `libvbrief/builder.py`
+- **Task 2.2.2** — Implement `from_items()` in `libxbrief/builder.py`
   - Dependencies: 1.2.1
-  - Acceptance: returns valid `VBriefDocument`; `PlanItem` objects used as-is, not mutated
+  - Acceptance: returns valid `XBriefDocument`; `PlanItem` objects used as-is, not mutated
   - Traces: FR-12
 
 - **Task 2.2.3** — Tests for helpers (`tests/test_builder_helpers.py`)
@@ -154,9 +154,9 @@ Export `PlanBuilder`, `quick_todo`, `from_items` (FR-14).
 ### Phase 3: Integration & Export *(depends on: Phase 1 and Phase 2)*
 
 - **Task 3.1.1** — Export `PlanBuilder`, `quick_todo`, `from_items` from
-  `libvbrief/__init__.py`
+  `libxbrief/__init__.py`
   - Dependencies: 1.2.2, 2.1.2, 2.2.3
-  - Acceptance: `from libvbrief import PlanBuilder, quick_todo, from_items` works without error
+  - Acceptance: `from libxbrief import PlanBuilder, quick_todo, from_items` works without error
   - Traces: FR-14
 
 - **Task 3.1.2** — Integration tests (`tests/test_builder_integration.py`)
@@ -175,7 +175,7 @@ Export `PlanBuilder`, `quick_todo`, `from_items` (FR-14).
 
 - All new test files live in `tests/` alongside existing files.
 - No phase/task is complete until its tests pass — tests are the acceptance gate.
-- No mocking of libvbrief internals; tests build real documents and validate them.
+- No mocking of libxbrief internals; tests build real documents and validate them.
 - Edge cases required across all tests:
   - Empty plan (no items, no edges)
   - Item with no ID used in `add_edges_from` (strict and non-strict modes)
@@ -185,5 +185,5 @@ Export `PlanBuilder`, `quick_todo`, `from_items` (FR-14).
 
 ## Deployment
 
-No new package dependencies. Version bump to `0.2.0` in `pyproject.toml` after all phases
+No new package dependencies. Version bump to `0.7.0` in `pyproject.toml` after all phases
 pass. No PyPI publish required (local dev package for now).

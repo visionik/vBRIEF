@@ -1,0 +1,13 @@
+{
+  "xBRIEFInfo": { "version": "0.4" },
+  "playbook": {
+    "title": "Legacy Warp Playbook",
+    "items": [
+      {
+        "title": "Capture user preferences",
+        "status": "completed",
+        "content": "Legacy v0.4 playbook fixture retained for validation tests."
+      }
+    ]
+  }
+}

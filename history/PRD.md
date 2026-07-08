@@ -1,13 +1,13 @@
-# Product Requirements Document: libvbrief.py
+# Product Requirements Document: libxbrief.py
 
 **Generated**: 2026-02-23
 **Status**: Ready for AI Interview
 
 ## Initial Input
 
-**Project Description**: python implementation of a simple, sane, idiompotic, python library to read and write vBRIEF files
+**Project Description**: python implementation of a simple, sane, idiompotic, python library to read and write xBRIEF files
 
-**I want to build libvbrief.py that has the following features:**
+**I want to build libxbrief.py that has the following features:**
 
 ---
 
@@ -20,7 +20,7 @@ Legend (from RFC2119): !=MUST, ~=SHOULD, ≉=SHOULD NOT, ⊗=MUST NOT, ?=MAY.
 ## Input Template
 
 ```
-I want to build libvbrief.py that has the following features:
+I want to build libxbrief.py that has the following features:
 1. [feature]
 2. [feature]
 ...
@@ -117,7 +117,7 @@ N. [feature]
 
 ## Interview Log (Appended)
 
-**Q1: v1 scope for libvbrief.py**
+**Q1: v1 scope for libxbrief.py**
 - Option selected: 1 (Plan JSON core only)
 - Answer: Use current v0.5 Plan JSON core; ignore old formats; TRON deferred.
 

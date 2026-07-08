@@ -4,19 +4,19 @@ import json
 
 import pytest
 
-from libvbrief import ValidationError, dump_file, dumps, load_file, loads
+from libxbrief import ValidationError, dump_file, dumps, load_file, loads
 
 
 def test_loads_lenient_mode_allows_invalid_doc() -> None:
-    text = json.dumps({"vBRIEFInfo": {"version": "0.4"}, "plan": {"title": "x", "status": "oops", "items": []}})
+    text = json.dumps({"xBRIEFInfo": {"version": "0.4"}, "plan": {"title": "x", "status": "oops", "items": []}})
 
     doc = loads(text, strict=False)
 
-    assert doc["vBRIEFInfo"]["version"] == "0.4"
+    assert doc["xBRIEFInfo"]["version"] == "0.4"
 
 
 def test_loads_strict_mode_raises() -> None:
-    text = json.dumps({"vBRIEFInfo": {"version": "0.4"}, "plan": {"title": "x", "status": "oops", "items": []}})
+    text = json.dumps({"xBRIEFInfo": {"version": "0.4"}, "plan": {"title": "x", "status": "oops", "items": []}})
 
     with pytest.raises(ValidationError):
         loads(text, strict=True)
@@ -24,11 +24,11 @@ def test_loads_strict_mode_raises() -> None:
 
 def test_file_io_round_trip(tmp_path) -> None:
     source = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {"title": "R", "status": "running", "items": [{"title": "a", "status": "pending"}]},
     }
 
-    path = tmp_path / "doc.vbrief.json"
+    path = tmp_path / "doc.xbrief.json"
     dump_file(source, path)
 
     loaded = load_file(path)
@@ -36,8 +36,8 @@ def test_file_io_round_trip(tmp_path) -> None:
 
 
 def test_load_file_strict_raises(tmp_path) -> None:
-    bad = {"vBRIEFInfo": {"version": "0.4"}, "plan": {"title": "x", "status": "oops", "items": []}}
-    path = tmp_path / "bad.vbrief.json"
+    bad = {"xBRIEFInfo": {"version": "0.4"}, "plan": {"title": "x", "status": "oops", "items": []}}
+    path = tmp_path / "bad.xbrief.json"
     dump_file(bad, path)
 
     with pytest.raises(ValidationError):
@@ -45,10 +45,10 @@ def test_load_file_strict_raises(tmp_path) -> None:
 
 
 def test_dumps_with_model_object() -> None:
-    from libvbrief import VBriefDocument
+    from libxbrief import XBriefDocument
 
-    model = VBriefDocument.from_dict({
-        "vBRIEFInfo": {"version": "0.5"},
+    model = XBriefDocument.from_dict({
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {"title": "M", "status": "draft", "items": []},
     })
 
@@ -59,7 +59,7 @@ def test_dumps_with_model_object() -> None:
 
 def test_dumps_preserve_mode_keeps_insertion_order() -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {
             "title": "T",
             "status": "running",
@@ -81,7 +81,7 @@ def test_dumps_coerce_to_dict_no_preserve_order_kwarg() -> None:
     class NoKwarg:
         def to_dict(self) -> dict:  # noqa: ANN001
             return {
-                "vBRIEFInfo": {"version": "0.5"},
+                "xBRIEFInfo": {"version": "0.8"},
                 "plan": {"title": "NK", "status": "running", "items": []},
             }
 
@@ -98,7 +98,7 @@ def test_dumps_coerce_to_dict_no_to_dict_raises_type_error() -> None:
 
 def test_parse_json_non_dict_raises_value_error() -> None:
     """parse_json raises ValueError when the root JSON value is not an object (json_codec.py:16)."""
-    from libvbrief.serialization.json_codec import parse_json
+    from libxbrief.serialization.json_codec import parse_json
 
-    with pytest.raises(ValueError, match="vBRIEF JSON document must be an object"):
+    with pytest.raises(ValueError, match="xBRIEF JSON document must be an object"):
         parse_json("[1, 2, 3]")

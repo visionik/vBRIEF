@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from libvbrief import (
+from libxbrief import (
     PlanBuilder,
     PlanItem,
-    VBriefDocument,
+    XBriefDocument,
     dump_file,
     dumps,
     from_items,
@@ -36,7 +36,7 @@ def test_plan_builder_round_trip_via_public_api() -> None:
     assert document.validate(dag=True).is_valid
 
     text = dumps(document)
-    rebuilt = VBriefDocument.from_dict(loads(text))
+    rebuilt = XBriefDocument.from_dict(loads(text))
 
     assert rebuilt.to_dict() == document.to_dict()
 
@@ -62,7 +62,7 @@ def test_public_api_supports_mixing_builder_and_direct_plan_items() -> None:
 
 def test_quick_todo_round_trips_through_file_io(tmp_path) -> None:
     document = quick_todo("Todo", ["one", "two"])
-    path = tmp_path / "todo.vbrief.json"
+    path = tmp_path / "todo.xbrief.json"
 
     dump_file(document, path)
     loaded = load_file(path)

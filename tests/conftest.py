@@ -1,4 +1,4 @@
-"""Shared pytest fixtures for libvbrief tests."""
+"""Shared pytest fixtures for libxbrief tests."""
 
 from __future__ import annotations
 

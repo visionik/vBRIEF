@@ -1,4 +1,4 @@
-"""End-to-end tests for libvbrief.
+"""End-to-end tests for libxbrief.
 
 Each test exercises a complete workflow: build → serialize → load →
 validate → modify → re-serialize, simulating real-world usage patterns.
@@ -9,10 +9,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from libvbrief import (
+from libxbrief import (
     PlanBuilder,
     PlanItem,
-    VBriefDocument,
+    XBriefDocument,
     dumps,
     from_items,
     loads,
@@ -43,11 +43,11 @@ def test_e2e_build_validate_persist_reload(tmp_path: Path) -> None:
     assert report.is_valid, report.errors
 
     # Persist
-    path = tmp_path / "sprint-47.vbrief.json"
+    path = tmp_path / "sprint-47.xbrief.json"
     doc.to_file(path)
 
     # Reload
-    loaded_model = VBriefDocument.from_file(path)
+    loaded_model = XBriefDocument.from_file(path)
     assert loaded_model.plan.title == "Sprint 47"
     assert loaded_model.plan.tags == ["mvp"]
     assert len(loaded_model.plan.items) == 2
@@ -67,21 +67,21 @@ def test_e2e_build_validate_persist_reload(tmp_path: Path) -> None:
 def test_e2e_load_modify_save_roundtrip(tmp_path: Path) -> None:
     # Create initial document
     initial = quick_todo("Backlog", ["Task A", "Task B", "Task C"])
-    path = tmp_path / "backlog.vbrief.json"
+    path = tmp_path / "backlog.xbrief.json"
     initial.to_file(path)
 
     # Load, modify
-    model = VBriefDocument.from_file(path)
+    model = XBriefDocument.from_file(path)
     model.plan.items[0].status = "completed"
     model.plan.items[0].completed = "2026-03-31T12:00:00Z"
     model.plan.items.append(PlanItem.pending("Task D"))
 
     # Save modified
-    modified_path = tmp_path / "backlog-modified.vbrief.json"
+    modified_path = tmp_path / "backlog-modified.xbrief.json"
     model.to_file(modified_path)
 
     # Reload and verify
-    reloaded = VBriefDocument.from_file(modified_path)
+    reloaded = XBriefDocument.from_file(modified_path)
     assert reloaded.plan.items[0].status == "completed"
     assert reloaded.plan.items[0].completed == "2026-03-31T12:00:00Z"
     assert len(reloaded.plan.items) == 4
@@ -111,7 +111,7 @@ def test_e2e_mixed_builder_and_factory_workflow() -> None:
 
     # Serialize and round-trip
     text = dumps(doc)
-    rebuilt = VBriefDocument.from_dict(loads(text))
+    rebuilt = XBriefDocument.from_dict(loads(text))
     assert rebuilt.plan.items[2].status == "pending"
     assert rebuilt.plan.items[3].status == "blocked"
 
@@ -200,17 +200,17 @@ def test_e2e_nonstrict_defers_to_validate() -> None:
 
 def test_e2e_quick_todo_file_roundtrip(tmp_path: Path) -> None:
     doc = quick_todo("Shopping", ["Milk", "Eggs", "Bread"])
-    path = tmp_path / "shopping.vbrief.json"
+    path = tmp_path / "shopping.xbrief.json"
     doc.to_file(path)
 
     # Verify file is valid JSON
     raw = json.loads(path.read_text(encoding="utf-8"))
-    assert raw["vBRIEFInfo"]["version"] == "0.5"
+    assert raw["xBRIEFInfo"]["version"] == "0.8"
     assert raw["plan"]["title"] == "Shopping"
     assert len(raw["plan"]["items"]) == 3
 
     # Reload via class API
-    reloaded = VBriefDocument.from_file(path)
+    reloaded = XBriefDocument.from_file(path)
     assert reloaded.validate().is_valid
     assert reloaded.plan.items[1].title == "Eggs"
 
@@ -223,7 +223,7 @@ def test_e2e_quick_todo_file_roundtrip(tmp_path: Path) -> None:
 def test_e2e_unknown_fields_survive_full_lifecycle(tmp_path: Path) -> None:
     # Manually create a doc with extension fields
     raw = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {
             "title": "Extended Plan",
             "status": "running",
@@ -241,12 +241,12 @@ def test_e2e_unknown_fields_survive_full_lifecycle(tmp_path: Path) -> None:
     }
 
     # Load → model → serialize → reload
-    model = VBriefDocument.from_dict(raw)
+    model = XBriefDocument.from_dict(raw)
     assert model.plan.extras["type"] == "custom-extension"
     assert model.plan.items[0].extras["kind"] == "requirement"
     assert model.extras["topLevelExtra"] == "preserved"
 
-    path = tmp_path / "extended.vbrief.json"
+    path = tmp_path / "extended.xbrief.json"
     model.to_file(path)
 
     reloaded_raw = json.loads(path.read_text(encoding="utf-8"))
@@ -269,25 +269,25 @@ def test_e2e_canonical_output_has_sorted_keys() -> None:
 
 
 def test_e2e_preserve_format_keeps_original_key_order(tmp_path: Path) -> None:
-    # Create with specific key order (plan before vBRIEFInfo)
-    raw = '{"plan": {"title": "T", "status": "running", "items": []}, "vBRIEFInfo": {"version": "0.5"}}'
-    model = VBriefDocument.from_json(raw)
+    # Create with specific key order (plan before xBRIEFInfo)
+    raw = '{"plan": {"title": "T", "status": "running", "items": []}, "xBRIEFInfo": {"version": "0.8"}}'
+    model = XBriefDocument.from_json(raw)
     preserved = model.to_json(preserve_format=True, canonical=False)
     parsed = json.loads(preserved)
     keys = list(parsed.keys())
-    assert keys.index("plan") < keys.index("vBRIEFInfo")
+    assert keys.index("plan") < keys.index("xBRIEFInfo")
 
 
 # ---------------------------------------------------------------------------
-# Workflow 10: VBriefDocument.from_json / from_file strict + dag
+# Workflow 10: XBriefDocument.from_json / from_file strict + dag
 # ---------------------------------------------------------------------------
 
 
 def test_e2e_from_json_strict_raises_on_invalid() -> None:
-    bad_json = '{"vBRIEFInfo": {"version": "0.5"}, "plan": {"title": "T"}}'
+    bad_json = '{"xBRIEFInfo": {"version": "0.8"}, "plan": {"title": "T"}}'
 
     try:
-        VBriefDocument.from_json(bad_json, strict=True)
+        XBriefDocument.from_json(bad_json, strict=True)
     except Exception:
         pass  # Expected — missing status and items
     else:
@@ -296,7 +296,7 @@ def test_e2e_from_json_strict_raises_on_invalid() -> None:
 
 def test_e2e_from_file_strict_dag_validates_fully(tmp_path: Path) -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {
             "title": "T",
             "status": "running",
@@ -307,11 +307,11 @@ def test_e2e_from_file_strict_dag_validates_fully(tmp_path: Path) -> None:
             "edges": [{"from": "a", "to": "b"}, {"from": "b", "to": "a"}],
         },
     }
-    path = tmp_path / "cycle.vbrief.json"
+    path = tmp_path / "cycle.xbrief.json"
     path.write_text(json.dumps(doc), encoding="utf-8")
 
     try:
-        VBriefDocument.from_file(path, strict=True, dag=True)
+        XBriefDocument.from_file(path, strict=True, dag=True)
     except Exception:
         pass  # Expected — DAG cycle
     else:

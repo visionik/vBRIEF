@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for contributing to vBRIEF.
+Thanks for contributing to xBRIEF.
 
 ## Development workflow
 

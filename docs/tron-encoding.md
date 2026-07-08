@@ -1,15 +1,15 @@
-# vBRIEF TRON Encoding Guide
+# xBRIEF TRON Encoding Guide
 
 **Version**: 0.5  
 **Status**: Reference Implementation
 
 ## Overview
 
-TRON (Token Reduced Object Notation) is the preferred format for vBRIEF documents in AI/agent workflows due to its token efficiency. This guide defines the standard TRON class definitions for vBRIEF v0.5 entities.
+TRON (Token Reduced Object Notation) is the preferred format for xBRIEF documents in AI/agent workflows due to its token efficiency. This guide defines the standard TRON class definitions for xBRIEF v0.5 entities.
 
 ## Why TRON?
 
-- **35-40% token reduction** vs JSON for typical vBRIEF documents
+- **35-40% token reduction** vs JSON for typical xBRIEF documents
 - **Lower API costs** for LLM operations
 - **More context fits** in fixed-size context windows
 - **Human readable** with reduced noise from repeated field names
@@ -101,7 +101,7 @@ plan: {
 ```tron
 class PlanItem: title, status
 
-vBRIEFInfo: {version: "0.5"}
+xBRIEFInfo: {version: "0.5"}
 plan: {
   title: "Daily Tasks",
   status: "running",
@@ -115,7 +115,7 @@ plan: {
 **JSON equivalent** (73 tokens):
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "xBRIEFInfo": {"version": "0.5"},
   "plan": {
     "title": "Daily Tasks",
     "status": "running",
@@ -135,7 +135,7 @@ plan: {
 ```tron
 class PlanItem: id, title, status
 
-vBRIEFInfo: {version: "0.5", created: "2026-02-03T09:00:00Z"}
+xBRIEFInfo: {version: "0.5", created: "2026-02-03T09:00:00Z"}
 plan: {
   id: "api-redesign",
   title: "API Redesign: REST to GraphQL",
@@ -157,7 +157,7 @@ plan: {
 **JSON equivalent** (198 tokens):
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5", "created": "2026-02-03T09:00:00Z"},
+  "xBRIEFInfo": {"version": "0.5", "created": "2026-02-03T09:00:00Z"},
   "plan": {
     "id": "api-redesign",
     "title": "API Redesign: REST to GraphQL",
@@ -186,7 +186,7 @@ plan: {
 class Edge: from, to, type
 class PlanItem: id, title, status
 
-vBRIEFInfo: {version: "0.5"}
+xBRIEFInfo: {version: "0.5"}
 plan: {
   id: "build-pipeline",
   title: "CI/CD Build Pipeline",
@@ -213,7 +213,7 @@ plan: {
 **JSON equivalent** (267 tokens):
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "xBRIEFInfo": {"version": "0.5"},
   "plan": {
     "id": "build-pipeline",
     "title": "CI/CD Build Pipeline",
@@ -246,7 +246,7 @@ plan: {
 ```tron
 class PlanItem: id, title, status
 
-vBRIEFInfo: {version: "0.5"}
+xBRIEFInfo: {version: "0.5"}
 plan: {
   id: "incident-db",
   title: "Incident: Database Outage",
@@ -270,7 +270,7 @@ plan: {
 **JSON equivalent** (233 tokens):
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "xBRIEFInfo": {"version": "0.5"},
   "plan": {
     "id": "incident-db",
     "title": "Incident: Database Outage",
@@ -304,7 +304,7 @@ Place class definitions at the top of the document, before any data:
 class Edge: from, to, type
 class PlanItem: id, title, status
 
-vBRIEFInfo: {version: "0.5"}
+xBRIEFInfo: {version: "0.5"}
 plan: {...}
 ```
 
@@ -410,8 +410,8 @@ import tiktoken
 
 encoder = tiktoken.encoding_for_model("gpt-4")
 
-json_str = open("plan.vbrief.json").read()
-tron_str = open("plan.vbrief.tron").read()
+json_str = open("plan.xbrief.json").read()
+tron_str = open("plan.xbrief.tron").read()
 
 json_tokens = len(encoder.encode(json_str))
 tron_tokens = len(encoder.encode(tron_str))
@@ -468,7 +468,7 @@ interface Edge {
 
 - TRON Specification: https://tron-format.github.io/
 - TRON vs JSON comparison: https://www.piotr-sikora.com/blog/2025-12-05-toon-tron-csv-yaml-json-format-comparison
-- vBRIEF v0.5 Specification: See SPECIFICATION.md
+- xBRIEF v0.5 Specification: See SPECIFICATION.md
 
 ## Future: Data Flow Extension
 

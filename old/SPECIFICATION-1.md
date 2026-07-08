@@ -1,4 +1,4 @@
-# vBRIEF v0.5 Specification: Unified Plan Model
+# xBRIEF v0.5 Specification: Unified Plan Model
 
 **Version**: 0.5 (Beta)  
 **Status**: Draft for Implementation  
@@ -7,7 +7,7 @@
 
 ## Overview
 
-vBRIEF v0.5 represents a fundamental architectural refactor that unifies todos, plans, playbooks, and prompt-graphs into a single "Plan" object with graduated complexity and DAG (Directed Acyclic Graph) capabilities.
+xBRIEF v0.5 represents a fundamental architectural refactor that unifies todos, plans, playbooks, and prompt-graphs into a single "Plan" object with graduated complexity and DAG (Directed Acyclic Graph) capabilities.
 
 This specification eliminates the separate `TodoList` and `Playbook` container types, creating a unified model where:
 - **Simple Plans** function as todo lists (minimal fields)
@@ -90,8 +90,8 @@ This refactor MUST:
 ### Document Structure
 
 ```
-vBRIEF Document (v0.5)
-├── vBRIEFInfo (required)
+xBRIEF Document (v0.5)
+├── xBRIEFInfo (required)
 │   ├── version: "0.5" (required)
 │   ├── created, updated (optional, promoted to core)
 │   └── metadata (optional, promoted to core)
@@ -162,7 +162,7 @@ plan.edges: [
 **Minimal Plan (todo-like):**
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "xBRIEFInfo": {"version": "0.5"},
   "plan": {
     "title": "Daily Tasks",
     "status": "running",
@@ -177,7 +177,7 @@ plan.edges: [
 **Structured Plan (with narratives):**
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "xBRIEFInfo": {"version": "0.5"},
   "plan": {
     "title": "API Redesign",
     "status": "proposed",
@@ -194,7 +194,7 @@ plan.edges: [
 **Retrospective Plan (playbook):**
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "xBRIEFInfo": {"version": "0.5"},
   "plan": {
     "title": "Incident Response: DB Outage",
     "status": "completed",
@@ -213,7 +213,7 @@ plan.edges: [
 ```tron
 class Edge: from, to, type
 
-vBRIEFInfo: {version: "0.5"}
+xBRIEFInfo: {version: "0.5"}
 plan: {
   title: "Build Pipeline",
   status: "running",
@@ -234,9 +234,9 @@ plan: {
 
 ## Conformance
 
-A document is **vBRIEF v0.5 conformant** if and only if:
+A document is **xBRIEF v0.5 conformant** if and only if:
 
-1. Contains `vBRIEFInfo` with `version: "0.5"`
+1. Contains `xBRIEFInfo` with `version: "0.5"`
 2. Contains exactly one `plan` object (no `todoList` or `playbook`)
 3. Plan has required fields: `title`, `status`, `items`
 4. All `status` values use defined enum: `draft`, `proposed`, `approved`, `pending`, `running`, `completed`, `blocked`, `cancelled`
@@ -255,7 +255,7 @@ A document is **vBRIEF v0.5 conformant** if and only if:
 
 #### Subphase 1.1: Schema Definition
 
-- **Task 1.1.1**: Create unified `vbrief-core.schema.json`
+- **Task 1.1.1**: Create unified `xbrief-core.schema.json`
   - Dependencies: None
   - Acceptance: Single schema file validates Plan with all core fields
   - Details: Remove TodoList, Playbook; merge PlanItem/TodoItem fields
@@ -365,7 +365,7 @@ A document is **vBRIEF v0.5 conformant** if and only if:
 
 - **Task 3.2.1**: Integrate TRON library (per language)
   - Dependencies: Subphase 3.1 complete
-  - Acceptance: Go, Python, TypeScript parsers handle vBRIEF TRON
+  - Acceptance: Go, Python, TypeScript parsers handle xBRIEF TRON
   - Details: Import/configure TRON libraries
 
 - **Task 3.2.2**: Implement TRON ↔ JSON conversion
@@ -484,7 +484,7 @@ A document is **vBRIEF v0.5 conformant** if and only if:
 
 #### Subphase 6.1: CLI Validator
 
-- **Task 6.1.1**: Build vbrief-validate CLI tool
+- **Task 6.1.1**: Build xbrief-validate CLI tool
   - Dependencies: Phase 5 complete
   - Acceptance: CLI validates JSON/TRON files against v0.5 schema
   - Details: Reports conformance errors with line numbers
@@ -526,7 +526,7 @@ A document is **vBRIEF v0.5 conformant** if and only if:
   - Acceptance: Go module, PyPI package, npm package published
   - Details: Versioned as 0.5.0-beta
 
-- **Task 7.1.3**: Update vbrief.dev website
+- **Task 7.1.3**: Update xbrief.dev website
   - Dependencies: Task 7.1.1
   - Acceptance: Website reflects v0.5 as current version
   - Details: Update docs, examples, download links
@@ -587,14 +587,14 @@ A document is **vBRIEF v0.5 conformant** if and only if:
 
 ### Package Distribution
 
-- **Go**: `github.com/visionik/vBRIEF` module
-- **Python**: `vbrief` package on PyPI
-- **TypeScript**: `@vbrief/core` package on npm
-- **Schemas**: Hosted at `https://vbrief.dev/schemas/`
+- **Go**: `github.com/visionik/xBRIEF` module
+- **Python**: `xbrief` package on PyPI
+- **TypeScript**: `@xbrief/core` package on npm
+- **Schemas**: Hosted at `https://xbrief.dev/schemas/`
 
 ### Documentation Hosting
 
-- Primary docs at `https://vbrief.dev/`
+- Primary docs at `https://xbrief.dev/`
 - Versioned docs (v0.4, v0.5) available
 - Schema files available via CDN for validation tools
 
@@ -720,7 +720,7 @@ A: Option 4 - Make it a Plan Reference (planRef URI field, internal reference sy
 A: Option 1 - Approve as-is (title, status, items only)
 
 **Q28: Schema File Organization**  
-A: Option 1 - Single Schema File (merge into vbrief-core.schema.json)
+A: Option 1 - Single Schema File (merge into xbrief-core.schema.json)
 
 **Q29: Implementation Timeline and Phasing**  
 A: Option 1 - Single Release (v0.5) (all changes together)

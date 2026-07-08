@@ -1,21 +1,21 @@
-# Migration Guide: vBRIEF v0.4 → v0.5 and v0.5 → v0.6
+# Migration Guide: xBRIEF v0.4 → v0.5 and v0.5 → v0.6
 
 **Date**: 2026-03-31  
 **Status**: Final
 
 ## Overview
 
-vBRIEF v0.5 represents a major architectural refactor that unifies todos, plans, and playbooks into a single Plan model with DAG capabilities. This guide helps you migrate existing v0.4 documents to v0.5 and existing v0.5 documents to v0.6.
+xBRIEF v0.5 represents a major architectural refactor that unifies todos, plans, and playbooks into a single Plan model with DAG capabilities. This guide helps you migrate existing v0.4 documents to v0.5 and existing v0.5 documents to v0.6.
 
 ## v0.5 → v0.6 Migration
 
-vBRIEF v0.6 is a smaller upgrade than v0.5, but it adds one important new status and standardizes nested PlanItem hierarchies on `items`.
+xBRIEF v0.6 is a smaller upgrade than v0.5, but it adds one important new status and standardizes nested PlanItem hierarchies on `items`.
 
 ### Changes Summary
 
 | Change | Impact | Migration Path |
 |--------|--------|----------------|
-| `vBRIEFInfo.version` updated | All v0.6 documents must declare the new version | Change `"0.5"` to `"0.6"` |
+| `xBRIEFInfo.version` updated | All v0.6 documents must declare the new version | Change `"0.5"` to `"0.6"` |
 | `failed` status added | New terminal failure state available | Emit `failed` instead of overloading `blocked` when work ends unsuccessfully |
 | `items` preferred on PlanItem | Nested child arrays should use `items` going forward | Rename `subItems` to `items` when writing v0.6 |
 | `subItems` retained as alias | No immediate break for older producers | Readers SHOULD continue accepting `subItems` |
@@ -23,7 +23,7 @@ vBRIEF v0.6 is a smaller upgrade than v0.5, but it adds one important new status
 
 ### Quick Migration Checklist
 
-- [ ] Update `vBRIEFInfo.version` from `"0.5"` to `"0.6"`
+- [ ] Update `xBRIEFInfo.version` from `"0.5"` to `"0.6"`
 - [ ] Treat `failed` as the terminal unsuccessful status
 - [ ] Continue using `blocked` only for non-terminal impediments and waits
 - [ ] Rename nested `subItems` arrays to `items` in newly written documents
@@ -103,7 +103,7 @@ Compatibility guidance:
 
 ## Quick Migration Checklist
 
-- [ ] Update `vBRIEFInfo.version` from `"0.4"` to `"0.5"`
+- [ ] Update `xBRIEFInfo.version` from `"0.4"` to `"0.5"`
 - [ ] Convert any `todoList` to `plan`
 - [ ] Convert any `playbook` to `plan` with retrospective narratives
 - [ ] Change all `inProgress` status values to `running`
@@ -118,7 +118,7 @@ Compatibility guidance:
 **v0.4 TodoList:**
 ```json
 {
-  "vBRIEFInfo": {"version": "0.4"},
+  "xBRIEFInfo": {"version": "0.4"},
   "todoList": {
     "items": [
       {"title": "Fix bug", "status": "pending"},
@@ -131,7 +131,7 @@ Compatibility guidance:
 **v0.5 Plan:**
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "xBRIEFInfo": {"version": "0.5"},
   "plan": {
     "title": "Tasks",
     "status": "running",
@@ -154,7 +154,7 @@ Compatibility guidance:
 **v0.4 Playbook:**
 ```json
 {
-  "vBRIEFInfo": {"version": "0.4"},
+  "xBRIEFInfo": {"version": "0.4"},
   "playbook": {
     "title": "Incident Response",
     "items": [
@@ -171,7 +171,7 @@ Compatibility guidance:
 **v0.5 Plan:**
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "xBRIEFInfo": {"version": "0.5"},
   "plan": {
     "title": "Incident Response",
     "status": "completed",
@@ -305,14 +305,14 @@ Additional Plan-level statuses (only for `plan.status`, not item status):
         "id": "phase1",
         "title": "Phase 1",
         "status": "running",
-        "planRef": "file://./phase1-tasks.vbrief.json"
+        "planRef": "file://./phase1-tasks.xbrief.json"
       }
     ]
   }
 }
 ```
 
-Where `phase1-tasks.vbrief.json` is a separate Plan document.
+Where `phase1-tasks.xbrief.json` is a separate Plan document.
 
 ### 6. Narrative Key Casing (Optional)
 
@@ -413,7 +413,7 @@ If you need to migrate many documents, consider:
 After migration, validate your documents:
 
 ```bash
-python3 validation/vbrief_validator.py your-migrated-file.vbrief.json
+python3 validation/xbrief_validator.py your-migrated-file.xbrief.json
 ```
 
 The validator checks:
@@ -425,11 +425,11 @@ The validator checks:
 ## Examples
 
 See `examples/` directory for complete v0.5 documents:
-- `minimal-plan.vbrief.json` - Simple task list (was TodoList in v0.4)
-- `structured-plan.vbrief.json` - Plan with narratives
-- `retrospective-plan.vbrief.json` - Playbook-style (was Playbook in v0.4)
-- `dag-plan.vbrief.json` - Plan with DAG edges (replaces dependencies)
-- `dag-plan.vbrief.tron` - TRON format for token efficiency
+- `minimal-plan.xbrief.json` - Simple task list (was TodoList in v0.4)
+- `structured-plan.xbrief.json` - Plan with narratives
+- `retrospective-plan.xbrief.json` - Playbook-style (was Playbook in v0.4)
+- `dag-plan.xbrief.json` - Plan with DAG edges (replaces dependencies)
+- `dag-plan.xbrief.tron` - TRON format for token efficiency
 
 ## Common Migration Patterns
 
@@ -437,12 +437,12 @@ See `examples/` directory for complete v0.5 documents:
 
 **v0.4:**
 ```json
-{"vBRIEFInfo": {"version": "0.4"}, "todoList": {"items": [...]}}
+{"xBRIEFInfo": {"version": "0.4"}, "todoList": {"items": [...]}}
 ```
 
 **v0.5:**
 ```json
-{"vBRIEFInfo": {"version": "0.5"}, "plan": {"title": "Tasks", "status": "running", "items": [...]}}
+{"xBRIEFInfo": {"version": "0.5"}, "plan": {"title": "Tasks", "status": "running", "items": [...]}}
 ```
 
 ### Pattern 2: Plan with Dependencies
@@ -471,8 +471,8 @@ See `examples/` directory for complete v0.5 documents:
 
 ## Getting Help
 
-- **Validation errors**: Run `vbrief_validator.py` for detailed error messages
-- **Schema questions**: See `schemas/vbrief-core.schema.json`
+- **Validation errors**: Run `xbrief_validator.py` for detailed error messages
+- **Schema questions**: See `schemas/xbrief-core.schema.json`
 - **Conformance criteria**: See `SPECIFICATION.md` section on Conformance
 - **Examples**: See `examples/` directory
 
@@ -499,7 +499,7 @@ A: Cycles are invalid in v0.5. The validator will detect and report them. Restru
 ## Next Steps
 
 1. Update your documents following this guide
-2. Run validation: `python3 validation/vbrief_validator.py file.vbrief.json`
+2. Run validation: `python3 validation/xbrief_validator.py file.xbrief.json`
 3. Consider TRON format for token efficiency (see `docs/tron-encoding.md`)
 4. Read the full specification: `SPECIFICATION.md`
 5. Explore examples: `examples/` directory

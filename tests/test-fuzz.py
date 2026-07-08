@@ -1,4 +1,4 @@
-"""Fuzz and property-based tests for libvbrief.
+"""Fuzz and property-based tests for libxbrief.
 
 Uses stdlib random to generate randomised inputs — no external dependencies.
 Each test runs many iterations with varied inputs to surface edge cases.
@@ -11,10 +11,10 @@ import random
 import string
 from typing import Any
 
-from libvbrief import PlanBuilder, VBriefDocument, dumps, loads, validate
-from libvbrief.builder import _slugify
-from libvbrief.compat import VALID_STATUSES
-from libvbrief.models import PlanItem
+from libxbrief import PlanBuilder, XBriefDocument, dumps, loads, validate
+from libxbrief.builder import _slugify
+from libxbrief.compat import VALID_STATUSES
+from libxbrief.models import PlanItem
 
 _RNG = random.Random(42)  # deterministic seed for reproducibility
 _ITERATIONS = 200
@@ -141,10 +141,10 @@ def test_validate_never_crashes_on_garbage_input() -> None:
         assert report is not None
 
 
-def test_validate_dict_with_random_vbrief_info() -> None:
+def test_validate_dict_with_random_xbrief_info() -> None:
     for _ in range(_ITERATIONS):
         doc: dict[str, Any] = {
-            "vBRIEFInfo": _random_garbage(),
+            "xBRIEFInfo": _random_garbage(),
             "plan": _random_garbage(),
         }
         report = validate(doc)
@@ -174,7 +174,7 @@ def test_round_trip_preserves_data_for_valid_plans() -> None:
         doc = builder.to_document()
         text = dumps(doc)
         loaded = loads(text)
-        rebuilt = VBriefDocument.from_dict(loaded)
+        rebuilt = XBriefDocument.from_dict(loaded)
 
         assert rebuilt.plan.title == doc.plan.title
         assert rebuilt.plan.status == doc.plan.status
@@ -221,5 +221,5 @@ def test_deep_nesting_does_not_crash() -> None:
     assert doc.validate().is_valid
     text = dumps(doc)
     loaded = loads(text)
-    rebuilt = VBriefDocument.from_dict(loaded)
+    rebuilt = XBriefDocument.from_dict(loaded)
     assert rebuilt.plan.title == "Deep Plan"

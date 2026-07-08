@@ -1,4 +1,4 @@
-// Package core provides the core types and interfaces for vBRIEF documents.
+// Package core provides the core types and interfaces for xBRIEF documents.
 package core
 
 import (
@@ -18,10 +18,10 @@ var (
 	ErrNoTodoList = errors.New("document does not contain a todoList")
 )
 
-// Document represents the root vBRIEF document.
+// Document represents the root xBRIEF document.
 // A document contains metadata and either a TodoList or a Plan (but not both).
 type Document struct {
-	Info     Info      `json:"vBRIEFInfo" tron:"vBRIEFInfo"`
+	Info     Info      `json:"xBRIEFInfo" tron:"xBRIEFInfo"`
 	TodoList *TodoList `json:"todoList,omitempty" tron:"todoList,omitempty"`
 	Plan     *Plan     `json:"plan,omitempty" tron:"plan,omitempty"`
 }

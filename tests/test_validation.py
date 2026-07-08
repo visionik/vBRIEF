@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from libvbrief import validate
-from libvbrief.issues import ValidationReport
+from libxbrief import validate
+from libxbrief.issues import ValidationReport
 
 
 def test_validate_minimal_document_has_no_errors() -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {
             "title": "Daily",
             "status": "running",
@@ -25,12 +25,12 @@ def test_validate_reports_missing_root_fields() -> None:
 
     codes = {issue.code for issue in report.errors}
     assert "missing_root_field" in codes
-    assert {issue.path for issue in report.errors} >= {"vBRIEFInfo", "plan"}
+    assert {issue.path for issue in report.errors} >= {"xBRIEFInfo", "plan"}
 
 
 def test_validate_reports_plan_and_item_errors() -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.4"},
+        "xBRIEFInfo": {"version": "0.4"},
         "plan": {
             "title": "Bad",
             "status": "inProgress",
@@ -65,16 +65,16 @@ def test_validate_non_mapping_document_returns_error() -> None:
     assert any(i.code == "invalid_document_type" for i in report.errors)
 
 
-def test_validate_vbrief_info_not_dict_reports_error() -> None:
-    doc = {"vBRIEFInfo": "not-a-dict", "plan": {"title": "T", "status": "running", "items": []}}
+def test_validate_xbrief_info_not_dict_reports_error() -> None:
+    doc = {"xBRIEFInfo": "not-a-dict", "plan": {"title": "T", "status": "running", "items": []}}
 
     report = validate(doc)
 
-    assert any(i.code == "invalid_root_field_type" and "vBRIEFInfo" in i.path for i in report.errors)
+    assert any(i.code == "invalid_root_field_type" and "xBRIEFInfo" in i.path for i in report.errors)
 
 
 def test_validate_plan_not_dict_reports_error() -> None:
-    doc = {"vBRIEFInfo": {"version": "0.5"}, "plan": "not-a-dict"}
+    doc = {"xBRIEFInfo": {"version": "0.8"}, "plan": "not-a-dict"}
 
     report = validate(doc)
 
@@ -82,7 +82,7 @@ def test_validate_plan_not_dict_reports_error() -> None:
 
 
 def test_validate_plan_missing_required_fields() -> None:
-    doc = {"vBRIEFInfo": {"version": "0.5"}, "plan": {}}
+    doc = {"xBRIEFInfo": {"version": "0.8"}, "plan": {}}
 
     report = validate(doc)
     codes = {i.code for i in report.errors}
@@ -94,7 +94,7 @@ def test_validate_plan_missing_required_fields() -> None:
 
 def test_validate_items_not_list_reports_error() -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {"title": "T", "status": "running", "items": "not-a-list"},
     }
 
@@ -105,7 +105,7 @@ def test_validate_items_not_list_reports_error() -> None:
 
 def test_validate_item_not_mapping_reports_error() -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {"title": "T", "status": "running", "items": [42]},
     }
 
@@ -116,7 +116,7 @@ def test_validate_item_not_mapping_reports_error() -> None:
 
 def test_validate_item_missing_status_reports_error() -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {"title": "T", "status": "running", "items": [{"title": "x"}]},
     }
 
@@ -128,7 +128,7 @@ def test_validate_item_missing_status_reports_error() -> None:
 
 def test_validate_subitems_not_list_reports_error() -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {
             "title": "T",
             "status": "running",
@@ -157,7 +157,7 @@ def test_validation_report_add_warning_and_extend() -> None:
 
 def test_validation_report_extend_with_error_issue() -> None:
     """extend() with an error-severity issue appends to errors (issues.py:45)."""
-    from libvbrief.issues import Issue
+    from libxbrief.issues import Issue
 
     report = ValidationReport()
     error_issue = Issue(code="some_error", path="p", message="m", severity="error")
@@ -169,7 +169,7 @@ def test_validation_report_extend_with_error_issue() -> None:
 
 
 def test_validation_error_summary_truncates_many_errors() -> None:
-    from libvbrief.errors import ValidationError
+    from libxbrief.errors import ValidationError
 
     report = ValidationReport()
     for i in range(5):

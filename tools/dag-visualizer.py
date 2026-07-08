@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-vBRIEF DAG Visualizer
+xBRIEF DAG Visualizer
 
-Generates Mermaid diagram from vBRIEF Plan edges and items.
+Generates Mermaid diagram from xBRIEF Plan edges and items.
 Useful for visualizing workflow dependencies and execution order.
 """
 
@@ -12,7 +12,7 @@ from typing import Dict, List
 
 
 class DAGVisualizer:
-    """Generates Mermaid diagrams from vBRIEF Plans."""
+    """Generates Mermaid diagrams from xBRIEF Plans."""
     
     # Status to color mapping
     STATUS_COLORS = {
@@ -146,10 +146,10 @@ class DAGVisualizer:
 
 def visualize_plan(file_path: str, output_format: str = "markdown", direction: str = "TB"):
     """
-    Visualize a vBRIEF Plan as a DAG.
+    Visualize a xBRIEF Plan as a DAG.
     
     Args:
-        file_path: Path to vBRIEF JSON file
+        file_path: Path to xBRIEF JSON file
         output_format: Output format (markdown, mermaid, html)
         direction: Graph direction (TB, LR, RL, BT)
     """
@@ -255,25 +255,25 @@ if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser(
-        description="Visualize vBRIEF Plan DAG as Mermaid diagram",
+        description="Visualize xBRIEF Plan DAG as Mermaid diagram",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   # Generate Markdown with embedded Mermaid
-  %(prog)s plan.vbrief.json > diagram.md
+  %(prog)s plan.xbrief.json > diagram.md
   
   # Generate HTML with interactive diagram
-  %(prog)s plan.vbrief.json --format html > diagram.html
+  %(prog)s plan.xbrief.json --format html > diagram.html
   
   # Generate raw Mermaid for embedding
-  %(prog)s plan.vbrief.json --format mermaid
+  %(prog)s plan.xbrief.json --format mermaid
   
   # Change graph direction to left-right
-  %(prog)s plan.vbrief.json --direction LR
+  %(prog)s plan.xbrief.json --direction LR
 """
     )
     
-    parser.add_argument("file", help="vBRIEF JSON file to visualize")
+    parser.add_argument("file", help="xBRIEF JSON file to visualize")
     parser.add_argument(
         "-f", "--format",
         choices=["markdown", "mermaid", "html"],

@@ -1,4 +1,4 @@
-# vBRIEF v0.5-beta Release Notes
+# xBRIEF v0.5-beta Release Notes
 
 **Release Date**: 2026-02-03  
 **Status**: Beta Release  
@@ -6,7 +6,7 @@
 
 ## 🎉 Major Changes
 
-vBRIEF v0.5 represents a **fundamental architectural refactor** that unifies todos, plans, playbooks, and prompt-graphs into a single, powerful Plan model.
+xBRIEF v0.5 represents a **fundamental architectural refactor** that unifies todos, plans, playbooks, and prompt-graphs into a single, powerful Plan model.
 
 ### The Big Picture
 
@@ -100,7 +100,7 @@ Comprehensive validation with three layers:
 3. DAG validation (cycle detection, reference validation)
 
 ```bash
-python3 validation/vbrief_validator.py plan.vbrief.json
+python3 validation/xbrief_validator.py plan.xbrief.json
 ```
 
 ### 6. Visual Documentation
@@ -117,10 +117,10 @@ Generate visual diagrams from Plans:
 
 ```bash
 # Markdown with Mermaid
-python3 tools/dag-visualizer.py plan.vbrief.json > diagram.md
+python3 tools/dag-visualizer.py plan.xbrief.json > diagram.md
 
 # Interactive HTML
-python3 tools/dag-visualizer.py plan.vbrief.json --format html > diagram.html
+python3 tools/dag-visualizer.py plan.xbrief.json --format html > diagram.html
 ```
 
 ## 💔 Breaking Changes
@@ -145,18 +145,18 @@ All v0.4 documents require migration. See [MIGRATION.md](MIGRATION.md) for detai
 ## 📦 What's Included
 
 ### Schema
-- `schemas/vbrief-core.schema.json` - Unified JSON Schema
+- `schemas/xbrief-core.schema.json` - Unified JSON Schema
 
 ### Examples
-- `examples/minimal-plan.vbrief.json` - Todo-like usage
-- `examples/structured-plan.vbrief.json` - With narratives
-- `examples/retrospective-plan.vbrief.json` - Playbook-style
-- `examples/dag-plan.vbrief.json` - With DAG edges
-- `examples/dag-plan.vbrief.tron` - TRON format
+- `examples/minimal-plan.xbrief.json` - Todo-like usage
+- `examples/structured-plan.xbrief.json` - With narratives
+- `examples/retrospective-plan.xbrief.json` - Playbook-style
+- `examples/dag-plan.xbrief.json` - With DAG edges
+- `examples/dag-plan.xbrief.tron` - TRON format
 
 ### Validation Tools
 - `validation/dag_validator.py` - DAG cycle detection
-- `validation/vbrief_validator.py` - Comprehensive validation
+- `validation/xbrief_validator.py` - Comprehensive validation
 
 ### Visualization
 - `tools/dag-visualizer.py` - Mermaid diagram generator
@@ -173,7 +173,7 @@ All v0.4 documents require migration. See [MIGRATION.md](MIGRATION.md) for detai
 
 ```json
 {
-  "vBRIEFInfo": {"version": "0.5"},
+  "xBRIEFInfo": {"version": "0.5"},
   "plan": {
     "title": "My Tasks",
     "status": "running",
@@ -188,7 +188,7 @@ All v0.4 documents require migration. See [MIGRATION.md](MIGRATION.md) for detai
 ### 2. Validate It
 
 ```bash
-python3 validation/vbrief_validator.py my-plan.vbrief.json
+python3 validation/xbrief_validator.py my-plan.xbrief.json
 ```
 
 ### 3. Add Complexity as Needed
@@ -222,22 +222,22 @@ python3 validation/vbrief_validator.py my-plan.vbrief.json
 ### Validation
 ```bash
 # Comprehensive validation
-python3 validation/vbrief_validator.py plan.vbrief.json
+python3 validation/xbrief_validator.py plan.xbrief.json
 
 # DAG validation only
-python3 validation/dag_validator.py plan.vbrief.json
+python3 validation/dag_validator.py plan.xbrief.json
 ```
 
 ### Visualization
 ```bash
 # Generate Markdown diagram
-python3 tools/dag-visualizer.py plan.vbrief.json > diagram.md
+python3 tools/dag-visualizer.py plan.xbrief.json > diagram.md
 
 # Generate interactive HTML
-python3 tools/dag-visualizer.py plan.vbrief.json -f html > diagram.html
+python3 tools/dag-visualizer.py plan.xbrief.json -f html > diagram.html
 
 # Left-to-right layout
-python3 tools/dag-visualizer.py plan.vbrief.json -d LR
+python3 tools/dag-visualizer.py plan.xbrief.json -d LR
 ```
 
 ## ⚠️ Known Limitations
@@ -269,8 +269,8 @@ This is a **beta release**. While the core specification is stable, some feature
 ## 🐛 Bug Reports
 
 Found an issue? Please report:
-- GitHub Issues: https://github.com/visionik/vBRIEF/issues
-- Include: vBRIEF version, example document, error message
+- GitHub Issues: https://github.com/visionik/xBRIEF/issues
+- Include: xBRIEF version, example document, error message
 
 ## 🤝 Contributing
 
@@ -317,7 +317,7 @@ Contributions welcome! Areas needing help:
 
 1. Read [MIGRATION.md](MIGRATION.md)
 2. Update documents to v0.5 format
-3. Validate with `vbrief_validator.py`
+3. Validate with `xbrief_validator.py`
 4. Test with your workflows
 5. Report any issues
 
@@ -333,11 +333,11 @@ See LICENSE file for details.
 
 - Documentation: See docs/ directory
 - Examples: See examples/ directory
-- Issues: https://github.com/visionik/vBRIEF/issues
-- Discussions: https://github.com/visionik/vBRIEF/discussions
+- Issues: https://github.com/visionik/xBRIEF/issues
+- Discussions: https://github.com/visionik/xBRIEF/discussions
 
 ---
 
-**Ready to try vBRIEF v0.5-beta?**
+**Ready to try xBRIEF v0.5-beta?**
 
 Start with [GUIDE.md](GUIDE.md) and create your first unified Plan!

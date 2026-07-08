@@ -23,54 +23,64 @@ tasks:
     cmds:
       - uv run --with ruff ruff check .
 
+  quality:
+    desc: Run all quality checks (lint, typecheck, tests, validate)
+    deps:
+      - lint
+      - ts:typecheck
+      - ts:lint
+      - python:coverage
+      - ts:coverage
+      - validate
+
   validate:
     desc: Validate all example documents
     cmds:
-      - uv run --extra dev python validation/vbrief_validator.py examples/*.vbrief.json
+      - uv run --extra dev python validation/xbrief_validator.py examples/*.xbrief.json
 
   python:test:
-    desc: Run libvbrief Python tests
+    desc: Run libxbrief Python tests
     cmds:
       - uv run --extra dev pytest tests/ -v
 
   python:coverage:
-    desc: Run libvbrief Python tests with coverage report
+    desc: Run libxbrief Python tests with coverage report
     cmds:
-      - uv run --extra dev pytest tests/ --cov=libvbrief --cov-report=term-missing --cov-fail-under=85
+      - uv run --extra dev pytest tests/ --cov=libxbrief --cov-report=term-missing --cov-fail-under=85
 
   ts:install:
-    desc: Install libvbrief-ts dependencies
-    dir: libvbrief-ts
+    desc: Install libxbrief-ts dependencies
+    dir: libxbrief-ts
     cmds:
       - npm install
 
   ts:typecheck:
-    desc: Run libvbrief-ts type checking
-    dir: libvbrief-ts
+    desc: Run libxbrief-ts type checking
+    dir: libxbrief-ts
     cmds:
       - npm run typecheck
 
   ts:lint:
-    desc: Run libvbrief-ts lint checks
-    dir: libvbrief-ts
+    desc: Run libxbrief-ts lint checks
+    dir: libxbrief-ts
     cmds:
       - npm run lint
 
   ts:test:
-    desc: Run libvbrief-ts tests
-    dir: libvbrief-ts
+    desc: Run libxbrief-ts tests
+    dir: libxbrief-ts
     cmds:
       - npm run test
 
   ts:coverage:
-    desc: Run libvbrief-ts tests with coverage
-    dir: libvbrief-ts
+    desc: Run libxbrief-ts tests with coverage
+    dir: libxbrief-ts
     cmds:
       - npm run test:coverage
 
   ts:build:
-    desc: Build the libvbrief-ts package
-    dir: libvbrief-ts
+    desc: Build the libxbrief-ts package
+    dir: libxbrief-ts
     cmds:
       - npm run build
 

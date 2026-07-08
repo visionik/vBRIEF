@@ -1,14 +1,14 @@
-# Getting Started with vBRIEF
+# Getting Started with xBRIEF
 
-This tutorial walks you through creating your first vBRIEF documents, from a simple task list to a full DAG workflow.
+This tutorial walks you through creating your first xBRIEF documents, from a simple task list to a full DAG workflow.
 
 ## 1. Your First Minimal Plan
 
-Create a file called `my-plan.vbrief.json`:
+Create a file called `my-plan.xbrief.json`:
 
 ```json
 {
-  "vBRIEFInfo": { "version": "0.6" },
+  "xBRIEFInfo": { "version": "0.8" },
   "plan": {
     "title": "Weekend Errands",
     "status": "running",
@@ -21,9 +21,9 @@ Create a file called `my-plan.vbrief.json`:
 }
 ```
 
-That's a valid vBRIEF document. Only four fields are required:
+That's a valid xBRIEF document. Only four fields are required:
 
-- `vBRIEFInfo.version` — must be `"0.6"`
+- `xBRIEFInfo.version` — must be `"0.6"`
 - `plan.title` — any descriptive name
 - `plan.status` — one of: `draft`, `proposed`, `approved`, `pending`, `running`, `completed`, `blocked`, `failed`, `cancelled`
 - `plan.items` — array of items (can be empty)
@@ -34,7 +34,7 @@ Narratives let you capture the *why* behind a plan. Add a `narratives` object to
 
 ```json
 {
-  "vBRIEFInfo": { "version": "0.6" },
+  "xBRIEFInfo": { "version": "0.8" },
   "plan": {
     "title": "API Redesign",
     "status": "proposed",
@@ -76,7 +76,7 @@ When tasks depend on each other, add `edges` to model the workflow:
 
 ```json
 {
-  "vBRIEFInfo": { "version": "0.6" },
+  "xBRIEFInfo": { "version": "0.8" },
   "plan": {
     "title": "Release Pipeline",
     "status": "running",
@@ -115,7 +115,7 @@ TRON reduces token usage by ~35–40%. Convert the pipeline example above:
 class Edge: from, to, type
 class PlanItem: id, title, status
 
-vBRIEFInfo: { version: "0.6" }
+xBRIEFInfo: { version: "0.8" }
 plan: {
   title: "Release Pipeline",
   status: "running",
@@ -141,13 +141,13 @@ TRON class definitions at the top map positional arguments to fields. See [docs/
 Run the validator:
 
 ```bash
-python validation/vbrief_validator.py my-plan.vbrief.json
+python validation/xbrief_validator.py my-plan.xbrief.json
 ```
 
 The validator checks:
 
 - JSON syntax
-- Required fields (`vBRIEFInfo.version`, `plan.title`, `plan.status`, `plan.items`)
+- Required fields (`xBRIEFInfo.version`, `plan.title`, `plan.status`, `plan.items`)
 - Valid status enum values
 - DAG constraints (no cycles, valid edge references)
 - Hierarchical ID format
@@ -156,5 +156,5 @@ The validator checks:
 ## Next Steps
 
 - **[GUIDE.md](GUIDE.md)** — Patterns and recipes for common use cases
-- **[vbrief-spec-0.6.md](vbrief-spec-0.6.md)** — Formal specification
+- **[xbrief-spec-0.6.md](xbrief-spec-0.6.md)** — Formal specification
 - **[examples/](../examples/)** — More examples in JSON and TRON

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from libvbrief.builder import from_items, quick_todo
-from libvbrief.models import PlanItem
+from libxbrief.builder import from_items, quick_todo
+from libxbrief.models import PlanItem
 
 
 def test_quick_todo_coerces_strings_to_pending_items() -> None:

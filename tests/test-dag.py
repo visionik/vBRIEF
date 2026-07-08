@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from libvbrief import ValidationError, VBriefDocument, validate
+from libxbrief import ValidationError, XBriefDocument, validate
 
 
 # ---------------------------------------------------------------------------
@@ -20,9 +20,9 @@ from libvbrief import ValidationError, VBriefDocument, validate
 # ---------------------------------------------------------------------------
 
 def _doc(plan_extra: dict) -> dict:
-    """Build a minimal valid v0.5 document with extra plan fields."""
+    """Build a minimal valid v0.8 document with extra plan fields."""
     return {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {
             "title": "Test",
             "status": "running",
@@ -69,7 +69,7 @@ def test_dag_linear_chain_is_valid() -> None:
 
 def test_dag_diamond_is_valid() -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {
             "title": "T", "status": "running",
             "items": [
@@ -199,7 +199,7 @@ def test_dag_edge_missing_to_reports_error() -> None:
 def test_dag_collect_ids_skips_non_mapping_items() -> None:
     """Non-Mapping entries in plan.items are skipped by _collect_ids (dag.py:122)."""
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {
             "title": "T", "status": "running",
             "items": [42, "bad", None],  # all non-Mapping → skipped
@@ -213,7 +213,7 @@ def test_dag_collect_ids_skips_non_mapping_items() -> None:
 
 def test_dag_subitems_ids_are_valid_edge_targets() -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {
             "title": "T", "status": "running",
             "items": [
@@ -253,7 +253,7 @@ def test_dag_cycle_not_reported_when_dag_false() -> None:
 
 def test_model_validate_with_dag_true_detects_cycle() -> None:
     doc = _doc({"edges": [{"from": "a", "to": "b"}, {"from": "b", "to": "a"}]})
-    model = VBriefDocument.from_dict(doc)
+    model = XBriefDocument.from_dict(doc)
     report = model.validate(dag=True)
     assert any(i.code == "dag_cycle" for i in report.errors)
 
@@ -261,17 +261,17 @@ def test_model_validate_with_dag_true_detects_cycle() -> None:
 def test_model_from_dict_strict_dag_raises_on_cycle() -> None:
     doc = _doc({"edges": [{"from": "a", "to": "b"}, {"from": "b", "to": "a"}]})
     with pytest.raises(ValidationError) as exc_info:
-        VBriefDocument.from_dict(doc, strict=True, dag=True)
+        XBriefDocument.from_dict(doc, strict=True, dag=True)
     assert any(i.code == "dag_cycle" for i in exc_info.value.report.errors)
 
 
 def test_model_from_file_strict_dag_raises_on_cycle(tmp_path: Path) -> None:
     import json
     doc = _doc({"edges": [{"from": "a", "to": "b"}, {"from": "b", "to": "a"}]})
-    path = tmp_path / "cycle.vbrief.json"
+    path = tmp_path / "cycle.xbrief.json"
     path.write_text(json.dumps(doc), encoding="utf-8")
     with pytest.raises(ValidationError):
-        VBriefDocument.from_file(path, strict=True, dag=True)
+        XBriefDocument.from_file(path, strict=True, dag=True)
 
 
 # ---------------------------------------------------------------------------
@@ -280,13 +280,13 @@ def test_model_from_file_strict_dag_raises_on_cycle(tmp_path: Path) -> None:
 
 
 def test_dag_plan_example_is_valid_dag(examples_dir: Path) -> None:
-    doc = VBriefDocument.from_file(examples_dir / "dag-plan.vbrief.json")
+    doc = XBriefDocument.from_file(examples_dir / "dag-plan.xbrief.json")
     report = doc.validate(dag=True)
     assert report.is_valid, report.errors
 
 
 def test_invalid_cycle_example_fails_dag_validation(examples_dir: Path) -> None:
-    doc = VBriefDocument.from_file(examples_dir / "invalid-cycle.vbrief.json")
+    doc = XBriefDocument.from_file(examples_dir / "invalid-cycle.xbrief.json")
     report = doc.validate(dag=True)
     assert not report.is_valid
     assert any(i.code == "dag_cycle" for i in report.errors)
@@ -294,6 +294,6 @@ def test_invalid_cycle_example_fails_dag_validation(examples_dir: Path) -> None:
 
 def test_minimal_plan_with_dag_true_is_valid(examples_dir: Path) -> None:
     """Plans with no edges pass DAG validation trivially."""
-    doc = VBriefDocument.from_file(examples_dir / "minimal-plan.vbrief.json")
+    doc = XBriefDocument.from_file(examples_dir / "minimal-plan.xbrief.json")
     report = doc.validate(dag=True)
     assert report.is_valid, report.errors

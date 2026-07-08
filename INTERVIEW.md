@@ -1,17 +1,17 @@
-# Interview: lib vBRIEF phase 2
+# Interview: lib xBRIEF phase 2
 
 **Generated**: 2026-03-30
 **Status**: Ready for AI Interview
 **Strategy**: interview
 **Path**: Light (Interview → SPECIFICATION)
-**Specification Output**: /Users/visionik/Projects/vBRIEF/SPECIFICATION.md
+**Specification Output**: /Users/visionik/Projects/xBRIEF/SPECIFICATION.md
 
 ## Initial Input
 
-**Project Description**: Proposed improvements to make libvbrief easier and faster for developers:
-To significantly improve developer experience, we should introduce a fluent PlanBuilder class that allows creating complex vBRIEF documents with chained methods, reducing boilerplate and improving readability compared to the current verbose constructor approach. Additional high-level helpers such as quick_todo(), from_items(), from_yaml(), and convenience methods like add_edges_from() and item factories (e.g. PlanItem.pending()) would make common use cases much faster to write. Finally, supporting a clean context-manager style and automatic hierarchical ID generation would further streamline plan creation while maintaining full compatibility with the existing libvbrief API.
+**Project Description**: Proposed improvements to make libxbrief easier and faster for developers:
+To significantly improve developer experience, we should introduce a fluent PlanBuilder class that allows creating complex xBRIEF documents with chained methods, reducing boilerplate and improving readability compared to the current verbose constructor approach. Additional high-level helpers such as quick_todo(), from_items(), from_yaml(), and convenience methods like add_edges_from() and item factories (e.g. PlanItem.pending()) would make common use cases much faster to write. Finally, supporting a clean context-manager style and automatic hierarchical ID generation would further streamline plan creation while maintaining full compatibility with the existing libxbrief API.
 
-**I want to build lib vBRIEF phase 2 that has the following features:**
+**I want to build lib xBRIEF phase 2 that has the following features:**
 1. example new code using builder and other patterns:
 ---
 
@@ -33,7 +33,7 @@ Legend (from RFC2119): !=MUST, ~=SHOULD, ≉=SHOULD NOT, ⊗=MUST NOT, ?=MAY.
 ## Input Template
 
 ```
-I want to build lib vBRIEF phase 2 that has the following features:
+I want to build lib xBRIEF phase 2 that has the following features:
 1. [feature]
 2. [feature]
 ...
@@ -121,17 +121,17 @@ Any remaining decisions deferred to implementation.
 
 ### Specification Flow (both paths)
 
-1. ! Write `./vbrief/specification.vbrief.json` with `status: draft`
+1. ! Write `./xbrief/specification.xbrief.json` with `status: draft`
 2. ! Summarize what was decided and ask the user to review
-3. ! On user approval, update `status` to `approved` in the vbrief file
+3. ! On user approval, update `status` to `approved` in the xbrief file
 4. ! Run `task spec:render` (or generate `SPECIFICATION.md` directly if task unavailable)
-5. ? For add-on specs: write `./vbrief/specification-{name}.vbrief.json` → `SPECIFICATION-{name}.md`
+5. ? For add-on specs: write `./xbrief/specification-{name}.xbrief.json` → `SPECIFICATION-{name}.md`
 
-! The vBRIEF file MUST use this exact top-level structure:
+! The xBRIEF file MUST use this exact top-level structure:
 
 ```json
 {
-  "vBRIEFInfo": { "version": "0.5" },
+  "xBRIEFInfo": { "version": "0.5" },
   "plan": {
     "title": "Project Name SPECIFICATION",
     "status": "draft",
@@ -147,7 +147,7 @@ Any remaining decisions deferred to implementation.
 }
 ```
 
-~ See [vbrief/vbrief.md](../vbrief/vbrief.md) for full schema documentation and [vbrief/schemas/vbrief-core.schema.json](../vbrief/schemas/vbrief-core.schema.json) for the JSON Schema.
+~ See [xbrief/xbrief.md](../xbrief/xbrief.md) for full schema documentation and [xbrief/schemas/xbrief-core.schema.json](../xbrief/schemas/xbrief-core.schema.json) for the JSON Schema.
 
 ---
 
@@ -189,7 +189,7 @@ Any remaining decisions deferred to implementation.
 - Answer: Context manager is optional. `PlanBuilder` works as a plain object; `__exit__`
   is a no-op.
 
-- ⊗ Write `SPECIFICATION.md` directly — it is generated from the vbrief source
+- ⊗ Write `SPECIFICATION.md` directly — it is generated from the xbrief source
 - ! Follow all relevant deft guidelines
 - ! Use RFC 2119 MUST, SHOULD, MAY, SHOULD NOT, MUST NOT wording
 - ! Break into phases, subphases, tasks

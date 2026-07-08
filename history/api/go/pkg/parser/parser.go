@@ -1,4 +1,4 @@
-// Package parser provides interfaces and implementations for parsing vBRIEF documents.
+// Package parser provides interfaces and implementations for parsing xBRIEF documents.
 package parser
 
 import (
@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
 )
 
 var (

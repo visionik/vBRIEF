@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
 )
 
 // JSONParser parses documents in JSON format.

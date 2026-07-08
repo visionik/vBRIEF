@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from libvbrief import validate
-from libvbrief.builder import ItemBuilder, PlanBuilder, _slugify
+from libxbrief import validate
+from libxbrief.builder import ItemBuilder, PlanBuilder, _slugify
 
 
 def test_slugify_normalizes_text() -> None:

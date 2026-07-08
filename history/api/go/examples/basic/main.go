@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/visionik/vBRIEF/api/go/pkg/builder"
-	"github.com/visionik/vBRIEF/api/go/pkg/convert"
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
-	"github.com/visionik/vBRIEF/api/go/pkg/parser"
-	"github.com/visionik/vBRIEF/api/go/pkg/query"
-	"github.com/visionik/vBRIEF/api/go/pkg/validator"
+	"github.com/visionik/xBRIEF/api/go/pkg/builder"
+	"github.com/visionik/xBRIEF/api/go/pkg/convert"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/parser"
+	"github.com/visionik/xBRIEF/api/go/pkg/query"
+	"github.com/visionik/xBRIEF/api/go/pkg/validator"
 )
 
 func main() {
-	fmt.Println("=== vBRIEF Go Library Examples ===")
+	fmt.Println("=== xBRIEF Go Library Examples ===")
 	fmt.Println()
 
 	// Example 1: Build a TodoList

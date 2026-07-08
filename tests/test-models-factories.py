@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from libvbrief.models import PlanItem
+from libxbrief.models import PlanItem
 
 
 def test_plan_item_status_factories_set_expected_status() -> None:

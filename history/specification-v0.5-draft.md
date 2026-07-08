@@ -1,4 +1,4 @@
-# libvbrief.py Specification v1
+# libxbrief.py Specification v1
 
 **Version**: 1.0.0-draft
 **Status**: Draft for Implementation
@@ -7,7 +7,7 @@
 
 ## Overview
 
-`libvbrief.py` is a Python library for reading, writing, and validating vBRIEF v0.5 JSON documents.
+`libxbrief.py` is a Python library for reading, writing, and validating xBRIEF v0.5 JSON documents.
 
 This v1 release focuses on a practical core:
 - Read/write current v0.5 **Plan JSON** documents
@@ -19,7 +19,7 @@ This v1 release focuses on a practical core:
 
 ### In Scope (v1)
 
-1. Parse and emit v0.5 JSON documents with root `vBRIEFInfo` and `plan`
+1. Parse and emit v0.5 JSON documents with root `xBRIEFInfo` and `plan`
 2. Provide functional API and dataclass object model
 3. Validate core structural and conformance rules (non-DAG)
 4. Preserve unknown fields at root, plan, and item levels
@@ -55,7 +55,7 @@ This v1 release focuses on a practical core:
    - `dumps(doc, *, canonical=True, preserve_format=False)`
    - `validate(doc)`
 2. The library MUST provide class-first model types:
-   - `VBriefDocument`
+   - `XBriefDocument`
    - `Plan`
    - `PlanItem`
 3. The class model MUST provide constructors/from-helpers and serialization methods.
@@ -68,8 +68,8 @@ This v1 release focuses on a practical core:
 3. Strict mode MAY be exposed via `strict=True` on load/helpers and MUST raise on validation errors.
 4. Validation MUST return structured issues in non-strict mode.
 5. Validation MUST check:
-   - Required root fields (`vBRIEFInfo`, `plan`)
-   - Version exactness (`vBRIEFInfo.version == "0.5"`)
+   - Required root fields (`xBRIEFInfo`, `plan`)
+   - Version exactness (`xBRIEFInfo.version == "0.5"`)
    - Required plan fields (`title`, `status`, `items`)
    - Status enum validity
    - Hierarchical ID format where `id` appears
@@ -107,7 +107,7 @@ This v1 release focuses on a practical core:
 The implementation MUST use a layered package layout:
 
 ```text
-libvbrief/
+libxbrief/
   __init__.py
   io.py
   models.py
@@ -126,7 +126,7 @@ libvbrief/
 ### Module Responsibilities
 
 1. `models.py`
-   - Dataclasses: `VBriefDocument`, `Plan`, `PlanItem`
+   - Dataclasses: `XBriefDocument`, `Plan`, `PlanItem`
    - Extension/unknown-field storage
 2. `io.py`
    - File/string entry points
@@ -145,10 +145,10 @@ libvbrief/
 
 ### Data Model Contracts
 
-#### `VBriefDocument`
+#### `XBriefDocument`
 
 Required fields:
-- `vbrief_info: dict`
+- `xbrief_info: dict`
 - `plan: Plan`
 
 Optional/internal:
@@ -198,7 +198,7 @@ Unknown fields:
 ### Dict API
 
 ```python
-from libvbrief import load_file, loads, dump_file, dumps, validate
+from libxbrief import load_file, loads, dump_file, dumps, validate
 ```
 
 Behavior:
@@ -210,12 +210,12 @@ Behavior:
 ### Class API
 
 ```python
-from libvbrief import VBriefDocument, Plan, PlanItem
+from libxbrief import XBriefDocument, Plan, PlanItem
 ```
 
 Behavior:
-1. `VBriefDocument.from_file(path, *, strict=False)`
-2. `VBriefDocument.from_json(text, *, strict=False)`
+1. `XBriefDocument.from_file(path, *, strict=False)`
+2. `XBriefDocument.from_json(text, *, strict=False)`
 3. `obj.to_dict()` / `obj.to_json(...)` / `obj.to_file(...)`
 4. `obj.validate()` returns structured report; strict path raises.
 
@@ -268,7 +268,7 @@ Behavior:
 - Task 2.1.2: Implement `Plan` dataclass + nested items support
   - Dependencies: Task 2.1.1
   - Acceptance: Nested item trees parse/serialize correctly
-- Task 2.1.3: Implement `VBriefDocument` dataclass
+- Task 2.1.3: Implement `XBriefDocument` dataclass
   - Dependencies: Task 2.1.2
   - Acceptance: Root + plan + extras represented losslessly
 

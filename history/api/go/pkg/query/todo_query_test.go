@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
 )
 
 func TestTodoQuery_ByStatus(t *testing.T) {

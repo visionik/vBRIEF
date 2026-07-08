@@ -1,4 +1,4 @@
-# libvbrief-ts Project Guidelines
+# libxbrief-ts Project Guidelines
 
 Only specify items here that **override or extend** the deft defaults.
 See `deft/main.md`, `deft/coding/coding.md`, and language-specific files for base standards.

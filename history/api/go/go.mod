@@ -1,4 +1,4 @@
-module github.com/visionik/vBRIEF/api/go
+module github.com/visionik/xBRIEF/api/go
 
 go 1.25.4
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from libvbrief import VBriefDocument, dumps, loads
-from libvbrief.builder import PlanBuilder
+from libxbrief import XBriefDocument, dumps, loads
+from libxbrief.builder import PlanBuilder
 
 
 def _build_plan(*, strict: bool = True) -> PlanBuilder:
@@ -80,7 +80,7 @@ def test_plan_builder_round_trips_through_json_helpers() -> None:
 
     text = dumps(document)
     loaded = loads(text)
-    rebuilt = VBriefDocument.from_dict(loaded)
+    rebuilt = XBriefDocument.from_dict(loaded)
 
     assert rebuilt.plan.title == "Launch Plan"
     assert rebuilt.plan.tags == ["mvp"]

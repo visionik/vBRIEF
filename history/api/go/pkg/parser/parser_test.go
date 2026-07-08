@@ -7,11 +7,11 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
 )
 
 const validJSON = `{
-  "vBRIEFInfo": {
+  "xBRIEFInfo": {
     "version": "0.2",
     "author": "test-author"
   },
@@ -30,7 +30,7 @@ const validJSON = `{
 }`
 
 const validPlanJSON = `{
-  "vBRIEFInfo": {
+  "xBRIEFInfo": {
     "version": "0.2"
   },
   "plan": {

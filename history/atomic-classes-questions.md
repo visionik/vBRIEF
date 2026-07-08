@@ -167,7 +167,7 @@ class Tagged: tags
 
 ### Applied To
 
-ALL vBRIEF entities MAY be Tagged via Extension 3:
+ALL xBRIEF entities MAY be Tagged via Extension 3:
 - TodoList
 - TodoItem
 - Plan

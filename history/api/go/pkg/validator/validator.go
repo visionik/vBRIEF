@@ -1,11 +1,11 @@
-// Package validator provides validation logic for vBRIEF documents.
+// Package validator provides validation logic for xBRIEF documents.
 package validator
 
 import (
 	"errors"
 	"fmt"
 
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
 )
 
 var (
@@ -39,7 +39,7 @@ func (e ValidationErrors) Error() string {
 	return result
 }
 
-// Validator validates vBRIEF documents.
+// Validator validates xBRIEF documents.
 type Validator interface {
 	// Validate checks if a document is valid.
 	Validate(doc *core.Document) error
@@ -73,7 +73,7 @@ func (v *validator) Validate(doc *core.Document) error {
 	// Validate Info
 	if doc.Info.Version == "" {
 		errors = append(errors, ValidationError{
-			Field:   "vBRIEFInfo.version",
+			Field:   "xBRIEFInfo.version",
 			Message: "version is required",
 		})
 	}

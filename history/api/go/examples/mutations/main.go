@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/visionik/vBRIEF/api/go/pkg/builder"
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
-	"github.com/visionik/vBRIEF/api/go/pkg/updater"
+	"github.com/visionik/xBRIEF/api/go/pkg/builder"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/updater"
 )
 
 func main() {
-	fmt.Println("=== vBRIEF Mutation API Demo ===")
+	fmt.Println("=== xBRIEF Mutation API Demo ===")
 	fmt.Println()
 
 	// Direct mutations on TodoList

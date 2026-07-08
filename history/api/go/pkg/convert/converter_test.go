@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
 )
 
 func TestConverter_Convert(t *testing.T) {
@@ -27,7 +27,7 @@ func TestConverter_Convert(t *testing.T) {
 
 		require.NoError(t, err)
 		require.NotEmpty(t, data)
-		assert.Contains(t, string(data), "vBRIEFInfo")
+		assert.Contains(t, string(data), "xBRIEFInfo")
 		assert.Contains(t, string(data), "0.2")
 		assert.Contains(t, string(data), "Task 1")
 	})
@@ -72,7 +72,7 @@ func TestConverter_ConvertTo(t *testing.T) {
 		err := conv.ConvertTo(doc, FormatJSON, &buf)
 
 		require.NoError(t, err)
-		assert.Contains(t, buf.String(), "vBRIEFInfo")
+		assert.Contains(t, buf.String(), "xBRIEFInfo")
 		assert.Contains(t, buf.String(), "Task")
 	})
 
@@ -106,7 +106,7 @@ func TestToJSON(t *testing.T) {
 
 		require.NoError(t, err)
 		require.NotEmpty(t, data)
-		assert.Contains(t, string(data), "vBRIEFInfo")
+		assert.Contains(t, string(data), "xBRIEFInfo")
 		assert.Contains(t, string(data), "todoList")
 	})
 }

@@ -9,15 +9,15 @@
 
 | Document | Lines | Category | Purpose |
 |----------|-------|----------|---------|
-| `vBRIEF-extension-common.md` | 1,320 | Core | Extensions 1-12 (timestamps, IDs, metadata, etc.) |
-| `vBRIEF-extension-security.md` | 1,201 | Domain | Security, permissions, access control |
-| `vBRIEF-extension-MCP.md` | 1,668 | Integration | Model Context Protocol integration |
-| `vBRIEF-extension-playbooks.md` | 534 | Core | Playbook format & patterns |
-| `vBRIEF-extension-beads.md` | 753 | Integration | Beads framework integration |
-| `vBRIEF-extension-claude.md` | 515 | Integration | Claude-specific features |
-| `vBRIEF-extension-api-python.md` | 1,928 | API | Python library design |
-| `vBRIEF-extension-api-typescript.md` | 1,989 | API | TypeScript library design |
-| `vBRIEF-extension-api-go.md` | 493 | API | Go library status (implemented) |
+| `xBRIEF-extension-common.md` | 1,320 | Core | Extensions 1-12 (timestamps, IDs, metadata, etc.) |
+| `xBRIEF-extension-security.md` | 1,201 | Domain | Security, permissions, access control |
+| `xBRIEF-extension-MCP.md` | 1,668 | Integration | Model Context Protocol integration |
+| `xBRIEF-extension-playbooks.md` | 534 | Core | Playbook format & patterns |
+| `xBRIEF-extension-beads.md` | 753 | Integration | Beads framework integration |
+| `xBRIEF-extension-claude.md` | 515 | Integration | Claude-specific features |
+| `xBRIEF-extension-api-python.md` | 1,928 | API | Python library design |
+| `xBRIEF-extension-api-typescript.md` | 1,989 | API | TypeScript library design |
+| `xBRIEF-extension-api-go.md` | 493 | API | Go library status (implemented) |
 
 ## Analysis
 
@@ -28,14 +28,14 @@
 - `extension-security.md` - Security features
 - `extension-playbooks.md` - Long-term memory
 
-These define the vBRIEF spec itself.
+These define the xBRIEF spec itself.
 
 **Group 2: Integrations** (~2,936 lines)
 - `extension-MCP.md` - MCP protocol
 - `extension-beads.md` - Beads framework
 - `extension-claude.md` - Claude AI
 
-These show how to integrate vBRIEF with specific tools/systems.
+These show how to integrate xBRIEF with specific tools/systems.
 
 **Group 3: API Designs** (~4,410 lines)
 - `extension-api-python.md` - Python implementation
@@ -49,7 +49,7 @@ These are language-specific API proposals/designs.
 ### Rationale
 
 **1. Different Audiences**
-- Core extensions: Anyone implementing vBRIEF
+- Core extensions: Anyone implementing xBRIEF
 - Integrations: Users of specific tools (MCP/Beads/Claude)
 - API designs: Language-specific implementers
 
@@ -79,29 +79,29 @@ These are language-specific API proposals/designs.
 
 Create `extensions/README.md`:
 ```markdown
-# vBRIEF Extensions
+# xBRIEF Extensions
 
 ## Core Extensions
-- [Common Extensions](./vBRIEF-extension-common.md) - Extensions 1-12
-- [Security](./vBRIEF-extension-security.md) - Access control, permissions
-- [Playbooks](./vBRIEF-extension-playbooks.md) - Long-term memory patterns
+- [Common Extensions](./xBRIEF-extension-common.md) - Extensions 1-12
+- [Security](./xBRIEF-extension-security.md) - Access control, permissions
+- [Playbooks](./xBRIEF-extension-playbooks.md) - Long-term memory patterns
 
 ## Integrations
-- [Model Context Protocol (MCP)](./vBRIEF-extension-MCP.md)
-- [Beads Framework](./vBRIEF-extension-beads.md)
-- [Claude AI](./vBRIEF-extension-claude.md)
+- [Model Context Protocol (MCP)](./xBRIEF-extension-MCP.md)
+- [Beads Framework](./xBRIEF-extension-beads.md)
+- [Claude AI](./xBRIEF-extension-claude.md)
 
 ## API Implementations
-- [Python API](./vBRIEF-extension-api-python.md)
-- [TypeScript API](./vBRIEF-extension-api-typescript.md)
-- [Go API](./vBRIEF-extension-api-go.md) - ✅ Implemented
+- [Python API](./xBRIEF-extension-api-python.md)
+- [TypeScript API](./xBRIEF-extension-api-typescript.md)
+- [Go API](./xBRIEF-extension-api-go.md) - ✅ Implemented
 ```
 
 ### 2. Move to `extensions/` Directory
 
 Create clear separation:
 ```
-vBRIEF/
+xBRIEF/
 ├── extensions/
 │   ├── README.md               # Navigation index
 │   ├── common.md               # Core extensions
@@ -130,15 +130,15 @@ docs:extensions:organize:
   desc: Organize extension documentation
   cmds:
     - mkdir -p extensions/api
-    - cp vBRIEF-extension-common.md extensions/common.md
-    - cp vBRIEF-extension-security.md extensions/security.md
-    - cp vBRIEF-extension-playbooks.md extensions/playbooks.md
-    - cp vBRIEF-extension-MCP.md extensions/mcp.md
-    - cp vBRIEF-extension-beads.md extensions/beads.md
-    - cp vBRIEF-extension-claude.md extensions/claude.md
-    - cp vBRIEF-extension-api-python.md extensions/api/python.md
-    - cp vBRIEF-extension-api-typescript.md extensions/api/typescript.md
-    - cp vBRIEF-extension-api-go.md extensions/api/go.md
+    - cp xBRIEF-extension-common.md extensions/common.md
+    - cp xBRIEF-extension-security.md extensions/security.md
+    - cp xBRIEF-extension-playbooks.md extensions/playbooks.md
+    - cp xBRIEF-extension-MCP.md extensions/mcp.md
+    - cp xBRIEF-extension-beads.md extensions/beads.md
+    - cp xBRIEF-extension-claude.md extensions/claude.md
+    - cp xBRIEF-extension-api-python.md extensions/api/python.md
+    - cp xBRIEF-extension-api-typescript.md extensions/api/typescript.md
+    - cp xBRIEF-extension-api-go.md extensions/api/go.md
     # Create navigation index
     - cat > extensions/README.md < navigation_template.md
 ```

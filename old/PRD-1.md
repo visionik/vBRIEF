@@ -1,4 +1,4 @@
-# Product Requirements Document: vBRIEF specification refactor
+# Product Requirements Document: xBRIEF specification refactor
 
 **Generated**: 2026-02-03
 **Status**: Ready for AI Interview
@@ -13,9 +13,9 @@
 
 see https://github.com/visionik/deft-universe/tree/main/docs/promptgraph-2*.md for examples.
 
-TL;DR we want to turn vBRIEF Into a single plan "object" which can do todo lists, plans, playbooks, and promptgraphs.  
+TL;DR we want to turn xBRIEF Into a single plan "object" which can do todo lists, plans, playbooks, and promptgraphs.  
 
-**I want to build vBRIEF specification refactor that has the following features:**
+**I want to build xBRIEF specification refactor that has the following features:**
 
 ---
 
@@ -28,7 +28,7 @@ Legend (from RFC2119): !=MUST, ~=SHOULD, ≉=SHOULD NOT, ⊗=MUST NOT, ?=MAY.
 ## Input Template
 
 ```
-I want to build vBRIEF specification refactor that has the following features:
+I want to build xBRIEF specification refactor that has the following features:
 1. [feature]
 2. [feature]
 ...

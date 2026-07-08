@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from libvbrief import validate
+from libxbrief import validate
 
 
 def test_validation_paths_are_specific_for_nested_items() -> None:
     doc = {
-        "vBRIEFInfo": {"version": "0.5"},
+        "xBRIEFInfo": {"version": "0.8"},
         "plan": {
             "title": "Nested",
             "status": "running",

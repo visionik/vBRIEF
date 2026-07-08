@@ -1,4 +1,4 @@
-// Package convert provides format conversion utilities for vBRIEF documents.
+// Package convert provides format conversion utilities for xBRIEF documents.
 package convert
 
 import (
@@ -8,7 +8,7 @@ import (
 	"io"
 
 	"github.com/tron-format/trongo/pkg/tron"
-	"github.com/visionik/vBRIEF/api/go/pkg/core"
+	"github.com/visionik/xBRIEF/api/go/pkg/core"
 )
 
 var (
