@@ -92,6 +92,7 @@ export const PLAN_FIELD_ORDER = [
   "edges",
   "tags",
   "metadata",
+  "architecture",
   "created",
   "updated",
   "author",

@@ -72,6 +72,7 @@
         },
         "tags": {"type": "array", "items": {"type": "string"}},
         "metadata": {"type": "object"},
+        "architecture": {"$ref": "#/$defs/Architecture"},
         "created": {"$ref": "#/$defs/dateTime"},
         "updated": {"$ref": "#/$defs/dateTime"},
         "author": {"type": "string"},
@@ -125,6 +126,90 @@
         "sequence": {"type": "integer", "minimum": 0},
         "lastModifiedBy": {"$ref": "#/$defs/Agent"},
         "lockedBy": {"$ref": "#/$defs/Lock"}
+      },
+      "additionalProperties": true
+    },
+    "Architecture": {
+      "type": "object",
+      "properties": {
+        "systemOfRecord": {"$ref": "#/$defs/SystemOfRecord"}
+      },
+      "additionalProperties": true
+    },
+    "SystemOfRecord": {
+      "type": "object",
+      "required": ["stateSurfaces"],
+      "properties": {
+        "stateSurfaces": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/StateSurface"}
+        },
+        "referenceApplications": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/ReferenceApplication"}
+        }
+      },
+      "additionalProperties": true
+    },
+    "StateSurface": {
+      "type": "object",
+      "required": ["name", "classification"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "classification": {"$ref": "#/$defs/StateClassification"},
+        "owner": {"type": "string"},
+        "approvedStorage": {"$ref": "#/$defs/StorageDeclaration"},
+        "forbiddenStorage": {"$ref": "#/$defs/StorageDeclaration"},
+        "migrationRequired": {"type": "boolean"},
+        "auditRequired": {"type": "boolean"},
+        "concurrencyRequired": {"type": "boolean"},
+        "permissionBoundary": {"type": "string"},
+        "concurrencySemantics": {"type": "string"},
+        "transactionBoundary": {"type": "string"},
+        "recoverySemantics": {"type": "string"},
+        "conflictDetection": {"type": "string"},
+        "deleteSemantics": {"type": "string"},
+        "migrationPath": {"type": "string"},
+        "sourceOfTruth": {"type": "string"},
+        "invalidation": {"type": "string"},
+        "productionGuard": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "StateClassification": {
+      "enum": [
+        "durable_product_state",
+        "auth_session_state",
+        "authorization_state",
+        "audit_event_state",
+        "external_integration_state",
+        "canonical_artifact",
+        "cache",
+        "projection",
+        "import_export_artifact",
+        "dev_only_fixture",
+        "ephemeral_ui_state"
+      ]
+    },
+    "StorageDeclaration": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ]
+    },
+    "ReferenceApplication": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "items": {"type": "string"}},
+        "mustPreserve": {"type": "array", "items": {"type": "string"}},
+        "intentionallyNotCarriedForward": {"type": "array", "items": {"type": "string"}},
+        "persistenceModel": {"type": "string"},
+        "authSessionModel": {"type": "string"},
+        "ownershipPermissionModel": {"type": "string"},
+        "workflowRuntimeModel": {"type": "string"}
       },
       "additionalProperties": true
     },

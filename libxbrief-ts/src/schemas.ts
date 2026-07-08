@@ -2,6 +2,68 @@ import { z } from "zod";
 
 const AnyValueSchema = z.unknown();
 
+export const STATE_CLASSIFICATIONS = [
+  "durable_product_state",
+  "auth_session_state",
+  "authorization_state",
+  "audit_event_state",
+  "external_integration_state",
+  "canonical_artifact",
+  "cache",
+  "projection",
+  "import_export_artifact",
+  "dev_only_fixture",
+  "ephemeral_ui_state",
+] as const;
+
+export type StateClassification = (typeof STATE_CLASSIFICATIONS)[number];
+export type StorageDeclaration = string | string[];
+
+export interface StateSurfaceData {
+  name: string;
+  classification: StateClassification;
+  owner?: string;
+  approvedStorage?: StorageDeclaration;
+  forbiddenStorage?: StorageDeclaration;
+  migrationRequired?: boolean;
+  auditRequired?: boolean;
+  concurrencyRequired?: boolean;
+  permissionBoundary?: string;
+  concurrencySemantics?: string;
+  transactionBoundary?: string;
+  recoverySemantics?: string;
+  conflictDetection?: string;
+  deleteSemantics?: string;
+  migrationPath?: string;
+  sourceOfTruth?: string;
+  invalidation?: string;
+  productionGuard?: string;
+  [key: string]: unknown;
+}
+
+export interface ReferenceApplicationData {
+  name: string;
+  evidence?: string[];
+  mustPreserve?: string[];
+  intentionallyNotCarriedForward?: string[];
+  persistenceModel?: string;
+  authSessionModel?: string;
+  ownershipPermissionModel?: string;
+  workflowRuntimeModel?: string;
+  [key: string]: unknown;
+}
+
+export interface SystemOfRecordData {
+  stateSurfaces: StateSurfaceData[];
+  referenceApplications?: ReferenceApplicationData[];
+  [key: string]: unknown;
+}
+
+export interface ArchitectureData {
+  systemOfRecord?: SystemOfRecordData;
+  [key: string]: unknown;
+}
+
 export interface PlanEdgeData {
   from: string;
   to: string;
@@ -55,6 +117,7 @@ export interface PlanData {
   edges?: PlanEdgeData[];
   tags?: unknown;
   metadata?: unknown;
+  architecture?: ArchitectureData;
   created?: unknown;
   updated?: unknown;
   author?: unknown;
@@ -132,6 +195,62 @@ export const PlanItemSchema: z.ZodType<PlanItemData> = z.lazy(() =>
     .passthrough(),
 );
 
+export const StorageDeclarationSchema: z.ZodType<StorageDeclaration> = z.union([
+  z.string(),
+  z.array(z.string()),
+]);
+
+export const StateClassificationSchema = z.enum(STATE_CLASSIFICATIONS);
+
+export const StateSurfaceSchema: z.ZodType<StateSurfaceData> = z
+  .object({
+    name: z.string().min(1),
+    classification: StateClassificationSchema,
+    owner: z.string().optional(),
+    approvedStorage: StorageDeclarationSchema.optional(),
+    forbiddenStorage: StorageDeclarationSchema.optional(),
+    migrationRequired: z.boolean().optional(),
+    auditRequired: z.boolean().optional(),
+    concurrencyRequired: z.boolean().optional(),
+    permissionBoundary: z.string().optional(),
+    concurrencySemantics: z.string().optional(),
+    transactionBoundary: z.string().optional(),
+    recoverySemantics: z.string().optional(),
+    conflictDetection: z.string().optional(),
+    deleteSemantics: z.string().optional(),
+    migrationPath: z.string().optional(),
+    sourceOfTruth: z.string().optional(),
+    invalidation: z.string().optional(),
+    productionGuard: z.string().optional(),
+  })
+  .passthrough();
+
+export const ReferenceApplicationSchema: z.ZodType<ReferenceApplicationData> = z
+  .object({
+    name: z.string().min(1),
+    evidence: z.array(z.string()).optional(),
+    mustPreserve: z.array(z.string()).optional(),
+    intentionallyNotCarriedForward: z.array(z.string()).optional(),
+    persistenceModel: z.string().optional(),
+    authSessionModel: z.string().optional(),
+    ownershipPermissionModel: z.string().optional(),
+    workflowRuntimeModel: z.string().optional(),
+  })
+  .passthrough();
+
+export const SystemOfRecordSchema: z.ZodType<SystemOfRecordData> = z
+  .object({
+    stateSurfaces: z.array(StateSurfaceSchema).min(1),
+    referenceApplications: z.array(ReferenceApplicationSchema).optional(),
+  })
+  .passthrough();
+
+export const ArchitectureSchema: z.ZodType<ArchitectureData> = z
+  .object({
+    systemOfRecord: SystemOfRecordSchema.optional(),
+  })
+  .passthrough();
+
 /**
  * Runtime schema for xBRIEF plans.
  */
@@ -146,6 +265,7 @@ export const PlanSchema: z.ZodType<PlanData> = z
     edges: z.array(PlanEdgeSchema).optional(),
     tags: AnyValueSchema.optional(),
     metadata: AnyValueSchema.optional(),
+    architecture: ArchitectureSchema.optional(),
     created: AnyValueSchema.optional(),
     updated: AnyValueSchema.optional(),
     author: AnyValueSchema.optional(),
@@ -174,4 +294,3 @@ export const XBriefDocumentSchema: z.ZodType<XBriefDocumentData> = z
     plan: PlanSchema,
   })
   .passthrough();
-

@@ -97,6 +97,7 @@ The `plan` field contains the primary planning artifact.
 | `edges` | array | Array of Edge objects defining dependencies (see [Section 6](#6-dag-directed-acyclic-graph-support)). |
 | `tags` | array of strings | Categorization tags. |
 | `metadata` | object | Arbitrary key-value metadata. |
+| `architecture` | object | Architecture design records for the plan, including system-of-record declarations. |
 | `created` | string (ISO 8601) | Plan creation timestamp. |
 | `updated` | string (ISO 8601) | Plan last-modified timestamp. |
 | `author` | string | Plan author identifier. |
@@ -146,6 +147,53 @@ The following keys are RECOMMENDED for retrospective documents:
 #### 3.3.3 Custom Keys
 
 Additional narrative keys are permitted. Implementations MUST preserve all narrative keys, including unrecognized ones. Custom keys SHOULD follow TitleCase convention for consistency.
+
+### 3.4 Architecture
+
+The `architecture` field is an OPTIONAL object for design records that apply to the plan as a whole. Implementations MUST preserve all keys in this object, including unrecognized keys.
+
+#### 3.4.1 System of Record
+
+The `architecture.systemOfRecord` field declares the authoritative owner for stateful behavior introduced or modified by the plan. When present, it MUST contain a non-empty `stateSurfaces` array. Each state surface SHOULD include a human-readable `name`, a `classification`, and enough ownership and storage detail for implementation agents or gates to determine whether the declared system of record is appropriate.
+
+Recognized `classification` values are:
+
+| Value | Meaning |
+|-------|---------|
+| `durable_product_state` | Authoritative product or application state. |
+| `auth_session_state` | Identity, authentication, session, or security state. |
+| `authorization_state` | Roles, memberships, grants, permissions, or ownership state. |
+| `audit_event_state` | Append-only or traceable audit, history, or compliance state. |
+| `external_integration_state` | State owned by, synchronized with, or delegated to an external provider. |
+| `canonical_artifact` | Source-controlled or user-authored artifact read as evidence, not mutable application persistence. |
+| `cache` | Rebuildable, non-authoritative derived state with invalidation rules. |
+| `projection` | Derived read model whose source of truth is another state surface. |
+| `import_export_artifact` | Temporary transfer artifact, not live application state. |
+| `dev_only_fixture` | Test or local-only data excluded from production runtime. |
+| `ephemeral_ui_state` | Temporary view state safe to keep in browser or process memory. |
+
+System-of-record records may also include `referenceApplications` when the plan is carrying behavior forward from another application. Each reference application entry SHOULD identify evidence, behavior that must be preserved, and behavior intentionally not carried forward.
+
+**Example:**
+
+```json
+{
+  "architecture": {
+    "systemOfRecord": {
+      "stateSurfaces": [
+        {
+          "name": "Workspace",
+          "classification": "durable_product_state",
+          "owner": "application database",
+          "approvedStorage": "postgres",
+          "permissionBoundary": "workspace membership"
+        }
+      ],
+      "referenceApplications": []
+    }
+  }
+}
+```
 
 ---
 

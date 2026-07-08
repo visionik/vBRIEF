@@ -58,6 +58,7 @@ export interface PlanInit extends Record<string, unknown> {
   edges?: unknown;
   tags?: unknown;
   metadata?: unknown;
+  architecture?: unknown;
   created?: unknown;
   updated?: unknown;
   author?: unknown;
@@ -267,6 +268,7 @@ export class Plan {
   public edges: OptionalUnknown;
   public tags: OptionalUnknown;
   public metadata: OptionalUnknown;
+  public architecture: OptionalUnknown;
   public created: OptionalUnknown;
   public updated: OptionalUnknown;
   public author: OptionalUnknown;
@@ -292,6 +294,7 @@ export class Plan {
     this.edges = init.edges;
     this.tags = init.tags;
     this.metadata = init.metadata;
+    this.architecture = init.architecture;
     this.created = init.created;
     this.updated = init.updated;
     this.author = init.author;
@@ -320,6 +323,7 @@ export class Plan {
       edges: mapping.edges,
       tags: mapping.tags,
       metadata: mapping.metadata,
+      architecture: mapping.architecture,
       created: mapping.created,
       updated: mapping.updated,
       author: mapping.author,
@@ -481,6 +485,7 @@ function knownPlanValues(plan: Plan, preserveOrder: boolean): Record<string, unk
     edges: plan.edges,
     tags: plan.tags,
     metadata: plan.metadata,
+    architecture: plan.architecture,
     created: plan.created,
     updated: plan.updated,
     author: plan.author,

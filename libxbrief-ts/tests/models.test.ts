@@ -1,6 +1,13 @@
 import { describe, expect, test } from "vitest";
 
-import { Plan, PlanItem, XBriefDocument } from "../src/index.js";
+import {
+  ArchitectureSchema,
+  Plan,
+  PlanItem,
+  StateSurfaceSchema,
+  SystemOfRecordSchema,
+  XBriefDocument,
+} from "../src/index.js";
 
 describe("models", () => {
   test("preserves unknown fields and ordering when round-tripping a document", () => {
@@ -77,5 +84,89 @@ describe("models", () => {
         items: [{ title: "Implement parser", status: "pending" }],
       },
     });
+  });
+
+  test("round-trips plan architecture system-of-record as a known field", () => {
+    const architecture = {
+      systemOfRecord: {
+        stateSurfaces: [
+          {
+            name: "Workspace",
+            classification: "durable_product_state",
+            owner: "application database",
+            approvedStorage: "postgres",
+            permissionBoundary: "workspace membership",
+          },
+        ],
+      },
+    };
+    const document = XBriefDocument.fromDict({
+      xBRIEFInfo: { version: "0.8" },
+      plan: {
+        title: "Stateful feature",
+        status: "draft",
+        items: [],
+        architecture,
+      },
+    });
+
+    expect(document.plan.architecture).toEqual(architecture);
+    expect(document.plan.extras.architecture).toBeUndefined();
+    expect(document.toDict()).toEqual({
+      xBRIEFInfo: { version: "0.8" },
+      plan: {
+        title: "Stateful feature",
+        status: "draft",
+        items: [],
+        architecture,
+      },
+    });
+  });
+
+  test("validates architecture system-of-record schemas", () => {
+    expect(
+      ArchitectureSchema.parse({
+        systemOfRecord: {
+          stateSurfaces: [
+            {
+              name: "Workspace",
+              classification: "durable_product_state",
+            },
+          ],
+        },
+      }),
+    ).toEqual({
+      systemOfRecord: {
+        stateSurfaces: [
+          {
+            name: "Workspace",
+            classification: "durable_product_state",
+          },
+        ],
+      },
+    });
+
+    expect(() =>
+      SystemOfRecordSchema.parse({
+        stateSurfaces: [],
+      }),
+    ).toThrow();
+
+    expect(
+      StateSurfaceSchema.parse({
+        name: "Workspace",
+        classification: "durable_product_state",
+      }),
+    ).toEqual({
+      name: "Workspace",
+      classification: "durable_product_state",
+    });
+
+    expect(() =>
+      StateSurfaceSchema.parse({
+        name: "Workspace",
+        classification: "durable",
+      }),
+    ).toThrow();
   });
 });

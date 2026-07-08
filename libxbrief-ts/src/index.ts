@@ -31,14 +31,27 @@ export { slugify, ItemBuilder, PlanBuilder, quickTodo, fromItems } from "./build
 export { validatePlanDAG } from "./dag.js";
 export { parseJson, dumpsJson } from "./json-codec.js";
 export {
+  ArchitectureSchema,
   PlanEdgeSchema,
   PlanItemSchema,
   PlanSchema,
+  ReferenceApplicationSchema,
+  STATE_CLASSIFICATIONS,
+  StateClassificationSchema,
+  StateSurfaceSchema,
+  StorageDeclarationSchema,
+  SystemOfRecordSchema,
   XBriefDocumentSchema,
 } from "./schemas.js";
 export type {
+  ArchitectureData,
   PlanEdgeData,
   PlanItemData,
   PlanData,
+  ReferenceApplicationData,
+  StateClassification,
+  StateSurfaceData,
+  StorageDeclaration,
+  SystemOfRecordData,
   XBriefDocumentData,
 } from "./schemas.js";

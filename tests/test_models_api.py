@@ -156,6 +156,46 @@ def test_plan_with_optional_fields_round_trips() -> None:
     assert result["plan"]["tags"] == ["q1"]
 
 
+def test_plan_architecture_system_of_record_round_trips_as_known_field() -> None:
+    architecture = {
+        "systemOfRecord": {
+            "stateSurfaces": [
+                {
+                    "name": "Workspace",
+                    "classification": "durable_product_state",
+                    "owner": "application database",
+                    "approvedStorage": "postgres",
+                    "permissionBoundary": "workspace membership",
+                }
+            ],
+            "referenceApplications": [
+                {
+                    "name": "reference-app",
+                    "evidence": ["database schema", "auth/session flow"],
+                    "mustPreserve": ["database-backed records"],
+                    "intentionallyNotCarriedForward": [],
+                }
+            ],
+        }
+    }
+    doc = {
+        "xBRIEFInfo": {"version": "0.8"},
+        "plan": {
+            "title": "Stateful feature",
+            "status": "draft",
+            "items": [],
+            "architecture": architecture,
+        },
+    }
+
+    model = XBriefDocument.from_dict(doc)
+    result = model.to_dict()
+
+    assert model.plan.architecture == architecture
+    assert "architecture" not in model.plan.extras
+    assert result["plan"]["architecture"] == architecture
+
+
 def test_merge_values_includes_fields_added_after_parse() -> None:
     """Known fields set after from_dict (not in original _field_order) still appear in preserve-order output."""
     source = {
